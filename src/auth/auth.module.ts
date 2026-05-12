@@ -4,18 +4,22 @@ import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RolesGuard } from './guards/roles.guard';
 
 /**
- * AuthModule ดูแล Register, Login และ JWT
+ * AuthModule ดูแลระบบสมัครสมาชิก, เข้าสู่ระบบ, JWT และ Role Guard
  */
 @Module({
   imports: [
     /**
      * ต้อง import UsersModule
-     * เพราะ AuthService ใช้ UsersService
+     * เพราะ AuthService ต้องใช้ UsersService
      */
     UsersModule,
 
+    /**
+     * ตั้งค่า JWT สำหรับสร้างและตรวจสอบ Token
+     */
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
@@ -24,6 +28,6 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtAuthGuard],
+  providers: [AuthService, JwtAuthGuard, RolesGuard],
 })
 export class AuthModule {}
