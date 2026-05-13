@@ -3,6 +3,7 @@ generator client {
   output       = "../src/generated/prisma"
   moduleFormat = "cjs"
 }
+
 datasource db {
   provider = "postgresql"
 }
@@ -10,6 +11,12 @@ datasource db {
 enum UserRole {
   ISSUER
   HOLDER
+}
+
+enum CredentialStatus {
+  PENDING
+  VERIFIED
+  INVALID
 }
 
 model User {
@@ -20,6 +27,44 @@ model User {
   name          String
   walletAddress String?
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  issuedCredentials Credential[] @relation("IssuerCredentials")
+  ownedCredentials  Credential[] @relation("HolderCredentials")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Credential {
+  id           String @id @default(uuid())
+  credentialId String @unique @default(uuid())
+
+  issuerId String
+  holderId String
+
+  issuer User @relation("IssuerCredentials", fields: [issuerId], references: [id])
+  holder User @relation("HolderCredentials", fields: [holderId], references: [id])
+
+  studentName String
+  studentId   String
+  faculty     String?
+  major       String?
+
+  documentTitle String
+  issuedAt      DateTime
+
+  fileName    String
+  fileSize    Int
+  mimeType    String
+  storagePath String
+
+  documentHash String
+
+  status CredentialStatus @default(PENDING)
+
+  network         String?
+  transactionHash String?
+  blockNumber     Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -51,7 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Credential: 'Credential'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -82,6 +83,33 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CredentialScalarFieldEnum = {
+  id: 'id',
+  credentialId: 'credentialId',
+  issuerId: 'issuerId',
+  holderId: 'holderId',
+  studentName: 'studentName',
+  studentId: 'studentId',
+  faculty: 'faculty',
+  major: 'major',
+  documentTitle: 'documentTitle',
+  issuedAt: 'issuedAt',
+  fileName: 'fileName',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  storagePath: 'storagePath',
+  documentHash: 'documentHash',
+  status: 'status',
+  network: 'network',
+  transactionHash: 'transactionHash',
+  blockNumber: 'blockNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CredentialScalarFieldEnum = (typeof CredentialScalarFieldEnum)[keyof typeof CredentialScalarFieldEnum]
 
 
 export const SortOrder = {

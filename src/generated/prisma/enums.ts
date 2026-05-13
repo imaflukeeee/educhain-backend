@@ -15,3 +15,12 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const CredentialStatus = {
+  PENDING: 'PENDING',
+  VERIFIED: 'VERIFIED',
+  INVALID: 'INVALID'
+} as const
+
+export type CredentialStatus = (typeof CredentialStatus)[keyof typeof CredentialStatus]

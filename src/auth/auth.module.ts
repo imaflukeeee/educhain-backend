@@ -29,5 +29,10 @@ import { RolesGuard } from './guards/roles.guard';
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtAuthGuard, RolesGuard],
+  /**
+   * Export Guard และ JwtModule
+   * เพื่อให้ Module อื่น เช่น CredentialsModule สามารถใช้ @UseGuards ได้
+   */
+  exports: [JwtModule, JwtAuthGuard, RolesGuard],
 })
 export class AuthModule {}

@@ -44,3 +44,8 @@ export { Prisma }
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Credential
+ * 
+ */
+export type Credential = Prisma.CredentialModel
