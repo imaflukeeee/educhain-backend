@@ -5,6 +5,7 @@ import { CredentialsModule } from './credentials/credentials.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { StorageModule } from './storage/storage.module';
 import { UsersModule } from './users/users.module';
+import { BlockchainModule } from './blockchain/blockchain.module';
 
 /**
  * AppModule คือ Module หลักของ Backend
@@ -23,6 +24,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     AuthModule,
     CredentialsModule,
+    BlockchainModule,
   ],
 })
 export class AppModule {}

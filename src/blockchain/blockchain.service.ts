@@ -1,0 +1,169 @@
+import 'dotenv/config';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { ethers } from 'ethers';
+import { credentialRegistryAbi } from './abis/credential-registry.abi';
+
+/**
+ * BlockchainService ใช้เชื่อมต่อ Polygon Amoy Testnet
+ * และเรียกใช้งาน Smart Contract ของ EduChain
+ */
+@Injectable()
+export class BlockchainService {
+  private readonly provider: ethers.JsonRpcProvider;
+  private readonly wallet: ethers.Wallet;
+  private readonly contract: ethers.Contract;
+  private readonly contractAddress: string;
+  private readonly networkName: string;
+
+  constructor() {
+    const rpcUrl = process.env.AMOY_RPC_URL;
+    const privateKey = process.env.BLOCKCHAIN_PRIVATE_KEY;
+    const contractAddress = process.env.CONTRACT_ADDRESS;
+    const networkName = process.env.BLOCKCHAIN_NETWORK ?? 'Polygon Amoy';
+
+    if (!rpcUrl) {
+      throw new InternalServerErrorException(
+        'กรุณาตั้งค่า AMOY_RPC_URL ในไฟล์ .env',
+      );
+    }
+
+    if (!privateKey) {
+      throw new InternalServerErrorException(
+        'กรุณาตั้งค่า BLOCKCHAIN_PRIVATE_KEY ในไฟล์ .env',
+      );
+    }
+
+    if (!contractAddress) {
+      throw new InternalServerErrorException(
+        'กรุณาตั้งค่า CONTRACT_ADDRESS ในไฟล์ .env',
+      );
+    }
+
+    /**
+     * Provider ใช้เชื่อมต่อ RPC ของ Polygon Amoy
+     */
+    this.provider = new ethers.JsonRpcProvider(rpcUrl);
+
+    /**
+     * Wallet ใช้สำหรับส่ง Transaction
+     * Private Key ต้องอยู่ใน .env เท่านั้น
+     */
+    this.wallet = new ethers.Wallet(privateKey, this.provider);
+
+    this.contractAddress = contractAddress;
+    this.networkName = networkName;
+
+    /**
+     * Contract Instance สำหรับเรียก Smart Contract
+     */
+    this.contract = new ethers.Contract(
+      this.contractAddress,
+      credentialRegistryAbi,
+      this.wallet,
+    );
+  }
+
+  /**
+   * ใช้ตรวจสอบว่า Backend เชื่อม Blockchain ได้ไหม
+   */
+  async getBlockchainStatus() {
+    try {
+      const network = await this.provider.getNetwork();
+      const walletAddress = await this.wallet.getAddress();
+      const balance = await this.provider.getBalance(walletAddress);
+      const contractCode = await this.provider.getCode(this.contractAddress);
+
+      const isContractDeployed = contractCode !== '0x';
+
+      return {
+        message: 'เชื่อมต่อ Blockchain สำเร็จ',
+        network: this.networkName,
+        chainId: Number(network.chainId),
+        walletAddress,
+        walletBalance: ethers.formatEther(balance),
+        contractAddress: this.contractAddress,
+        isContractDeployed,
+      };
+    } catch {
+      throw new InternalServerErrorException(
+        'เชื่อมต่อ Blockchain ไม่สำเร็จ กรุณาตรวจสอบ RPC URL, Private Key หรือ Contract Address',
+      );
+    }
+  }
+
+  /**
+   * บันทึกข้อมูล Credential ลง Smart Contract
+   */
+  async registerCredentialOnChain(params: {
+    credentialId: string;
+    documentHash: string;
+    holderAddress: string;
+    issuerSignature: string;
+  }): Promise<{
+    transactionHash: string;
+    blockNumber: number;
+    network: string;
+  }> {
+    const { credentialId, documentHash, holderAddress, issuerSignature } =
+      params;
+
+    if (!ethers.isAddress(holderAddress)) {
+      throw new BadRequestException('Wallet Address ของ Holder ไม่ถูกต้อง');
+    }
+
+    try {
+      /**
+       * ตรวจสอบก่อนว่า credentialId นี้เคยถูกบันทึกบน Blockchain แล้วหรือยัง
+       */
+      const exists = (await this.contract.credentialExists(
+        credentialId,
+      )) as boolean;
+
+      if (exists) {
+        throw new BadRequestException('เอกสารนี้ถูกบันทึกลง Blockchain แล้ว');
+      }
+
+      /**
+       * ส่ง Transaction ไปยัง Smart Contract
+       */
+      const tx = (await this.contract.registerCredential(
+        credentialId,
+        documentHash,
+        holderAddress,
+        issuerSignature,
+      )) as ethers.ContractTransactionResponse;
+
+      /**
+       * รอให้ Transaction ถูกยืนยัน
+       */
+      const receipt = await tx.wait();
+
+      if (!receipt) {
+        throw new InternalServerErrorException(
+          'ไม่พบข้อมูลยืนยัน Transaction จาก Blockchain',
+        );
+      }
+
+      return {
+        transactionHash: receipt.hash,
+        blockNumber: receipt.blockNumber,
+        network: this.networkName,
+      };
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof InternalServerErrorException
+      ) {
+        throw error;
+      }
+
+      throw new InternalServerErrorException(
+        'บันทึกข้อมูลเอกสารลง Blockchain ไม่สำเร็จ',
+      );
+    }
+  }
+}
