@@ -21,9 +21,6 @@ export class SupabaseStorageService {
       );
     }
 
-    /**
-     * ใช้ service role key เพื่อให้ Backend มีสิทธิ์ upload/read ไฟล์ใน Private Bucket
-     */
     this.supabase = createClient(supabaseUrl, serviceRoleKey);
     this.bucketName = bucketName;
   }
@@ -50,5 +47,28 @@ export class SupabaseStorageService {
     }
 
     return params.storagePath;
+  }
+
+  /**
+   * สร้าง Signed URL สำหรับเปิดหรือดาวน์โหลดไฟล์จาก Private Bucket
+   * URL นี้มีอายุจำกัด ไม่เปิดไฟล์เป็น Public ถาวร
+   */
+  async createSignedUrl(params: {
+    storagePath: string;
+    expiresInSeconds?: number;
+  }): Promise<string> {
+    const { storagePath, expiresInSeconds = 60 * 5 } = params;
+
+    const { data, error } = await this.supabase.storage
+      .from(this.bucketName)
+      .createSignedUrl(storagePath, expiresInSeconds);
+
+    if (error || !data?.signedUrl) {
+      throw new InternalServerErrorException(
+        `สร้างลิงก์ดาวน์โหลดไฟล์ไม่สำเร็จ: ${error?.message ?? 'ไม่ทราบสาเหตุ'}`,
+      );
+    }
+
+    return data.signedUrl;
   }
 }
