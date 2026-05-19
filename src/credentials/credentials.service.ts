@@ -9,12 +9,14 @@ import { CredentialStatus, UserRole } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { SupabaseStorageService } from '../storage/supabase-storage.service';
 import { CreateCredentialDto } from './dto/create-credential.dto';
+import { BlockchainService } from '../blockchain/blockchain.service';
 
 @Injectable()
 export class CredentialsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly storageService: SupabaseStorageService,
+    private readonly blockchainService: BlockchainService,
   ) {}
 
   /**
@@ -135,6 +137,97 @@ export class CredentialsService {
         },
       },
     });
+  }
+
+  /**
+   * Issuer ใช้บันทึก Credential Hash ลง Blockchain
+   * หลังบันทึกสำเร็จ ระบบจะอัปเดตสถานะเอกสารเป็น VERIFIED
+   */
+  async registerCredentialOnChain(params: {
+    credentialId: string;
+    issuerId: string;
+  }) {
+    const credential = await this.prisma.credential.findUnique({
+      where: {
+        id: params.credentialId,
+      },
+      include: {
+        holder: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            walletAddress: true,
+          },
+        },
+      },
+    });
+
+    if (!credential) {
+      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
+    }
+
+    /**
+     * ตรวจสอบว่า Issuer ที่กดบันทึกลง Blockchain
+     * ต้องเป็นเจ้าของเอกสารที่เป็นผู้ออกเท่านั้น
+     */
+    if (credential.issuerId !== params.issuerId) {
+      throw new ForbiddenException(
+        'คุณไม่มีสิทธิ์บันทึกเอกสารนี้ลง Blockchain',
+      );
+    }
+
+    /**
+     * ป้องกันการบันทึกซ้ำ
+     */
+    if (credential.status === 'VERIFIED') {
+      throw new BadRequestException('เอกสารนี้ถูกยืนยันบน Blockchain แล้ว');
+    }
+
+    if (credential.transactionHash) {
+      throw new BadRequestException(
+        'เอกสารนี้มี Transaction บน Blockchain แล้ว',
+      );
+    }
+
+    /**
+     * Holder ต้องมี Wallet Address
+     * เพราะ Smart Contract ต้องเก็บ holderAddress
+     */
+    if (!credential.holder.walletAddress) {
+      throw new BadRequestException('Holder ยังไม่ได้ตั้งค่า Wallet Address');
+    }
+
+    /**
+     * ส่ง documentHash ไปบันทึกบน Smart Contract
+     */
+    const blockchainResult =
+      await this.blockchainService.registerCredentialOnChain({
+        credentialId: credential.credentialId,
+        documentHash: credential.documentHash,
+        holderAddress: credential.holder.walletAddress,
+      });
+
+    /**
+     * อัปเดตข้อมูลใน Database หลัง Transaction สำเร็จ
+     */
+    const updatedCredential = await this.prisma.credential.update({
+      where: {
+        id: credential.id,
+      },
+      data: {
+        status: 'VERIFIED',
+        network: blockchainResult.network,
+        transactionHash: blockchainResult.transactionHash,
+        blockNumber: blockchainResult.blockNumber,
+      },
+    });
+
+    return {
+      message: 'บันทึกข้อมูลเอกสารลง Blockchain สำเร็จ',
+      credential: updatedCredential,
+      blockchain: blockchainResult,
+    };
   }
 
   /**

@@ -57,6 +57,29 @@ export class CredentialsController {
   }
 
   /**
+   * POST /credentials/:id/register-chain
+   * Issuer ใช้บันทึก documentHash ของเอกสารลง Blockchain
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ISSUER')
+  @Post(':id/register-chain')
+  registerCredentialOnChain(
+    @Req() request: AuthenticatedRequest,
+    @Param('id') id: string,
+  ) {
+    const user = request.user;
+
+    if (!user) {
+      throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งานจาก Token');
+    }
+
+    return this.credentialsService.registerCredentialOnChain({
+      credentialId: id,
+      issuerId: user.sub,
+    });
+  }
+
+  /**
    * GET /credentials/issuer
    * Issuer ใช้ดูรายการเอกสารที่ตัวเองออก
    */

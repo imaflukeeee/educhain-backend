@@ -102,14 +102,12 @@ export class BlockchainService {
     credentialId: string;
     documentHash: string;
     holderAddress: string;
-    issuerSignature: string;
   }): Promise<{
     transactionHash: string;
     blockNumber: number;
     network: string;
   }> {
-    const { credentialId, documentHash, holderAddress, issuerSignature } =
-      params;
+    const { credentialId, documentHash, holderAddress } = params;
 
     if (!ethers.isAddress(holderAddress)) {
       throw new BadRequestException('Wallet Address ของ Holder ไม่ถูกต้อง');
@@ -128,6 +126,18 @@ export class BlockchainService {
       }
 
       /**
+       * สร้างข้อความสำหรับให้ Issuer Wallet เซ็น
+       */
+      const signatureMessage = [
+        'EduChain Credential',
+        `Credential ID: ${credentialId}`,
+        `Document Hash: ${documentHash}`,
+        `Holder Address: ${holderAddress}`,
+      ].join('\n');
+
+      const issuerSignature = await this.wallet.signMessage(signatureMessage);
+
+      /**
        * ส่ง Transaction ไปยัง Smart Contract
        */
       const tx = (await this.contract.registerCredential(
@@ -138,7 +148,7 @@ export class BlockchainService {
       )) as ethers.ContractTransactionResponse;
 
       /**
-       * รอให้ Transaction ถูกยืนยัน
+       * รอให้ Transaction ถูกยืนยันบน Blockchain
        */
       const receipt = await tx.wait();
 
@@ -154,6 +164,12 @@ export class BlockchainService {
         network: this.networkName,
       };
     } catch (error) {
+      /**
+       * แสดง error จริงใน Terminal เพื่อใช้ Debug ตอนพัฒนา
+       * ห้ามส่ง private key หรือ secret ออกไปใน response
+       */
+      console.error('Blockchain register error:', error);
+
       if (
         error instanceof BadRequestException ||
         error instanceof InternalServerErrorException
