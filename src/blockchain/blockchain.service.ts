@@ -3,6 +3,7 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { ethers } from 'ethers';
 import { credentialRegistryAbi } from './abis/credential-registry.abi';
@@ -179,6 +180,63 @@ export class BlockchainService {
 
       throw new InternalServerErrorException(
         'บันทึกข้อมูลเอกสารลง Blockchain ไม่สำเร็จ',
+      );
+    }
+  }
+  /**
+   * ดึงข้อมูล Credential จาก Smart Contract
+   */
+  async getCredentialFromChain(credentialId: string): Promise<{
+    credentialId: string;
+    documentHash: string;
+    issuerAddress: string;
+    holderAddress: string;
+    issuerSignature: string;
+    timestamp: number;
+  }> {
+    if (!credentialId) {
+      throw new BadRequestException('กรุณาระบุ Credential ID');
+    }
+
+    try {
+      /**
+       * เช็คก่อนว่ามี credential นี้บน Blockchain หรือไม่
+       */
+      const exists = (await this.contract.credentialExists(
+        credentialId,
+      )) as boolean;
+
+      if (!exists) {
+        throw new NotFoundException('ไม่พบข้อมูลเอกสารนี้บน Blockchain');
+      }
+
+      /**
+       * อ่านข้อมูลจาก Smart Contract
+       */
+      const result = (await this.contract.getCredential(
+        credentialId,
+      )) as unknown[];
+
+      const timestampRaw = result[5] as bigint;
+
+      return {
+        credentialId: result[0] as string,
+        documentHash: result[1] as string,
+        issuerAddress: result[2] as string,
+        holderAddress: result[3] as string,
+        issuerSignature: result[4] as string,
+        timestamp: Number(timestampRaw),
+      };
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException
+      ) {
+        throw error;
+      }
+
+      throw new InternalServerErrorException(
+        'อ่านข้อมูลเอกสารจาก Blockchain ไม่สำเร็จ',
       );
     }
   }

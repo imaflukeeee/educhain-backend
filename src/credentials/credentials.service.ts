@@ -357,4 +357,196 @@ export class CredentialsService {
       expiresInSeconds: 60 * 5,
     };
   }
+  /**
+   * ตรวจสอบข้อมูล Credential ระหว่าง Database กับ Blockchain
+   */
+  async verifyCredentialOnChain(params: {
+    credentialId: string;
+    userId: string;
+    role: 'ISSUER' | 'HOLDER';
+  }) {
+    const credential = await this.prisma.credential.findUnique({
+      where: {
+        id: params.credentialId,
+      },
+      include: {
+        holder: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            walletAddress: true,
+          },
+        },
+        issuer: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            walletAddress: true,
+          },
+        },
+      },
+    });
+
+    if (!credential) {
+      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
+    }
+
+    const isIssuerOwner =
+      params.role === 'ISSUER' && credential.issuerId === params.userId;
+
+    const isHolderOwner =
+      params.role === 'HOLDER' && credential.holderId === params.userId;
+
+    if (!isIssuerOwner && !isHolderOwner) {
+      throw new ForbiddenException('คุณไม่มีสิทธิ์ตรวจสอบเอกสารนี้');
+    }
+
+    const blockchainCredential =
+      await this.blockchainService.getCredentialFromChain(
+        credential.credentialId,
+      );
+
+    const isDocumentHashMatched =
+      credential.documentHash.toLowerCase() ===
+      blockchainCredential.documentHash.toLowerCase();
+
+    const isHolderAddressMatched =
+      credential.holder.walletAddress?.toLowerCase() ===
+      blockchainCredential.holderAddress.toLowerCase();
+
+    const isDatabaseVerified = credential.status === 'VERIFIED';
+
+    const isValid =
+      isDocumentHashMatched && isHolderAddressMatched && isDatabaseVerified;
+
+    return {
+      message: isValid
+        ? 'ตรวจสอบเอกสารสำเร็จ ข้อมูลตรงกับ Blockchain'
+        : 'ตรวจสอบเอกสารไม่สำเร็จ ข้อมูลไม่ตรงกับ Blockchain',
+      isValid,
+      checks: {
+        documentHashMatched: isDocumentHashMatched,
+        holderAddressMatched: isHolderAddressMatched,
+        databaseStatusVerified: isDatabaseVerified,
+      },
+      database: {
+        id: credential.id,
+        credentialId: credential.credentialId,
+        documentHash: credential.documentHash,
+        status: credential.status,
+        transactionHash: credential.transactionHash,
+        blockNumber: credential.blockNumber,
+        network: credential.network,
+        holderWalletAddress: credential.holder.walletAddress,
+      },
+      blockchain: blockchainCredential,
+    };
+  }
+  /**
+   * Public Verify API
+   * Verifier ใช้ตรวจสอบเอกสารจาก credentialId โดยไม่ต้อง Login
+   */
+  async verifyPublicCredential(params: { credentialId: string }) {
+    if (!params.credentialId) {
+      throw new BadRequestException('กรุณาระบุ Credential ID');
+    }
+
+    const credential = await this.prisma.credential.findUnique({
+      where: {
+        credentialId: params.credentialId,
+      },
+      include: {
+        issuer: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            walletAddress: true,
+          },
+        },
+        holder: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            walletAddress: true,
+          },
+        },
+      },
+    });
+
+    if (!credential) {
+      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
+    }
+
+    const blockchainCredential =
+      await this.blockchainService.getCredentialFromChain(
+        credential.credentialId,
+      );
+
+    const isDocumentHashMatched =
+      credential.documentHash.toLowerCase() ===
+      blockchainCredential.documentHash.toLowerCase();
+
+    const isHolderAddressMatched =
+      credential.holder.walletAddress?.toLowerCase() ===
+      blockchainCredential.holderAddress.toLowerCase();
+
+    const isDatabaseVerified = credential.status === 'VERIFIED';
+
+    const hasTransaction =
+      Boolean(credential.transactionHash) &&
+      Boolean(credential.blockNumber) &&
+      Boolean(credential.network);
+
+    const isValid =
+      isDocumentHashMatched &&
+      isHolderAddressMatched &&
+      isDatabaseVerified &&
+      hasTransaction;
+
+    return {
+      message: isValid
+        ? 'ตรวจสอบเอกสารสำเร็จ เอกสารนี้ถูกต้องและอยู่บน Blockchain'
+        : 'ตรวจสอบเอกสารไม่สำเร็จ ข้อมูลเอกสารไม่ตรงกับ Blockchain',
+      isValid,
+      verifiedAt: new Date().toISOString(),
+      checks: {
+        documentHashMatched: isDocumentHashMatched,
+        holderAddressMatched: isHolderAddressMatched,
+        databaseStatusVerified: isDatabaseVerified,
+        hasTransaction,
+      },
+      credential: {
+        credentialId: credential.credentialId,
+        documentTitle: credential.documentTitle,
+        studentName: credential.studentName,
+        studentId: credential.studentId,
+        faculty: credential.faculty,
+        major: credential.major,
+        issuedAt: credential.issuedAt,
+        status: credential.status,
+      },
+      issuer: {
+        name: credential.issuer.name,
+        walletAddress: credential.issuer.walletAddress,
+      },
+      holder: {
+        name: credential.holder.name,
+        walletAddress: credential.holder.walletAddress,
+      },
+      blockchain: {
+        network: credential.network,
+        transactionHash: credential.transactionHash,
+        blockNumber: credential.blockNumber,
+        credentialId: blockchainCredential.credentialId,
+        documentHash: blockchainCredential.documentHash,
+        issuerAddress: blockchainCredential.issuerAddress,
+        holderAddress: blockchainCredential.holderAddress,
+        timestamp: blockchainCredential.timestamp,
+      },
+    };
+  }
 }

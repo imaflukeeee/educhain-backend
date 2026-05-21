@@ -116,9 +116,6 @@ export class CredentialsController {
   /**
    * GET /credentials/:id/download-url
    * สร้าง Signed URL สำหรับดาวน์โหลด PDF
-   *
-   * ต้องอยู่ก่อน @Get(':id')
-   * เพื่อป้องกัน route ชนกัน
    */
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ISSUER', 'HOLDER')
@@ -137,6 +134,41 @@ export class CredentialsController {
       credentialId: id,
       userId: user.sub,
       role: user.role,
+    });
+  }
+
+  /**
+   * GET /credentials/:id/verify-chain
+   * ตรวจสอบข้อมูลเอกสารระหว่าง Database กับ Blockchain
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ISSUER', 'HOLDER')
+  @Get(':id/verify-chain')
+  verifyCredentialOnChain(
+    @Req() request: AuthenticatedRequest,
+    @Param('id') id: string,
+  ) {
+    const user = request.user;
+
+    if (!user) {
+      throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งานจาก Token');
+    }
+
+    return this.credentialsService.verifyCredentialOnChain({
+      credentialId: id,
+      userId: user.sub,
+      role: user.role,
+    });
+  }
+
+  /**
+   * GET /credentials/public/:credentialId/verify
+   * Public Verify API สำหรับ Verifier ตรวจสอบเอกสารโดยไม่ต้อง Login
+   */
+  @Get('public/:credentialId/verify')
+  verifyPublicCredential(@Param('credentialId') credentialId: string) {
+    return this.credentialsService.verifyPublicCredential({
+      credentialId,
     });
   }
 
