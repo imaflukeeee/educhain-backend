@@ -2,12 +2,14 @@ import {
   ConflictException,
   Injectable,
   UnauthorizedException,
+  BadRequestException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { ethers } from 'ethers';
 
 @Injectable()
 export class AuthService {
@@ -105,5 +107,32 @@ export class AuthService {
     };
 
     return this.jwtService.signAsync(payload);
+  }
+  /**
+   * อัปเดต Wallet Address ของผู้ใช้งานปัจจุบัน
+   */
+  async updateMyWalletAddress(params: {
+    userId: string;
+    walletAddress: string;
+  }) {
+    if (!ethers.isAddress(params.walletAddress)) {
+      throw new BadRequestException('Wallet Address ไม่ถูกต้อง');
+    }
+
+    const normalizedWalletAddress = ethers.getAddress(params.walletAddress);
+
+    if (normalizedWalletAddress === ethers.ZeroAddress) {
+      throw new BadRequestException('ไม่สามารถใช้ Zero Address ได้');
+    }
+
+    const user = await this.usersService.updateWalletAddress({
+      userId: params.userId,
+      walletAddress: normalizedWalletAddress,
+    });
+
+    return {
+      message: 'อัปเดต Wallet Address สำเร็จ',
+      user,
+    };
   }
 }

@@ -6,6 +6,7 @@ import {
   Req,
   UnauthorizedException,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Roles } from './decorators/roles.decorator';
@@ -14,6 +15,7 @@ import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
 import type { AuthenticatedRequest } from './types/authenticated-request.type';
+import { UpdateWalletDto } from './dto/update-wallet.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -83,5 +85,26 @@ export class AuthController {
       message: 'อนุญาตให้เข้าถึงสำหรับ Holder',
       user: request.user,
     };
+  }
+  /**
+   * PATCH /auth/me/wallet
+   * ผู้ใช้งานใช้แก้ไข Wallet Address ของตัวเอง
+   */
+  @UseGuards(JwtAuthGuard)
+  @Patch('me/wallet')
+  updateMyWalletAddress(
+    @Req() request: AuthenticatedRequest,
+    @Body() updateWalletDto: UpdateWalletDto,
+  ) {
+    const user = request.user;
+
+    if (!user) {
+      throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งานจาก Token');
+    }
+
+    return this.authService.updateMyWalletAddress({
+      userId: user.sub,
+      walletAddress: updateWalletDto.walletAddress,
+    });
   }
 }

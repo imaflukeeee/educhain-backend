@@ -122,4 +122,25 @@ export class UsersService {
 
     return user;
   }
+  /**
+   * อัปเดต Wallet Address ของผู้ใช้งาน
+   */
+  async updateWalletAddress(params: { userId: string; walletAddress: string }) {
+    return this.prisma.user.update({
+      where: {
+        id: params.userId,
+      },
+      data: {
+        walletAddress: params.walletAddress,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        walletAddress: true,
+        updatedAt: true,
+      },
+    });
+  }
 }
