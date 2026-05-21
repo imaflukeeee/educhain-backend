@@ -1,12 +1,13 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
   Param,
   Post,
   Req,
-  UnauthorizedException,
   UploadedFile,
+  UnauthorizedException,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -111,6 +112,26 @@ export class CredentialsController {
     }
 
     return this.credentialsService.findByHolder(user.sub);
+  }
+
+  /**
+   * POST /credentials/public/:credentialId/verify-file
+   * Verifier อัปโหลดไฟล์ PDF เพื่อตรวจสอบ Hash กับ Database และ Blockchain
+   */
+  @Post('public/:credentialId/verify-file')
+  @UseInterceptors(FileInterceptor('file'))
+  verifyPublicCredentialFile(
+    @Param('credentialId') credentialId: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (!file) {
+      throw new BadRequestException('กรุณาอัปโหลดไฟล์เอกสาร');
+    }
+
+    return this.credentialsService.verifyPublicCredentialFile({
+      credentialId,
+      file,
+    });
   }
 
   /**

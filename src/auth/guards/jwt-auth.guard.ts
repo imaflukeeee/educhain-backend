@@ -27,7 +27,7 @@ export class JwtAuthGuard implements CanActivate {
     const authHeader = request.header('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('Missing authorization token');
+      throw new UnauthorizedException('กรุณาเข้าสู่ระบบก่อนใช้งาน');
     }
 
     /**
@@ -36,7 +36,7 @@ export class JwtAuthGuard implements CanActivate {
     const token = authHeader.replace('Bearer ', '').trim();
 
     if (!token) {
-      throw new UnauthorizedException('Missing authorization token');
+      throw new UnauthorizedException('กรุณาเข้าสู่ระบบก่อนใช้งาน');
     }
 
     const jwtSecret = process.env.JWT_SECRET;
@@ -61,7 +61,7 @@ export class JwtAuthGuard implements CanActivate {
 
       return true;
     } catch {
-      throw new UnauthorizedException('Invalid or expired token');
+      throw new UnauthorizedException('Token ไม่ถูกต้องหรือหมดอายุ กรุณาเข้าสู่ระบบใหม่');
     }
   }
 }

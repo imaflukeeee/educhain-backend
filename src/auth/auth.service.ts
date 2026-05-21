@@ -25,7 +25,7 @@ export class AuthService {
     const existingUser = await this.usersService.findByEmail(dto.email);
 
     if (existingUser) {
-      throw new ConflictException('Email already exists');
+      throw new ConflictException('อีเมลนี้ถูกใช้งานแล้ว');
     }
 
     /**
@@ -45,7 +45,7 @@ export class AuthService {
     const accessToken = await this.generateToken(user);
 
     return {
-      message: 'Register successfully',
+      message: 'สมัครสมาชิกสำเร็จ',
       user,
       accessToken,
     };
@@ -58,7 +58,7 @@ export class AuthService {
     const user = await this.usersService.findByEmail(dto.email);
 
     if (!user) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
     }
 
     /**
@@ -67,13 +67,13 @@ export class AuthService {
     const isPasswordValid = await bcrypt.compare(dto.password, user.password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
     }
 
     const accessToken = await this.generateToken(user);
 
     return {
-      message: 'Login successfully',
+      message: 'เข้าสู่ระบบสำเร็จ',
       user: {
         id: user.id,
         email: user.email,

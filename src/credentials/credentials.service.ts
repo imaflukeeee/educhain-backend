@@ -8,8 +8,8 @@ import { createHash, randomBytes } from 'crypto';
 import { CredentialStatus, UserRole } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { SupabaseStorageService } from '../storage/supabase-storage.service';
-import { CreateCredentialDto } from './dto/create-credential.dto';
 import { BlockchainService } from '../blockchain/blockchain.service';
+import { CreateCredentialDto } from './dto/create-credential.dto';
 
 @Injectable()
 export class CredentialsService {
@@ -37,18 +37,12 @@ export class CredentialsService {
       throw new BadRequestException('รองรับเฉพาะไฟล์ PDF เท่านั้น');
     }
 
-    /**
-     * จำกัดขนาดไฟล์ 10MB
-     */
     const maxFileSize = 10 * 1024 * 1024;
 
     if (file.size > maxFileSize) {
       throw new BadRequestException('ขนาดไฟล์ต้องไม่เกิน 10MB');
     }
 
-    /**
-     * ตรวจสอบว่า Holder มีอยู่จริง และต้องเป็น role HOLDER
-     */
     const holder = await this.prisma.user.findUnique({
       where: { email: dto.holderEmail },
       select: {
@@ -61,16 +55,8 @@ export class CredentialsService {
       throw new NotFoundException('ไม่พบนักศึกษาหรือ Holder ในระบบ');
     }
 
-    /**
-     * สร้าง SHA-256 Hash จากไฟล์ PDF จริง
-     * หากไฟล์ถูกแก้ไข ค่า Hash จะเปลี่ยนทันที
-     */
     const documentHash = createHash('sha256').update(file.buffer).digest('hex');
 
-    /**
-     * ตั้ง path สำหรับเก็บไฟล์ใน Supabase Storage
-     * แยก folder ตาม issuerId / holderId เพื่อจัดการง่าย
-     */
     const timestamp = Date.now();
     const safeFileName = file.originalname.replace(/\s+/g, '_');
     const storagePath = `${issuerId}/${holder.id}/${timestamp}_${safeFileName}`;
@@ -81,11 +67,6 @@ export class CredentialsService {
       mimeType: file.mimetype,
     });
 
-    /**
-     * บันทึก Metadata ลง PostgreSQL
-     * ตอนนี้ตั้ง status เป็น PENDING ก่อน
-     * ขั้นตอน Blockchain จะมาอัปเดตเป็น VERIFIED ภายหลัง
-     */
     const credential = await this.prisma.credential.create({
       data: {
         issuerId,
@@ -101,11 +82,6 @@ export class CredentialsService {
         mimeType: file.mimetype,
         storagePath,
         documentHash,
-
-        /**
-         * ใช้ string literal แทน CredentialStatus.PENDING
-         * เพื่อลดปัญหา ESLint resolve enum จาก generated Prisma Client
-         */
         status: CredentialStatus.PENDING,
       },
     });
@@ -115,6 +91,7 @@ export class CredentialsService {
       credential,
     };
   }
+
   /**
    * Issuer ดูรายการเอกสารที่ตัวเองเป็นผู้ออก
    */
@@ -137,97 +114,6 @@ export class CredentialsService {
         },
       },
     });
-  }
-
-  /**
-   * Issuer ใช้บันทึก Credential Hash ลง Blockchain
-   * หลังบันทึกสำเร็จ ระบบจะอัปเดตสถานะเอกสารเป็น VERIFIED
-   */
-  async registerCredentialOnChain(params: {
-    credentialId: string;
-    issuerId: string;
-  }) {
-    const credential = await this.prisma.credential.findUnique({
-      where: {
-        id: params.credentialId,
-      },
-      include: {
-        holder: {
-          select: {
-            id: true,
-            email: true,
-            name: true,
-            walletAddress: true,
-          },
-        },
-      },
-    });
-
-    if (!credential) {
-      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
-    }
-
-    /**
-     * ตรวจสอบว่า Issuer ที่กดบันทึกลง Blockchain
-     * ต้องเป็นเจ้าของเอกสารที่เป็นผู้ออกเท่านั้น
-     */
-    if (credential.issuerId !== params.issuerId) {
-      throw new ForbiddenException(
-        'คุณไม่มีสิทธิ์บันทึกเอกสารนี้ลง Blockchain',
-      );
-    }
-
-    /**
-     * ป้องกันการบันทึกซ้ำ
-     */
-    if (credential.status === 'VERIFIED') {
-      throw new BadRequestException('เอกสารนี้ถูกยืนยันบน Blockchain แล้ว');
-    }
-
-    if (credential.transactionHash) {
-      throw new BadRequestException(
-        'เอกสารนี้มี Transaction บน Blockchain แล้ว',
-      );
-    }
-
-    /**
-     * Holder ต้องมี Wallet Address
-     * เพราะ Smart Contract ต้องเก็บ holderAddress
-     */
-    if (!credential.holder.walletAddress) {
-      throw new BadRequestException('Holder ยังไม่ได้ตั้งค่า Wallet Address');
-    }
-
-    /**
-     * ส่ง documentHash ไปบันทึกบน Smart Contract
-     */
-    const blockchainResult =
-      await this.blockchainService.registerCredentialOnChain({
-        credentialId: credential.credentialId,
-        documentHash: credential.documentHash,
-        holderAddress: credential.holder.walletAddress,
-      });
-
-    /**
-     * อัปเดตข้อมูลใน Database หลัง Transaction สำเร็จ
-     */
-    const updatedCredential = await this.prisma.credential.update({
-      where: {
-        id: credential.id,
-      },
-      data: {
-        status: 'VERIFIED',
-        network: blockchainResult.network,
-        transactionHash: blockchainResult.transactionHash,
-        blockNumber: blockchainResult.blockNumber,
-      },
-    });
-
-    return {
-      message: 'บันทึกข้อมูลเอกสารลง Blockchain สำเร็จ',
-      credential: updatedCredential,
-      blockchain: blockchainResult,
-    };
   }
 
   /**
@@ -307,10 +193,6 @@ export class CredentialsService {
 
   /**
    * สร้าง Signed URL สำหรับดาวน์โหลด PDF
-   *
-   * หมายเหตุ:
-   * - Issuer ดาวน์โหลดเอกสารที่ตัวเองออกได้
-   * - Holder ดาวน์โหลดได้เฉพาะเอกสารของตัวเองที่ VERIFIED แล้ว
    */
   async createDownloadUrl(params: {
     credentialId: string;
@@ -337,9 +219,6 @@ export class CredentialsService {
       throw new ForbiddenException('คุณไม่มีสิทธิ์ดาวน์โหลดเอกสารนี้');
     }
 
-    /**
-     * เพราะยังไม่ผ่านขั้นตอน Blockchain Verification
-     */
     if (params.role === 'HOLDER' && credential.status !== 'VERIFIED') {
       throw new BadRequestException(
         'เอกสารยังไม่พร้อมให้ดาวน์โหลด กรุณารอการยืนยันบน Blockchain',
@@ -357,6 +236,81 @@ export class CredentialsService {
       expiresInSeconds: 60 * 5,
     };
   }
+
+  /**
+   * Issuer ใช้บันทึก Credential Hash ลง Blockchain
+   * หลังบันทึกสำเร็จ ระบบจะอัปเดตสถานะเอกสารเป็น VERIFIED
+   */
+  async registerCredentialOnChain(params: {
+    credentialId: string;
+    issuerId: string;
+  }) {
+    const credential = await this.prisma.credential.findUnique({
+      where: {
+        id: params.credentialId,
+      },
+      include: {
+        holder: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            walletAddress: true,
+          },
+        },
+      },
+    });
+
+    if (!credential) {
+      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
+    }
+
+    if (credential.issuerId !== params.issuerId) {
+      throw new ForbiddenException(
+        'คุณไม่มีสิทธิ์บันทึกเอกสารนี้ลง Blockchain',
+      );
+    }
+
+    if (credential.status === 'VERIFIED') {
+      throw new BadRequestException('เอกสารนี้ถูกยืนยันบน Blockchain แล้ว');
+    }
+
+    if (credential.transactionHash) {
+      throw new BadRequestException(
+        'เอกสารนี้มี Transaction บน Blockchain แล้ว',
+      );
+    }
+
+    if (!credential.holder.walletAddress) {
+      throw new BadRequestException('Holder ยังไม่ได้ตั้งค่า Wallet Address');
+    }
+
+    const blockchainResult =
+      await this.blockchainService.registerCredentialOnChain({
+        credentialId: credential.credentialId,
+        documentHash: credential.documentHash,
+        holderAddress: credential.holder.walletAddress,
+      });
+
+    const updatedCredential = await this.prisma.credential.update({
+      where: {
+        id: credential.id,
+      },
+      data: {
+        status: 'VERIFIED',
+        network: blockchainResult.network,
+        transactionHash: blockchainResult.transactionHash,
+        blockNumber: blockchainResult.blockNumber,
+      },
+    });
+
+    return {
+      message: 'บันทึกข้อมูลเอกสารลง Blockchain สำเร็จ',
+      credential: updatedCredential,
+      blockchain: blockchainResult,
+    };
+  }
+
   /**
    * ตรวจสอบข้อมูล Credential ระหว่าง Database กับ Blockchain
    */
@@ -424,7 +378,9 @@ export class CredentialsService {
     return {
       message: isValid
         ? 'ตรวจสอบเอกสารสำเร็จ ข้อมูลตรงกับ Blockchain'
-        : 'ตรวจสอบเอกสารไม่สำเร็จ ข้อมูลไม่ตรงกับ Blockchain',
+        : !isDatabaseVerified
+          ? 'ตรวจสอบเอกสารไม่สำเร็จ เอกสารนี้ถูกเพิกถอนหรือไม่ได้อยู่ในสถานะยืนยัน'
+          : 'ตรวจสอบเอกสารไม่สำเร็จ ข้อมูลเอกสารไม่ตรงกับ Blockchain',
       isValid,
       checks: {
         documentHashMatched: isDocumentHashMatched,
@@ -444,6 +400,7 @@ export class CredentialsService {
       blockchain: blockchainCredential,
     };
   }
+
   /**
    * Public Verify API
    * Verifier ใช้ตรวจสอบเอกสารจาก credentialId โดยไม่ต้อง Login
@@ -510,7 +467,9 @@ export class CredentialsService {
     return {
       message: isValid
         ? 'ตรวจสอบเอกสารสำเร็จ เอกสารนี้ถูกต้องและอยู่บน Blockchain'
-        : 'ตรวจสอบเอกสารไม่สำเร็จ ข้อมูลเอกสารไม่ตรงกับ Blockchain',
+        : !isDatabaseVerified
+          ? 'ตรวจสอบเอกสารไม่สำเร็จ เอกสารนี้ถูกเพิกถอนหรือไม่ได้อยู่ในสถานะยืนยัน'
+          : 'ตรวจสอบเอกสารไม่สำเร็จ ข้อมูลเอกสารไม่ตรงกับ Blockchain',
       isValid,
       verifiedAt: new Date().toISOString(),
       checks: {
@@ -549,6 +508,139 @@ export class CredentialsService {
       },
     };
   }
+
+  /**
+   * Public Verify File API
+   * Verifier อัปโหลดไฟล์ PDF เพื่อตรวจสอบว่า Hash ของไฟล์ตรงกับ Database และ Blockchain หรือไม่
+   */
+  async verifyPublicCredentialFile(params: {
+    credentialId: string;
+    file: Express.Multer.File;
+  }) {
+    if (!params.credentialId) {
+      throw new BadRequestException('กรุณาระบุ Credential ID');
+    }
+
+    if (!params.file) {
+      throw new BadRequestException('กรุณาอัปโหลดไฟล์เอกสาร');
+    }
+
+    if (params.file.mimetype !== 'application/pdf') {
+      throw new BadRequestException('รองรับเฉพาะไฟล์ PDF เท่านั้น');
+    }
+
+    const credential = await this.prisma.credential.findUnique({
+      where: {
+        credentialId: params.credentialId,
+      },
+      include: {
+        issuer: {
+          select: {
+            name: true,
+            walletAddress: true,
+          },
+        },
+        holder: {
+          select: {
+            name: true,
+            walletAddress: true,
+          },
+        },
+      },
+    });
+
+    if (!credential) {
+      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
+    }
+
+    const uploadedFileHash = createHash('sha256')
+      .update(params.file.buffer)
+      .digest('hex');
+
+    const blockchainCredential =
+      await this.blockchainService.getCredentialFromChain(
+        credential.credentialId,
+      );
+
+    const isUploadedFileMatched =
+      uploadedFileHash.toLowerCase() === credential.documentHash.toLowerCase();
+
+    const isDocumentHashMatched =
+      credential.documentHash.toLowerCase() ===
+      blockchainCredential.documentHash.toLowerCase();
+
+    const isHolderAddressMatched =
+      credential.holder.walletAddress?.toLowerCase() ===
+      blockchainCredential.holderAddress.toLowerCase();
+
+    const isDatabaseVerified = credential.status === 'VERIFIED';
+
+    const hasTransaction =
+      Boolean(credential.transactionHash) &&
+      Boolean(credential.blockNumber) &&
+      Boolean(credential.network);
+
+    const isValid =
+      isUploadedFileMatched &&
+      isDocumentHashMatched &&
+      isHolderAddressMatched &&
+      isDatabaseVerified &&
+      hasTransaction;
+
+    return {
+      message: isValid
+        ? 'ตรวจสอบไฟล์เอกสารสำเร็จ ไฟล์นี้ถูกต้องและตรงกับข้อมูลบน Blockchain'
+        : !isDatabaseVerified
+          ? 'ตรวจสอบไฟล์เอกสารไม่สำเร็จ เอกสารนี้ถูกเพิกถอนหรือไม่ได้อยู่ในสถานะยืนยัน'
+          : !isUploadedFileMatched
+            ? 'ตรวจสอบไฟล์เอกสารไม่สำเร็จ ไฟล์นี้ไม่ตรงกับข้อมูลที่บันทึกไว้'
+            : 'ตรวจสอบไฟล์เอกสารไม่สำเร็จ ข้อมูลเอกสารไม่ตรงกับ Blockchain',
+      isValid,
+      verifiedAt: new Date().toISOString(),
+      checks: {
+        uploadedFileMatched: isUploadedFileMatched,
+        documentHashMatched: isDocumentHashMatched,
+        holderAddressMatched: isHolderAddressMatched,
+        databaseStatusVerified: isDatabaseVerified,
+        hasTransaction,
+      },
+      uploadedFile: {
+        fileName: params.file.originalname,
+        fileSize: params.file.size,
+        mimeType: params.file.mimetype,
+        sha256Hash: uploadedFileHash,
+      },
+      credential: {
+        credentialId: credential.credentialId,
+        documentTitle: credential.documentTitle,
+        studentName: credential.studentName,
+        studentId: credential.studentId,
+        faculty: credential.faculty,
+        major: credential.major,
+        issuedAt: credential.issuedAt,
+        status: credential.status,
+      },
+      issuer: {
+        name: credential.issuer.name,
+        walletAddress: credential.issuer.walletAddress,
+      },
+      holder: {
+        name: credential.holder.name,
+        walletAddress: credential.holder.walletAddress,
+      },
+      blockchain: {
+        network: credential.network,
+        transactionHash: credential.transactionHash,
+        blockNumber: credential.blockNumber,
+        credentialId: blockchainCredential.credentialId,
+        documentHash: blockchainCredential.documentHash,
+        issuerAddress: blockchainCredential.issuerAddress,
+        holderAddress: blockchainCredential.holderAddress,
+        timestamp: blockchainCredential.timestamp,
+      },
+    };
+  }
+
   /**
    * Holder ใช้สร้าง Share Link สำหรับให้ Verifier ตรวจสอบเอกสาร
    */
@@ -682,7 +774,9 @@ export class CredentialsService {
     return {
       message: isValid
         ? 'ตรวจสอบเอกสารจากลิงก์แชร์สำเร็จ เอกสารนี้ถูกต้องและอยู่บน Blockchain'
-        : 'ตรวจสอบเอกสารจากลิงก์แชร์ไม่สำเร็จ ข้อมูลไม่ตรงกับ Blockchain',
+        : !isDatabaseVerified
+          ? 'ตรวจสอบเอกสารจากลิงก์แชร์ไม่สำเร็จ เอกสารนี้ถูกเพิกถอนหรือไม่ได้อยู่ในสถานะยืนยัน'
+          : 'ตรวจสอบเอกสารจากลิงก์แชร์ไม่สำเร็จ ข้อมูลไม่ตรงกับ Blockchain',
       isValid,
       verifiedAt: new Date().toISOString(),
       shareLink: {
@@ -724,6 +818,7 @@ export class CredentialsService {
       },
     };
   }
+
   /**
    * Holder ใช้ยกเลิก Share Link ที่เคยสร้างไว้
    */
@@ -790,6 +885,7 @@ export class CredentialsService {
       credential: updatedShareLink.credential,
     };
   }
+
   /**
    * Holder ใช้ดูรายการ Share Link ทั้งหมดของเอกสาร
    */
@@ -870,6 +966,7 @@ export class CredentialsService {
       }),
     };
   }
+
   /**
    * Issuer ใช้เพิกถอน / ยกเลิก Credential
    * เมื่อเอกสารถูกทำให้ INVALID ระบบจะยกเลิก Share Link ทั้งหมดของเอกสารนี้ด้วย
@@ -911,9 +1008,6 @@ export class CredentialsService {
 
     const revokedAt = new Date();
 
-    /**
-     * ยกเลิก Share Link ทั้งหมดที่ยังไม่ถูก revoke
-     */
     await this.prisma.credentialShareLink.updateMany({
       where: {
         credentialId: credential.id,
