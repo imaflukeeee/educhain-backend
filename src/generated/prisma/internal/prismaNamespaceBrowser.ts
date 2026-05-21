@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Credential: 'Credential'
+  Credential: 'Credential',
+  CredentialShareLink: 'CredentialShareLink'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -110,6 +111,20 @@ export const CredentialScalarFieldEnum = {
 } as const
 
 export type CredentialScalarFieldEnum = (typeof CredentialScalarFieldEnum)[keyof typeof CredentialScalarFieldEnum]
+
+
+export const CredentialShareLinkScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  credentialId: 'credentialId',
+  holderId: 'holderId',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CredentialShareLinkScalarFieldEnum = (typeof CredentialShareLinkScalarFieldEnum)[keyof typeof CredentialShareLinkScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -32,6 +32,8 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  shareLinks CredentialShareLink[] @relation("HolderShareLinks")
 }
 
 model Credential {
@@ -67,4 +69,27 @@ model Credential {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  shareLinks CredentialShareLink[]
+}
+
+model CredentialShareLink {
+  id    String @id @default(uuid())
+  token String @unique
+
+  credentialId String
+  holderId     String
+
+  credential Credential @relation(fields: [credentialId], references: [id], onDelete: Cascade)
+  holder     User       @relation("HolderShareLinks", fields: [holderId], references: [id], onDelete: Cascade)
+
+  expiresAt DateTime
+  revokedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([credentialId])
+  @@index([holderId])
+  @@index([token])
 }

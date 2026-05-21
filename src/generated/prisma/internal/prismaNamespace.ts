@@ -385,7 +385,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Credential: 'Credential'
+  Credential: 'Credential',
+  CredentialShareLink: 'CredentialShareLink'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -401,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "credential"
+    modelProps: "user" | "credential" | "credentialShareLink"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -553,6 +554,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CredentialShareLink: {
+      payload: Prisma.$CredentialShareLinkPayload<ExtArgs>
+      fields: Prisma.CredentialShareLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CredentialShareLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CredentialShareLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.CredentialShareLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CredentialShareLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>
+        }
+        findMany: {
+          args: Prisma.CredentialShareLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>[]
+        }
+        create: {
+          args: Prisma.CredentialShareLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>
+        }
+        createMany: {
+          args: Prisma.CredentialShareLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CredentialShareLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.CredentialShareLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>
+        }
+        update: {
+          args: Prisma.CredentialShareLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.CredentialShareLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CredentialShareLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CredentialShareLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.CredentialShareLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialShareLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.CredentialShareLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCredentialShareLink>
+        }
+        groupBy: {
+          args: Prisma.CredentialShareLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CredentialShareLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CredentialShareLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CredentialShareLinkCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -631,6 +706,20 @@ export const CredentialScalarFieldEnum = {
 } as const
 
 export type CredentialScalarFieldEnum = (typeof CredentialScalarFieldEnum)[keyof typeof CredentialScalarFieldEnum]
+
+
+export const CredentialShareLinkScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  credentialId: 'credentialId',
+  holderId: 'holderId',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CredentialShareLinkScalarFieldEnum = (typeof CredentialShareLinkScalarFieldEnum)[keyof typeof CredentialShareLinkScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -858,6 +947,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   credential?: Prisma.CredentialOmit
+  credentialShareLink?: Prisma.CredentialShareLinkOmit
 }
 
 /* Types for Logging */

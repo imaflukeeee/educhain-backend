@@ -49,3 +49,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Credential = Prisma.CredentialModel
+/**
+ * Model CredentialShareLink
+ * 
+ */
+export type CredentialShareLink = Prisma.CredentialShareLinkModel

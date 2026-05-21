@@ -208,6 +208,7 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   issuedCredentials?: Prisma.CredentialListRelationFilter
   ownedCredentials?: Prisma.CredentialListRelationFilter
+  shareLinks?: Prisma.CredentialShareLinkListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -221,6 +222,7 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   issuedCredentials?: Prisma.CredentialOrderByRelationAggregateInput
   ownedCredentials?: Prisma.CredentialOrderByRelationAggregateInput
+  shareLinks?: Prisma.CredentialShareLinkOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -237,6 +239,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   issuedCredentials?: Prisma.CredentialListRelationFilter
   ownedCredentials?: Prisma.CredentialListRelationFilter
+  shareLinks?: Prisma.CredentialShareLinkListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -278,6 +281,7 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -291,6 +295,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
 }
 
 export type UserUpdateInput = {
@@ -304,6 +309,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -317,6 +323,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -434,6 +441,20 @@ export type UserUpdateOneRequiredWithoutOwnedCredentialsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOwnedCredentialsInput, Prisma.UserUpdateWithoutOwnedCredentialsInput>, Prisma.UserUncheckedUpdateWithoutOwnedCredentialsInput>
 }
 
+export type UserCreateNestedOneWithoutShareLinksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutShareLinksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutShareLinksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutShareLinksInput
+  upsert?: Prisma.UserUpsertWithoutShareLinksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutShareLinksInput, Prisma.UserUpdateWithoutShareLinksInput>, Prisma.UserUncheckedUpdateWithoutShareLinksInput>
+}
+
 export type UserCreateWithoutIssuedCredentialsInput = {
   id?: string
   email: string
@@ -444,6 +465,7 @@ export type UserCreateWithoutIssuedCredentialsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
 }
 
 export type UserUncheckedCreateWithoutIssuedCredentialsInput = {
@@ -456,6 +478,7 @@ export type UserUncheckedCreateWithoutIssuedCredentialsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
 }
 
 export type UserCreateOrConnectWithoutIssuedCredentialsInput = {
@@ -473,6 +496,7 @@ export type UserCreateWithoutOwnedCredentialsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
 }
 
 export type UserUncheckedCreateWithoutOwnedCredentialsInput = {
@@ -485,6 +509,7 @@ export type UserUncheckedCreateWithoutOwnedCredentialsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
 }
 
 export type UserCreateOrConnectWithoutOwnedCredentialsInput = {
@@ -513,6 +538,7 @@ export type UserUpdateWithoutIssuedCredentialsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIssuedCredentialsInput = {
@@ -525,6 +551,7 @@ export type UserUncheckedUpdateWithoutIssuedCredentialsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
 }
 
 export type UserUpsertWithoutOwnedCredentialsInput = {
@@ -548,6 +575,7 @@ export type UserUpdateWithoutOwnedCredentialsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOwnedCredentialsInput = {
@@ -560,6 +588,75 @@ export type UserUncheckedUpdateWithoutOwnedCredentialsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+}
+
+export type UserCreateWithoutShareLinksInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+}
+
+export type UserUncheckedCreateWithoutShareLinksInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+}
+
+export type UserCreateOrConnectWithoutShareLinksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
+}
+
+export type UserUpsertWithoutShareLinksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutShareLinksInput, Prisma.UserUncheckedUpdateWithoutShareLinksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutShareLinksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutShareLinksInput, Prisma.UserUncheckedUpdateWithoutShareLinksInput>
+}
+
+export type UserUpdateWithoutShareLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutShareLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
 }
 
 
@@ -570,11 +667,13 @@ export type UserUncheckedUpdateWithoutOwnedCredentialsInput = {
 export type UserCountOutputType = {
   issuedCredentials: number
   ownedCredentials: number
+  shareLinks: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   issuedCredentials?: boolean | UserCountOutputTypeCountIssuedCredentialsArgs
   ownedCredentials?: boolean | UserCountOutputTypeCountOwnedCredentialsArgs
+  shareLinks?: boolean | UserCountOutputTypeCountShareLinksArgs
 }
 
 /**
@@ -601,6 +700,13 @@ export type UserCountOutputTypeCountOwnedCredentialsArgs<ExtArgs extends runtime
   where?: Prisma.CredentialWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountShareLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CredentialShareLinkWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -613,6 +719,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   issuedCredentials?: boolean | Prisma.User$issuedCredentialsArgs<ExtArgs>
   ownedCredentials?: boolean | Prisma.User$ownedCredentialsArgs<ExtArgs>
+  shareLinks?: boolean | Prisma.User$shareLinksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -653,6 +760,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   issuedCredentials?: boolean | Prisma.User$issuedCredentialsArgs<ExtArgs>
   ownedCredentials?: boolean | Prisma.User$ownedCredentialsArgs<ExtArgs>
+  shareLinks?: boolean | Prisma.User$shareLinksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -663,6 +771,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     issuedCredentials: Prisma.$CredentialPayload<ExtArgs>[]
     ownedCredentials: Prisma.$CredentialPayload<ExtArgs>[]
+    shareLinks: Prisma.$CredentialShareLinkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1069,6 +1178,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   issuedCredentials<T extends Prisma.User$issuedCredentialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$issuedCredentialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ownedCredentials<T extends Prisma.User$ownedCredentialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ownedCredentialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  shareLinks<T extends Prisma.User$shareLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shareLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialShareLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1544,6 +1654,30 @@ export type User$ownedCredentialsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.CredentialScalarFieldEnum | Prisma.CredentialScalarFieldEnum[]
+}
+
+/**
+ * User.shareLinks
+ */
+export type User$shareLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CredentialShareLink
+   */
+  select?: Prisma.CredentialShareLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CredentialShareLink
+   */
+  omit?: Prisma.CredentialShareLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CredentialShareLinkInclude<ExtArgs> | null
+  where?: Prisma.CredentialShareLinkWhereInput
+  orderBy?: Prisma.CredentialShareLinkOrderByWithRelationInput | Prisma.CredentialShareLinkOrderByWithRelationInput[]
+  cursor?: Prisma.CredentialShareLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CredentialShareLinkScalarFieldEnum | Prisma.CredentialShareLinkScalarFieldEnum[]
 }
 
 /**

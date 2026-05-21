@@ -192,4 +192,36 @@ export class CredentialsController {
       role: user.role,
     });
   }
+  /**
+   * POST /credentials/:id/share-link
+   * Holder ใช้สร้างลิงก์แชร์เอกสาร
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('HOLDER')
+  @Post(':id/share-link')
+  createShareLink(
+    @Req() request: AuthenticatedRequest,
+    @Param('id') id: string,
+  ) {
+    const user = request.user;
+
+    if (!user) {
+      throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งานจาก Token');
+    }
+
+    return this.credentialsService.createShareLink({
+      credentialId: id,
+      holderId: user.sub,
+    });
+  }
+  /**
+   * GET /credentials/share/:token/verify
+   * Verifier ตรวจสอบเอกสารจาก Share Link โดยไม่ต้อง Login
+   */
+  @Get('share/:token/verify')
+  verifySharedCredential(@Param('token') token: string) {
+    return this.credentialsService.verifySharedCredential({
+      token,
+    });
+  }
 }

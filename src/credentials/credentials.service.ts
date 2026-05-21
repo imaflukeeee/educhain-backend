@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { createHash } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 import { CredentialStatus, UserRole } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { SupabaseStorageService } from '../storage/supabase-storage.service';
@@ -513,6 +513,181 @@ export class CredentialsService {
         : 'ตรวจสอบเอกสารไม่สำเร็จ ข้อมูลเอกสารไม่ตรงกับ Blockchain',
       isValid,
       verifiedAt: new Date().toISOString(),
+      checks: {
+        documentHashMatched: isDocumentHashMatched,
+        holderAddressMatched: isHolderAddressMatched,
+        databaseStatusVerified: isDatabaseVerified,
+        hasTransaction,
+      },
+      credential: {
+        credentialId: credential.credentialId,
+        documentTitle: credential.documentTitle,
+        studentName: credential.studentName,
+        studentId: credential.studentId,
+        faculty: credential.faculty,
+        major: credential.major,
+        issuedAt: credential.issuedAt,
+        status: credential.status,
+      },
+      issuer: {
+        name: credential.issuer.name,
+        walletAddress: credential.issuer.walletAddress,
+      },
+      holder: {
+        name: credential.holder.name,
+        walletAddress: credential.holder.walletAddress,
+      },
+      blockchain: {
+        network: credential.network,
+        transactionHash: credential.transactionHash,
+        blockNumber: credential.blockNumber,
+        credentialId: blockchainCredential.credentialId,
+        documentHash: blockchainCredential.documentHash,
+        issuerAddress: blockchainCredential.issuerAddress,
+        holderAddress: blockchainCredential.holderAddress,
+        timestamp: blockchainCredential.timestamp,
+      },
+    };
+  }
+  /**
+   * Holder ใช้สร้าง Share Link สำหรับให้ Verifier ตรวจสอบเอกสาร
+   */
+  async createShareLink(params: { credentialId: string; holderId: string }) {
+    const credential = await this.prisma.credential.findUnique({
+      where: {
+        id: params.credentialId,
+      },
+    });
+
+    if (!credential) {
+      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
+    }
+
+    if (credential.holderId !== params.holderId) {
+      throw new ForbiddenException('คุณไม่มีสิทธิ์สร้างลิงก์แชร์เอกสารนี้');
+    }
+
+    if (credential.status !== 'VERIFIED') {
+      throw new BadRequestException(
+        'สามารถสร้างลิงก์แชร์ได้เฉพาะเอกสารที่ยืนยันแล้วเท่านั้น',
+      );
+    }
+
+    if (!credential.transactionHash) {
+      throw new BadRequestException(
+        'เอกสารนี้ยังไม่มีข้อมูล Transaction บน Blockchain',
+      );
+    }
+
+    const token = randomBytes(32).toString('hex');
+
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
+
+    const shareLink = await this.prisma.credentialShareLink.create({
+      data: {
+        token,
+        credentialId: credential.id,
+        holderId: params.holderId,
+        expiresAt,
+      },
+    });
+
+    const baseUrl = (
+      process.env.APP_BASE_URL ?? 'http://localhost:4000'
+    ).replace(/\/$/, '');
+
+    return {
+      message: 'สร้างลิงก์แชร์เอกสารสำเร็จ',
+      shareLink: {
+        token: shareLink.token,
+        verifyUrl: `${baseUrl}/credentials/share/${shareLink.token}/verify`,
+        expiresAt: shareLink.expiresAt,
+      },
+    };
+  }
+
+  /**
+   * Verifier ใช้ตรวจสอบเอกสารผ่าน Share Link โดยไม่ต้อง Login
+   */
+  async verifySharedCredential(params: { token: string }) {
+    if (!params.token) {
+      throw new BadRequestException('กรุณาระบุ Share Token');
+    }
+
+    const shareLink = await this.prisma.credentialShareLink.findUnique({
+      where: {
+        token: params.token,
+      },
+      include: {
+        credential: {
+          include: {
+            issuer: {
+              select: {
+                name: true,
+                walletAddress: true,
+              },
+            },
+            holder: {
+              select: {
+                name: true,
+                walletAddress: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!shareLink) {
+      throw new NotFoundException('ไม่พบลิงก์แชร์เอกสาร');
+    }
+
+    if (shareLink.revokedAt) {
+      throw new BadRequestException('ลิงก์แชร์เอกสารนี้ถูกยกเลิกแล้ว');
+    }
+
+    if (shareLink.expiresAt < new Date()) {
+      throw new BadRequestException('ลิงก์แชร์เอกสารนี้หมดอายุแล้ว');
+    }
+
+    const credential = shareLink.credential;
+
+    const blockchainCredential =
+      await this.blockchainService.getCredentialFromChain(
+        credential.credentialId,
+      );
+
+    const isDocumentHashMatched =
+      credential.documentHash.toLowerCase() ===
+      blockchainCredential.documentHash.toLowerCase();
+
+    const isHolderAddressMatched =
+      credential.holder.walletAddress?.toLowerCase() ===
+      blockchainCredential.holderAddress.toLowerCase();
+
+    const isDatabaseVerified = credential.status === 'VERIFIED';
+
+    const hasTransaction =
+      Boolean(credential.transactionHash) &&
+      Boolean(credential.blockNumber) &&
+      Boolean(credential.network);
+
+    const isValid =
+      isDocumentHashMatched &&
+      isHolderAddressMatched &&
+      isDatabaseVerified &&
+      hasTransaction;
+
+    return {
+      message: isValid
+        ? 'ตรวจสอบเอกสารจากลิงก์แชร์สำเร็จ เอกสารนี้ถูกต้องและอยู่บน Blockchain'
+        : 'ตรวจสอบเอกสารจากลิงก์แชร์ไม่สำเร็จ ข้อมูลไม่ตรงกับ Blockchain',
+      isValid,
+      verifiedAt: new Date().toISOString(),
+      shareLink: {
+        expiresAt: shareLink.expiresAt,
+      },
       checks: {
         documentHashMatched: isDocumentHashMatched,
         holderAddressMatched: isHolderAddressMatched,
