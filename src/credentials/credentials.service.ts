@@ -790,4 +790,165 @@ export class CredentialsService {
       credential: updatedShareLink.credential,
     };
   }
+  /**
+   * Holder ใช้ดูรายการ Share Link ทั้งหมดของเอกสาร
+   */
+  async listShareLinks(params: { credentialId: string; holderId: string }) {
+    const credential = await this.prisma.credential.findUnique({
+      where: {
+        id: params.credentialId,
+      },
+      select: {
+        id: true,
+        credentialId: true,
+        documentTitle: true,
+        studentName: true,
+        status: true,
+        holderId: true,
+      },
+    });
+
+    if (!credential) {
+      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
+    }
+
+    if (credential.holderId !== params.holderId) {
+      throw new ForbiddenException(
+        'คุณไม่มีสิทธิ์ดูรายการลิงก์แชร์ของเอกสารนี้',
+      );
+    }
+
+    const shareLinks = await this.prisma.credentialShareLink.findMany({
+      where: {
+        credentialId: credential.id,
+        holderId: params.holderId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      select: {
+        token: true,
+        expiresAt: true,
+        revokedAt: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    const baseUrl = (
+      process.env.APP_BASE_URL ?? 'http://localhost:4000'
+    ).replace(/\/$/, '');
+
+    const now = new Date();
+
+    return {
+      message: 'ดึงรายการลิงก์แชร์เอกสารสำเร็จ',
+      credential: {
+        id: credential.id,
+        credentialId: credential.credentialId,
+        documentTitle: credential.documentTitle,
+        studentName: credential.studentName,
+        status: credential.status,
+      },
+      total: shareLinks.length,
+      shareLinks: shareLinks.map((link) => {
+        const status = link.revokedAt
+          ? 'REVOKED'
+          : link.expiresAt < now
+            ? 'EXPIRED'
+            : 'ACTIVE';
+
+        return {
+          token: link.token,
+          verifyUrl: `${baseUrl}/credentials/share/${link.token}/verify`,
+          status,
+          expiresAt: link.expiresAt,
+          revokedAt: link.revokedAt,
+          createdAt: link.createdAt,
+          updatedAt: link.updatedAt,
+        };
+      }),
+    };
+  }
+  /**
+   * Issuer ใช้เพิกถอน / ยกเลิก Credential
+   * เมื่อเอกสารถูกทำให้ INVALID ระบบจะยกเลิก Share Link ทั้งหมดของเอกสารนี้ด้วย
+   */
+  async invalidateCredential(params: {
+    credentialId: string;
+    issuerId: string;
+  }) {
+    const credential = await this.prisma.credential.findUnique({
+      where: {
+        id: params.credentialId,
+      },
+      select: {
+        id: true,
+        credentialId: true,
+        issuerId: true,
+        holderId: true,
+        documentTitle: true,
+        studentName: true,
+        studentId: true,
+        status: true,
+        transactionHash: true,
+        blockNumber: true,
+        network: true,
+      },
+    });
+
+    if (!credential) {
+      throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
+    }
+
+    if (credential.issuerId !== params.issuerId) {
+      throw new ForbiddenException('คุณไม่มีสิทธิ์เพิกถอนเอกสารนี้');
+    }
+
+    if (credential.status === 'INVALID') {
+      throw new BadRequestException('เอกสารนี้ถูกเพิกถอนไปแล้ว');
+    }
+
+    const revokedAt = new Date();
+
+    /**
+     * ยกเลิก Share Link ทั้งหมดที่ยังไม่ถูก revoke
+     */
+    await this.prisma.credentialShareLink.updateMany({
+      where: {
+        credentialId: credential.id,
+        revokedAt: null,
+      },
+      data: {
+        revokedAt,
+      },
+    });
+
+    const updatedCredential = await this.prisma.credential.update({
+      where: {
+        id: credential.id,
+      },
+      data: {
+        status: 'INVALID',
+      },
+      select: {
+        id: true,
+        credentialId: true,
+        documentTitle: true,
+        studentName: true,
+        studentId: true,
+        status: true,
+        transactionHash: true,
+        blockNumber: true,
+        network: true,
+        updatedAt: true,
+      },
+    });
+
+    return {
+      message: 'เพิกถอนเอกสารสำเร็จ',
+      credential: updatedCredential,
+      revokedShareLinksAt: revokedAt,
+    };
+  }
 }

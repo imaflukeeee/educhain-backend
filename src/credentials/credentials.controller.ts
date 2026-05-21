@@ -246,4 +246,48 @@ export class CredentialsController {
       holderId: user.sub,
     });
   }
+  /**
+   * GET /credentials/:id/share-links
+   * Holder ใช้ดูรายการลิงก์แชร์ทั้งหมดของเอกสาร
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('HOLDER')
+  @Get(':id/share-links')
+  listShareLinks(
+    @Req() request: AuthenticatedRequest,
+    @Param('id') id: string,
+  ) {
+    const user = request.user;
+
+    if (!user) {
+      throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งานจาก Token');
+    }
+
+    return this.credentialsService.listShareLinks({
+      credentialId: id,
+      holderId: user.sub,
+    });
+  }
+  /**
+   * POST /credentials/:id/invalidate
+   * Issuer ใช้เพิกถอน Credential
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ISSUER')
+  @Post(':id/invalidate')
+  invalidateCredential(
+    @Req() request: AuthenticatedRequest,
+    @Param('id') id: string,
+  ) {
+    const user = request.user;
+
+    if (!user) {
+      throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งานจาก Token');
+    }
+
+    return this.credentialsService.invalidateCredential({
+      credentialId: id,
+      issuerId: user.sub,
+    });
+  }
 }
