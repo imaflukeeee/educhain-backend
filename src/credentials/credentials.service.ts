@@ -724,4 +724,70 @@ export class CredentialsService {
       },
     };
   }
+  /**
+   * Holder ใช้ยกเลิก Share Link ที่เคยสร้างไว้
+   */
+  async revokeShareLink(params: { token: string; holderId: string }) {
+    if (!params.token) {
+      throw new BadRequestException('กรุณาระบุ Share Token');
+    }
+
+    const shareLink = await this.prisma.credentialShareLink.findUnique({
+      where: {
+        token: params.token,
+      },
+      include: {
+        credential: {
+          select: {
+            id: true,
+            credentialId: true,
+            documentTitle: true,
+            studentName: true,
+            status: true,
+          },
+        },
+      },
+    });
+
+    if (!shareLink) {
+      throw new NotFoundException('ไม่พบลิงก์แชร์เอกสาร');
+    }
+
+    if (shareLink.holderId !== params.holderId) {
+      throw new ForbiddenException('คุณไม่มีสิทธิ์ยกเลิกลิงก์แชร์นี้');
+    }
+
+    if (shareLink.revokedAt) {
+      throw new BadRequestException('ลิงก์แชร์เอกสารนี้ถูกยกเลิกไปแล้ว');
+    }
+
+    const updatedShareLink = await this.prisma.credentialShareLink.update({
+      where: {
+        token: params.token,
+      },
+      data: {
+        revokedAt: new Date(),
+      },
+      include: {
+        credential: {
+          select: {
+            credentialId: true,
+            documentTitle: true,
+            studentName: true,
+            status: true,
+          },
+        },
+      },
+    });
+
+    return {
+      message: 'ยกเลิกลิงก์แชร์เอกสารสำเร็จ',
+      shareLink: {
+        token: updatedShareLink.token,
+        revokedAt: updatedShareLink.revokedAt,
+        expiresAt: updatedShareLink.expiresAt,
+      },
+      credential: updatedShareLink.credential,
+    };
+  }
 }

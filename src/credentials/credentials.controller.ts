@@ -224,4 +224,26 @@ export class CredentialsController {
       token,
     });
   }
+  /**
+   * POST /credentials/share/:token/revoke
+   * Holder ใช้ยกเลิกลิงก์แชร์เอกสาร
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('HOLDER')
+  @Post('share/:token/revoke')
+  revokeShareLink(
+    @Req() request: AuthenticatedRequest,
+    @Param('token') token: string,
+  ) {
+    const user = request.user;
+
+    if (!user) {
+      throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งานจาก Token');
+    }
+
+    return this.credentialsService.revokeShareLink({
+      token,
+      holderId: user.sub,
+    });
+  }
 }
