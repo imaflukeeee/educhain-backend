@@ -1,36 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
-import {
-  IsDateString,
-  IsEmail,
-  IsIn,
-  IsOptional,
-  IsString,
-  IsUrl,
-  MinLength,
-  ValidateIf,
-} from 'class-validator';
+import { IsDateString, IsOptional, IsString, IsUrl, ValidateIf } from 'class-validator';
 
-export const REGISTER_ROLES = ['ISSUER', 'HOLDER'] as const;
-export type RegisterRole = (typeof REGISTER_ROLES)[number];
-
-export class RegisterDto {
-  @IsEmail()
-  email!: string;
-
-  @IsString()
-  @MinLength(8)
-  password!: string;
-
-  @IsString()
-  name!: string;
-
-  @IsIn(REGISTER_ROLES)
-  role!: RegisterRole;
-
+export class UpdateProfileDto {
   @IsOptional()
   @IsString()
-  walletAddress?: string;
+  name?: string;
 
   @IsOptional()
   @IsString()

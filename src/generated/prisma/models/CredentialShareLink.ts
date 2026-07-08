@@ -469,10 +469,6 @@ export type CredentialShareLinkUncheckedUpdateManyWithoutCredentialNestedInput =
   deleteMany?: Prisma.CredentialShareLinkScalarWhereInput | Prisma.CredentialShareLinkScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type CredentialShareLinkCreateWithoutHolderInput = {
   id?: string
   token: string

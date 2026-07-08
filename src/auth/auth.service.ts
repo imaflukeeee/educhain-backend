@@ -1,15 +1,65 @@
 import {
-  ConflictException,
-  Injectable,
-  UnauthorizedException,
   BadRequestException,
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { UsersService } from '../users/users.service';
+import { ethers } from 'ethers';
+import {
+  DEFAULT_STAFF_PERMISSIONS,
+  STAFF_PERMISSIONS,
+  UsersService,
+  type SafeUser,
+} from '../users/users.service';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { CreateStaffDto } from './dto/create-staff.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { ethers } from 'ethers';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { UpdateStaffDto } from './dto/update-staff.dto';
+
+function normalizeRequiredString(value?: string) {
+  return value?.trim() || '';
+}
+
+function normalizeNullableString(value?: string) {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+}
+
+function normalizeNullableDate(value?: string) {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  return new Date(`${trimmed}T00:00:00.000Z`);
+}
+
+function compactName(...parts: Array<string | null | undefined>) {
+  return parts.map((part) => part?.trim()).filter(Boolean).join(' ');
+}
+
+function getDisplayNameFromUser(user: Pick<SafeUser, 'name' | 'firstNameTh' | 'lastNameTh' | 'firstNameEn' | 'lastNameEn'>) {
+  return (
+    compactName(user.firstNameTh, user.lastNameTh) ||
+    compactName(user.firstNameEn, user.lastNameEn) ||
+    user.name
+  );
+}
 
 @Injectable()
 export class AuthService {
@@ -18,9 +68,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  /**
-   * Register สำหรับ Issuer / Holder
-   */
   async register(dto: RegisterDto) {
     const existingUser = await this.usersService.findByEmail(dto.email);
 
@@ -28,18 +75,53 @@ export class AuthService {
       throw new ConflictException('อีเมลนี้ถูกใช้งานแล้ว');
     }
 
-    /**
-     * Hash password ก่อนเก็บลง Database
-     * ห้ามเก็บ plain password เด็ดขาด
-     */
     const passwordHash = await bcrypt.hash(dto.password, 10);
+    const isIssuer = dto.role === 'ISSUER';
+
+    const fallbackName = isIssuer
+      ? normalizeRequiredString(dto.universityNameTh) ||
+        normalizeRequiredString(dto.universityNameEn) ||
+        normalizeRequiredString(dto.name)
+      : compactName(dto.firstNameTh, dto.lastNameTh) ||
+        compactName(dto.firstNameEn, dto.lastNameEn) ||
+        normalizeRequiredString(dto.name);
 
     const user = await this.usersService.createUser({
-      email: dto.email,
+      email: dto.email.trim().toLowerCase(),
       password: passwordHash,
-      name: dto.name,
+      name: fallbackName,
       role: dto.role,
-      walletAddress: dto.walletAddress,
+      walletAddress: normalizeNullableString(dto.walletAddress),
+      firstNameTh: normalizeNullableString(dto.firstNameTh),
+      lastNameTh: normalizeNullableString(dto.lastNameTh),
+      firstNameEn: normalizeNullableString(dto.firstNameEn),
+      lastNameEn: normalizeNullableString(dto.lastNameEn),
+      phone: normalizeNullableString(dto.phone),
+      birthDate: normalizeNullableDate(dto.birthDate),
+      studentId: normalizeNullableString(dto.studentId),
+      faculty: normalizeNullableString(dto.faculty),
+      major: normalizeNullableString(dto.major),
+      universityNameTh: normalizeNullableString(dto.universityNameTh),
+      universityNameEn: normalizeNullableString(dto.universityNameEn),
+      contactFirstNameTh: normalizeNullableString(dto.contactFirstNameTh),
+      contactLastNameTh: normalizeNullableString(dto.contactLastNameTh),
+      contactFirstNameEn: normalizeNullableString(dto.contactFirstNameEn),
+      contactLastNameEn: normalizeNullableString(dto.contactLastNameEn),
+      staffPosition: normalizeNullableString(dto.staffPosition),
+      staffDepartment: normalizeNullableString(dto.staffDepartment),
+      website: normalizeNullableString(dto.website),
+      address: normalizeNullableString(dto.address),
+      issuerAccountType: isIssuer ? 'UNIVERSITY_ADMIN' : null,
+      permissions: isIssuer
+        ? [
+            STAFF_PERMISSIONS.MANAGE_STAFF,
+            STAFF_PERMISSIONS.CREATE_CREDENTIAL,
+            STAFF_PERMISSIONS.REGISTER_CREDENTIAL,
+            STAFF_PERMISSIONS.VIEW_ALL_CREDENTIALS,
+            STAFF_PERMISSIONS.INVALIDATE_CREDENTIAL,
+          ]
+        : [],
+      isActive: true,
     });
 
     const accessToken = await this.generateToken(user);
@@ -51,9 +133,6 @@ export class AuthService {
     };
   }
 
-  /**
-   * Login ด้วย email/password
-   */
   async login(dto: LoginDto) {
     const user = await this.usersService.findByEmail(dto.email);
 
@@ -61,9 +140,10 @@ export class AuthService {
       throw new UnauthorizedException('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
     }
 
-    /**
-     * เทียบ password ที่ผู้ใช้กรอกกับ password hash ใน Database
-     */
+    if (user.isActive === false) {
+      throw new UnauthorizedException('บัญชีนี้ถูกปิดการใช้งาน กรุณาติดต่อผู้ดูแลบัญชี');
+    }
+
     const isPasswordValid = await bcrypt.compare(dto.password, user.password);
 
     if (!isPasswordValid) {
@@ -71,58 +151,250 @@ export class AuthService {
     }
 
     const accessToken = await this.generateToken(user);
+    const { password, ...safeUser } = user;
+    void password;
 
     return {
       message: 'เข้าสู่ระบบสำเร็จ',
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-        walletAddress: user.walletAddress,
-      },
+      user: safeUser,
       accessToken,
     };
   }
 
-  /**
-   * ดึงข้อมูลตัวเองจาก user id ใน JWT
-   */
   async me(userId: string) {
     return this.usersService.findById(userId);
   }
 
-  /**
-   * สร้าง JWT Token
-   */
   private async generateToken(user: {
     id: string;
     email: string;
     role: string;
   }): Promise<string> {
-    const payload = {
+    return this.jwtService.signAsync({
       sub: user.id,
       email: user.email,
       role: user.role,
-    };
-
-    return this.jwtService.signAsync(payload);
+    });
   }
-  /**
-   * อัปเดต Wallet Address ของผู้ใช้งานปัจจุบัน
-   */
+
+  private async getUniversityAdminOrThrow(userId: string) {
+    const user = await this.usersService.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('ไม่พบบัญชีผู้ใช้งาน');
+    }
+
+    if (user.role !== 'ISSUER' || user.issuerAccountType === 'REGISTRAR_STAFF') {
+      throw new ForbiddenException('เฉพาะบัญชีหลักของมหาวิทยาลัยเท่านั้นที่จัดการเจ้าหน้าที่ได้');
+    }
+
+    if (user.isActive === false) {
+      throw new ForbiddenException('บัญชีนี้ถูกปิดการใช้งาน');
+    }
+
+    return user;
+  }
+
+  async listStaffMembers(adminUserId: string) {
+    const admin = await this.getUniversityAdminOrThrow(adminUserId);
+    const staffMembers = await this.usersService.listStaffMembers(admin.id);
+
+    return {
+      message: 'ดึงรายชื่อเจ้าหน้าที่สำเร็จ',
+      staffMembers,
+    };
+  }
+
+  async createStaffMember(params: { adminUserId: string; dto: CreateStaffDto }) {
+    const admin = await this.getUniversityAdminOrThrow(params.adminUserId);
+    const dto = params.dto;
+    const existingUser = await this.usersService.findByEmail(dto.email);
+
+    if (existingUser) {
+      throw new ConflictException('อีเมลนี้ถูกใช้งานแล้ว');
+    }
+
+    const passwordHash = await bcrypt.hash(dto.password, 10);
+    const name =
+      compactName(dto.firstNameTh, dto.lastNameTh) ||
+      compactName(dto.firstNameEn, dto.lastNameEn) ||
+      dto.email.trim().toLowerCase();
+
+    const staff = await this.usersService.createUser({
+      email: dto.email.trim().toLowerCase(),
+      password: passwordHash,
+      name,
+      role: 'ISSUER',
+      issuerAccountType: 'REGISTRAR_STAFF',
+      universityOwnerId: admin.id,
+      universityNameTh: admin.universityNameTh ?? admin.name,
+      universityNameEn: admin.universityNameEn ?? null,
+      firstNameTh: normalizeNullableString(dto.firstNameTh),
+      lastNameTh: normalizeNullableString(dto.lastNameTh),
+      firstNameEn: normalizeNullableString(dto.firstNameEn),
+      lastNameEn: normalizeNullableString(dto.lastNameEn),
+      phone: normalizeNullableString(dto.phone),
+      staffPosition: normalizeNullableString(dto.staffPosition) ?? 'เจ้าหน้าที่ทะเบียน',
+      staffDepartment: normalizeNullableString(dto.staffDepartment) ?? 'งานทะเบียน',
+      permissions: dto.permissions?.length
+        ? dto.permissions
+        : DEFAULT_STAFF_PERMISSIONS,
+      isActive: true,
+    });
+
+    return {
+      message: 'เพิ่มบัญชีเจ้าหน้าที่สำเร็จ',
+      staff,
+    };
+  }
+
+  async updateStaffMember(params: {
+    adminUserId: string;
+    staffId: string;
+    dto: UpdateStaffDto;
+  }) {
+    const admin = await this.getUniversityAdminOrThrow(params.adminUserId);
+    const staff = await this.usersService.findStaffMember({
+      universityOwnerId: admin.id,
+      staffId: params.staffId,
+    });
+
+    if (!staff) {
+      throw new NotFoundException('ไม่พบเจ้าหน้าที่ในมหาวิทยาลัยนี้');
+    }
+
+    const dto = params.dto;
+    const firstNameTh = normalizeNullableString(dto.firstNameTh);
+    const lastNameTh = normalizeNullableString(dto.lastNameTh);
+    const firstNameEn = normalizeNullableString(dto.firstNameEn);
+    const lastNameEn = normalizeNullableString(dto.lastNameEn);
+
+    const nextName =
+      compactName(firstNameTh ?? staff.firstNameTh, lastNameTh ?? staff.lastNameTh) ||
+      compactName(firstNameEn ?? staff.firstNameEn, lastNameEn ?? staff.lastNameEn) ||
+      staff.name;
+
+    const updatedStaff = await this.usersService.updateStaffMember({
+      staffId: staff.id,
+      universityOwnerId: admin.id,
+      data: {
+        name: nextName,
+        firstNameTh,
+        lastNameTh,
+        firstNameEn,
+        lastNameEn,
+        phone: normalizeNullableString(dto.phone),
+        staffPosition: normalizeNullableString(dto.staffPosition),
+        staffDepartment: normalizeNullableString(dto.staffDepartment),
+        permissions: dto.permissions,
+        isActive: dto.isActive,
+      },
+    });
+
+    if (dto.newPassword) {
+      await this.usersService.updatePassword({
+        userId: staff.id,
+        passwordHash: await bcrypt.hash(dto.newPassword, 10),
+      });
+    }
+
+    return {
+      message: 'บันทึกข้อมูลเจ้าหน้าที่สำเร็จ',
+      staff: updatedStaff,
+    };
+  }
+
+  async updateMyProfile(params: { userId: string; dto: UpdateProfileDto }) {
+    const dto = params.dto;
+    const currentUser = await this.usersService.findById(params.userId);
+
+    if (!currentUser) {
+      throw new UnauthorizedException('ไม่พบบัญชีผู้ใช้งาน');
+    }
+
+    const isStaff = currentUser.issuerAccountType === 'REGISTRAR_STAFF';
+    const isIssuer = currentUser.role === 'ISSUER';
+    const nextName = isIssuer && !isStaff
+      ? normalizeRequiredString(dto.universityNameTh) ||
+        normalizeRequiredString(dto.universityNameEn) ||
+        normalizeRequiredString(dto.name) ||
+        currentUser.name
+      : compactName(dto.firstNameTh, dto.lastNameTh) ||
+        compactName(dto.firstNameEn, dto.lastNameEn) ||
+        normalizeRequiredString(dto.name) ||
+        currentUser.name;
+
+    const profileData = isStaff
+      ? {
+          phone: normalizeNullableString(dto.phone),
+        }
+      : currentUser.role === 'HOLDER'
+        ? {
+            name: nextName,
+            firstNameTh: normalizeNullableString(dto.firstNameTh),
+            lastNameTh: normalizeNullableString(dto.lastNameTh),
+            firstNameEn: normalizeNullableString(dto.firstNameEn),
+            lastNameEn: normalizeNullableString(dto.lastNameEn),
+            phone: normalizeNullableString(dto.phone),
+          }
+        : {
+            phone: normalizeNullableString(dto.phone),
+            website: normalizeNullableString(dto.website),
+            address: normalizeNullableString(dto.address),
+          };
+
+    const user = await this.usersService.updateProfile({
+      userId: params.userId,
+      data: profileData,
+    });
+
+    return {
+      message: 'บันทึกข้อมูลบัญชีสำเร็จ',
+      user,
+    };
+  }
+
+  async changeMyPassword(params: { userId: string; dto: ChangePasswordDto }) {
+    const user = await this.usersService.findById(params.userId);
+    const userWithPassword = user
+      ? await this.usersService.findByEmail(user.email)
+      : null;
+
+    if (!userWithPassword) {
+      throw new UnauthorizedException('ไม่พบบัญชีผู้ใช้งาน');
+    }
+
+    const isCurrentPasswordValid = await bcrypt.compare(
+      params.dto.currentPassword,
+      userWithPassword.password,
+    );
+
+    if (!isCurrentPasswordValid) {
+      throw new UnauthorizedException('รหัสผ่านปัจจุบันไม่ถูกต้อง');
+    }
+
+    await this.usersService.updatePassword({
+      userId: params.userId,
+      passwordHash: await bcrypt.hash(params.dto.newPassword, 10),
+    });
+
+    return {
+      message: 'เปลี่ยนรหัสผ่านสำเร็จ',
+    };
+  }
+
   async updateMyWalletAddress(params: {
     userId: string;
     walletAddress: string;
   }) {
     if (!ethers.isAddress(params.walletAddress)) {
-      throw new BadRequestException('Wallet Address ไม่ถูกต้อง');
+      throw new BadRequestException('รูปแบบบัญชีดิจิทัลไม่ถูกต้อง');
     }
 
     const normalizedWalletAddress = ethers.getAddress(params.walletAddress);
 
     if (normalizedWalletAddress === ethers.ZeroAddress) {
-      throw new BadRequestException('ไม่สามารถใช้ Zero Address ได้');
+      throw new BadRequestException('ไม่สามารถใช้บัญชีดิจิทัลนี้ได้');
     }
 
     const user = await this.usersService.updateWalletAddress({
@@ -131,7 +403,7 @@ export class AuthService {
     });
 
     return {
-      message: 'อัปเดต Wallet Address สำเร็จ',
+      message: 'บันทึกบัญชีดิจิทัลสำเร็จ',
       user,
     };
   }

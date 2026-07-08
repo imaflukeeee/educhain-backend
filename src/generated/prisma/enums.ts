@@ -17,6 +17,14 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const IssuerAccountType = {
+  UNIVERSITY_ADMIN: 'UNIVERSITY_ADMIN',
+  REGISTRAR_STAFF: 'REGISTRAR_STAFF'
+} as const
+
+export type IssuerAccountType = (typeof IssuerAccountType)[keyof typeof IssuerAccountType]
+
+
 export const CredentialStatus = {
   PENDING: 'PENDING',
   VERIFIED: 'VERIFIED',

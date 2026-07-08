@@ -13,6 +13,11 @@ enum UserRole {
   HOLDER
 }
 
+enum IssuerAccountType {
+  UNIVERSITY_ADMIN
+  REGISTRAR_STAFF
+}
+
 enum CredentialStatus {
   PENDING
   VERIFIED
@@ -27,13 +32,43 @@ model User {
   name          String
   walletAddress String?
 
+  firstNameTh       String?
+  lastNameTh        String?
+  firstNameEn       String?
+  lastNameEn        String?
+  phone             String?
+  birthDate         DateTime?
+  studentId         String?
+  faculty           String?
+  major             String?
+  universityNameTh  String?
+  universityNameEn  String?
+  contactFirstNameTh String?
+  contactLastNameTh  String?
+  contactFirstNameEn String?
+  contactLastNameEn  String?
+  staffPosition      String?
+  staffDepartment    String?
+  website           String?
+  address           String?
+
+  issuerAccountType IssuerAccountType?
+  universityOwnerId String?
+  universityOwner   User?  @relation("UniversityStaff", fields: [universityOwnerId], references: [id], onDelete: SetNull)
+  staffMembers      User[] @relation("UniversityStaff")
+  permissions       String[] @default([])
+  isActive          Boolean @default(true)
+
   issuedCredentials Credential[] @relation("IssuerCredentials")
   ownedCredentials  Credential[] @relation("HolderCredentials")
+  staffIssuedCredentials Credential[] @relation("CredentialIssuerStaff")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
   shareLinks CredentialShareLink[] @relation("HolderShareLinks")
+
+  @@index([universityOwnerId])
+  @@index([role, issuerAccountType])
 }
 
 model Credential {
@@ -42,9 +77,16 @@ model Credential {
 
   issuerId String
   holderId String
+  issuerStaffId String?
 
   issuer User @relation("IssuerCredentials", fields: [issuerId], references: [id])
   holder User @relation("HolderCredentials", fields: [holderId], references: [id])
+  issuerStaff User? @relation("CredentialIssuerStaff", fields: [issuerStaffId], references: [id], onDelete: SetNull)
+
+  issuedByName String?
+  issuedByEmail String?
+  issuedByPosition String?
+  issuedByDepartment String?
 
   studentName String
   studentId   String
@@ -71,6 +113,10 @@ model Credential {
   updatedAt DateTime @updatedAt
 
   shareLinks CredentialShareLink[]
+
+  @@index([issuerId])
+  @@index([issuerStaffId])
+  @@index([holderId])
 }
 
 model CredentialShareLink {
