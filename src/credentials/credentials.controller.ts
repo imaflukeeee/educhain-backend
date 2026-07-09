@@ -236,13 +236,21 @@ export class CredentialsController {
     });
   }
   /**
-   * GET /credentials/share/:token/verify
-   * Verifier ตรวจสอบเอกสารจาก Share Link โดยไม่ต้อง Login
+   * POST /credentials/share/:token/verify
+   * Verifier ตรวจสอบเอกสารจาก Share Link
+   * รองรับ:
+   * - ตรวจด้วย Link อย่างเดียว
+   * - ตรวจด้วย Link + PDF
    */
-  @Get('share/:token/verify')
-  verifySharedCredential(@Param('token') token: string) {
+  @Post('share/:token/verify')
+  @UseInterceptors(FileInterceptor('file'))
+  verifySharedCredential(
+    @Param('token') token: string,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
     return this.credentialsService.verifySharedCredential({
       token,
+      file,
     });
   }
   /**
