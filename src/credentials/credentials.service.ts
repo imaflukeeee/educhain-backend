@@ -44,7 +44,10 @@ function decodeUploadedFileName(fileName: string) {
 }
 
 function compactName(...parts: Array<string | null | undefined>) {
-  return parts.map((part) => part?.trim()).filter(Boolean).join(' ');
+  return parts
+    .map((part) => part?.trim())
+    .filter(Boolean)
+    .join(' ');
 }
 
 type IssuerContext = {
@@ -102,13 +105,21 @@ export class CredentialsService {
     const universityId = isStaff ? user.universityOwnerId : user.id;
 
     if (!universityId) {
-      throw new ForbiddenException('บัญชีเจ้าหน้าที่ยังไม่ได้ผูกกับมหาวิทยาลัย');
+      throw new ForbiddenException(
+        'บัญชีเจ้าหน้าที่ยังไม่ได้ผูกกับมหาวิทยาลัย',
+      );
     }
 
     const permissions = user.permissions ?? [];
 
-    if (isStaff && requiredPermission && !permissions.includes(requiredPermission)) {
-      throw new ForbiddenException('บัญชีนี้ยังไม่ได้รับสิทธิ์สำหรับการทำรายการนี้');
+    if (
+      isStaff &&
+      requiredPermission &&
+      !permissions.includes(requiredPermission)
+    ) {
+      throw new ForbiddenException(
+        'บัญชีนี้ยังไม่ได้รับสิทธิ์สำหรับการทำรายการนี้',
+      );
     }
 
     return {
@@ -126,10 +137,13 @@ export class CredentialsService {
     };
   }
 
-  private canViewCredentialAsIssuer(credential: {
-    issuerId: string;
-    issuerStaffId?: string | null;
-  }, context: IssuerContext) {
+  private canViewCredentialAsIssuer(
+    credential: {
+      issuerId: string;
+      issuerStaffId?: string | null;
+    },
+    context: IssuerContext,
+  ) {
     if (credential.issuerId !== context.universityId) {
       return false;
     }
@@ -384,7 +398,9 @@ export class CredentialsService {
     }
 
     if (params.role === 'HOLDER' && credential.status !== 'VERIFIED') {
-      throw new BadRequestException('เอกสารยังไม่พร้อมให้ดาวน์โหลด กรุณารอการยืนยัน');
+      throw new BadRequestException(
+        'เอกสารยังไม่พร้อมให้ดาวน์โหลด กรุณารอการยืนยัน',
+      );
     }
 
     const downloadUrl = await this.storageService.createSignedUrl({
@@ -442,11 +458,12 @@ export class CredentialsService {
       throw new BadRequestException('นักศึกษายังไม่ได้ตั้งค่าบัญชีดิจิทัล');
     }
 
-    const blockchainResult = await this.blockchainService.registerCredentialOnChain({
-      credentialId: credential.credentialId,
-      documentHash: credential.documentHash,
-      holderAddress: credential.holder.walletAddress,
-    });
+    const blockchainResult =
+      await this.blockchainService.registerCredentialOnChain({
+        credentialId: credential.credentialId,
+        documentHash: credential.documentHash,
+        holderAddress: credential.holder.walletAddress,
+      });
 
     const updatedCredential = await this.prisma.credential.update({
       where: { id: credential.id },
@@ -484,9 +501,21 @@ export class CredentialsService {
     const credential = await this.prisma.credential.findUnique({
       where: { id: params.credentialId },
       include: {
-        holder: { select: { id: true, email: true, name: true, walletAddress: true } },
-        issuer: { select: { id: true, email: true, name: true, walletAddress: true } },
-        issuerStaff: { select: { id: true, email: true, name: true, staffPosition: true, staffDepartment: true } },
+        holder: {
+          select: { id: true, email: true, name: true, walletAddress: true },
+        },
+        issuer: {
+          select: { id: true, email: true, name: true, walletAddress: true },
+        },
+        issuerStaff: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            staffPosition: true,
+            staffDepartment: true,
+          },
+        },
       },
     });
 
@@ -509,11 +538,19 @@ export class CredentialsService {
       throw new ForbiddenException('คุณไม่มีสิทธิ์ตรวจสอบเอกสารนี้');
     }
 
-    const blockchainCredential = await this.blockchainService.getCredentialFromChain(credential.credentialId);
-    const isDocumentHashMatched = credential.documentHash.toLowerCase() === blockchainCredential.documentHash.toLowerCase();
-    const isHolderAddressMatched = credential.holder.walletAddress?.toLowerCase() === blockchainCredential.holderAddress.toLowerCase();
+    const blockchainCredential =
+      await this.blockchainService.getCredentialFromChain(
+        credential.credentialId,
+      );
+    const isDocumentHashMatched =
+      credential.documentHash.toLowerCase() ===
+      blockchainCredential.documentHash.toLowerCase();
+    const isHolderAddressMatched =
+      credential.holder.walletAddress?.toLowerCase() ===
+      blockchainCredential.holderAddress.toLowerCase();
     const isDatabaseVerified = credential.status === 'VERIFIED';
-    const isValid = isDocumentHashMatched && isHolderAddressMatched && isDatabaseVerified;
+    const isValid =
+      isDocumentHashMatched && isHolderAddressMatched && isDatabaseVerified;
 
     return {
       message: isValid
@@ -552,9 +589,21 @@ export class CredentialsService {
     const credential = await this.prisma.credential.findUnique({
       where: { credentialId: params.credentialId },
       include: {
-        issuer: { select: { id: true, name: true, email: true, walletAddress: true } },
-        holder: { select: { id: true, name: true, email: true, walletAddress: true } },
-        issuerStaff: { select: { id: true, name: true, email: true, staffPosition: true, staffDepartment: true } },
+        issuer: {
+          select: { id: true, name: true, email: true, walletAddress: true },
+        },
+        holder: {
+          select: { id: true, name: true, email: true, walletAddress: true },
+        },
+        issuerStaff: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            staffPosition: true,
+            staffDepartment: true,
+          },
+        },
       },
     });
 
@@ -562,12 +611,26 @@ export class CredentialsService {
       throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
     }
 
-    const blockchainCredential = await this.blockchainService.getCredentialFromChain(credential.credentialId);
-    const isDocumentHashMatched = credential.documentHash.toLowerCase() === blockchainCredential.documentHash.toLowerCase();
-    const isHolderAddressMatched = credential.holder.walletAddress?.toLowerCase() === blockchainCredential.holderAddress.toLowerCase();
+    const blockchainCredential =
+      await this.blockchainService.getCredentialFromChain(
+        credential.credentialId,
+      );
+    const isDocumentHashMatched =
+      credential.documentHash.toLowerCase() ===
+      blockchainCredential.documentHash.toLowerCase();
+    const isHolderAddressMatched =
+      credential.holder.walletAddress?.toLowerCase() ===
+      blockchainCredential.holderAddress.toLowerCase();
     const isDatabaseVerified = credential.status === 'VERIFIED';
-    const hasTransaction = Boolean(credential.transactionHash) && Boolean(credential.blockNumber) && Boolean(credential.network);
-    const isValid = isDocumentHashMatched && isHolderAddressMatched && isDatabaseVerified && hasTransaction;
+    const hasTransaction =
+      Boolean(credential.transactionHash) &&
+      Boolean(credential.blockNumber) &&
+      Boolean(credential.network);
+    const isValid =
+      isDocumentHashMatched &&
+      isHolderAddressMatched &&
+      isDatabaseVerified &&
+      hasTransaction;
 
     return {
       message: isValid
@@ -577,7 +640,12 @@ export class CredentialsService {
           : 'ตรวจสอบเอกสารไม่สำเร็จ ข้อมูลเอกสารไม่ตรงกับข้อมูลที่ยืนยันไว้',
       isValid,
       verifiedAt: new Date().toISOString(),
-      checks: { documentHashMatched: isDocumentHashMatched, holderAddressMatched: isHolderAddressMatched, databaseStatusVerified: isDatabaseVerified, hasTransaction },
+      checks: {
+        documentHashMatched: isDocumentHashMatched,
+        holderAddressMatched: isHolderAddressMatched,
+        databaseStatusVerified: isDatabaseVerified,
+        hasTransaction,
+      },
       credential: {
         credentialId: credential.credentialId,
         documentTitle: credential.documentTitle,
@@ -591,14 +659,30 @@ export class CredentialsService {
         issuedByPosition: credential.issuedByPosition,
         issuedByDepartment: credential.issuedByDepartment,
       },
-      issuer: { name: credential.issuer.name, walletAddress: credential.issuer.walletAddress },
-      issuedBy: {
-        name: credential.issuedByName ?? credential.issuerStaff?.name ?? credential.issuer.name,
-        email: credential.issuedByEmail ?? credential.issuerStaff?.email ?? null,
-        position: credential.issuedByPosition ?? credential.issuerStaff?.staffPosition ?? null,
-        department: credential.issuedByDepartment ?? credential.issuerStaff?.staffDepartment ?? null,
+      issuer: {
+        name: credential.issuer.name,
+        walletAddress: credential.issuer.walletAddress,
       },
-      holder: { name: credential.holder.name, walletAddress: credential.holder.walletAddress },
+      issuedBy: {
+        name:
+          credential.issuedByName ??
+          credential.issuerStaff?.name ??
+          credential.issuer.name,
+        email:
+          credential.issuedByEmail ?? credential.issuerStaff?.email ?? null,
+        position:
+          credential.issuedByPosition ??
+          credential.issuerStaff?.staffPosition ??
+          null,
+        department:
+          credential.issuedByDepartment ??
+          credential.issuerStaff?.staffDepartment ??
+          null,
+      },
+      holder: {
+        name: credential.holder.name,
+        walletAddress: credential.holder.walletAddress,
+      },
       blockchain: {
         network: credential.network,
         transactionHash: credential.transactionHash,
@@ -633,7 +717,14 @@ export class CredentialsService {
       include: {
         issuer: { select: { name: true, walletAddress: true } },
         holder: { select: { name: true, walletAddress: true } },
-        issuerStaff: { select: { name: true, email: true, staffPosition: true, staffDepartment: true } },
+        issuerStaff: {
+          select: {
+            name: true,
+            email: true,
+            staffPosition: true,
+            staffDepartment: true,
+          },
+        },
       },
     });
 
@@ -641,14 +732,32 @@ export class CredentialsService {
       throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
     }
 
-    const uploadedFileHash = createHash('sha256').update(params.file.buffer).digest('hex');
-    const blockchainCredential = await this.blockchainService.getCredentialFromChain(credential.credentialId);
-    const isUploadedFileMatched = uploadedFileHash.toLowerCase() === credential.documentHash.toLowerCase();
-    const isDocumentHashMatched = credential.documentHash.toLowerCase() === blockchainCredential.documentHash.toLowerCase();
-    const isHolderAddressMatched = credential.holder.walletAddress?.toLowerCase() === blockchainCredential.holderAddress.toLowerCase();
+    const uploadedFileHash = createHash('sha256')
+      .update(params.file.buffer)
+      .digest('hex');
+    const blockchainCredential =
+      await this.blockchainService.getCredentialFromChain(
+        credential.credentialId,
+      );
+    const isUploadedFileMatched =
+      uploadedFileHash.toLowerCase() === credential.documentHash.toLowerCase();
+    const isDocumentHashMatched =
+      credential.documentHash.toLowerCase() ===
+      blockchainCredential.documentHash.toLowerCase();
+    const isHolderAddressMatched =
+      credential.holder.walletAddress?.toLowerCase() ===
+      blockchainCredential.holderAddress.toLowerCase();
     const isDatabaseVerified = credential.status === 'VERIFIED';
-    const hasTransaction = Boolean(credential.transactionHash) && Boolean(credential.blockNumber) && Boolean(credential.network);
-    const isValid = isUploadedFileMatched && isDocumentHashMatched && isHolderAddressMatched && isDatabaseVerified && hasTransaction;
+    const hasTransaction =
+      Boolean(credential.transactionHash) &&
+      Boolean(credential.blockNumber) &&
+      Boolean(credential.network);
+    const isValid =
+      isUploadedFileMatched &&
+      isDocumentHashMatched &&
+      isHolderAddressMatched &&
+      isDatabaseVerified &&
+      hasTransaction;
 
     return {
       message: isValid
@@ -660,7 +769,13 @@ export class CredentialsService {
             : 'ตรวจสอบไฟล์เอกสารไม่สำเร็จ ข้อมูลเอกสารไม่ตรงกับข้อมูลที่ยืนยันไว้',
       isValid,
       verifiedAt: new Date().toISOString(),
-      checks: { uploadedFileMatched: isUploadedFileMatched, documentHashMatched: isDocumentHashMatched, holderAddressMatched: isHolderAddressMatched, databaseStatusVerified: isDatabaseVerified, hasTransaction },
+      checks: {
+        uploadedFileMatched: isUploadedFileMatched,
+        documentHashMatched: isDocumentHashMatched,
+        holderAddressMatched: isHolderAddressMatched,
+        databaseStatusVerified: isDatabaseVerified,
+        hasTransaction,
+      },
       uploadedFile: {
         fileName: decodeUploadedFileName(params.file.originalname),
         fileSize: params.file.size,
@@ -680,14 +795,30 @@ export class CredentialsService {
         issuedByPosition: credential.issuedByPosition,
         issuedByDepartment: credential.issuedByDepartment,
       },
-      issuer: { name: credential.issuer.name, walletAddress: credential.issuer.walletAddress },
-      issuedBy: {
-        name: credential.issuedByName ?? credential.issuerStaff?.name ?? credential.issuer.name,
-        email: credential.issuedByEmail ?? credential.issuerStaff?.email ?? null,
-        position: credential.issuedByPosition ?? credential.issuerStaff?.staffPosition ?? null,
-        department: credential.issuedByDepartment ?? credential.issuerStaff?.staffDepartment ?? null,
+      issuer: {
+        name: credential.issuer.name,
+        walletAddress: credential.issuer.walletAddress,
       },
-      holder: { name: credential.holder.name, walletAddress: credential.holder.walletAddress },
+      issuedBy: {
+        name:
+          credential.issuedByName ??
+          credential.issuerStaff?.name ??
+          credential.issuer.name,
+        email:
+          credential.issuedByEmail ?? credential.issuerStaff?.email ?? null,
+        position:
+          credential.issuedByPosition ??
+          credential.issuerStaff?.staffPosition ??
+          null,
+        department:
+          credential.issuedByDepartment ??
+          credential.issuerStaff?.staffDepartment ??
+          null,
+      },
+      holder: {
+        name: credential.holder.name,
+        walletAddress: credential.holder.walletAddress,
+      },
       blockchain: {
         network: credential.network,
         transactionHash: credential.transactionHash,
@@ -702,7 +833,9 @@ export class CredentialsService {
   }
 
   async createShareLink(params: { credentialId: string; holderId: string }) {
-    const credential = await this.prisma.credential.findUnique({ where: { id: params.credentialId } });
+    const credential = await this.prisma.credential.findUnique({
+      where: { id: params.credentialId },
+    });
 
     if (!credential) {
       throw new NotFoundException('ไม่พบข้อมูลเอกสาร');
@@ -713,7 +846,9 @@ export class CredentialsService {
     }
 
     if (credential.status !== 'VERIFIED') {
-      throw new BadRequestException('สามารถสร้างลิงก์ตรวจสอบได้เฉพาะเอกสารที่ยืนยันแล้วเท่านั้น');
+      throw new BadRequestException(
+        'สามารถสร้างลิงก์ตรวจสอบได้เฉพาะเอกสารที่ยืนยันแล้วเท่านั้น',
+      );
     }
 
     if (!credential.transactionHash) {
@@ -725,10 +860,17 @@ export class CredentialsService {
     expiresAt.setDate(expiresAt.getDate() + 7);
 
     const shareLink = await this.prisma.credentialShareLink.create({
-      data: { token, credentialId: credential.id, holderId: params.holderId, expiresAt },
+      data: {
+        token,
+        credentialId: credential.id,
+        holderId: params.holderId,
+        expiresAt,
+      },
     });
 
-    const baseUrl = (process.env.APP_BASE_URL ?? 'http://localhost:4000').replace(/\/$/, '');
+    const baseUrl = (
+      process.env.APP_BASE_URL ?? 'http://localhost:4000'
+    ).replace(/\/$/, '');
 
     return {
       message: 'สร้างลิงก์ตรวจสอบเอกสารสำเร็จ',
@@ -740,7 +882,10 @@ export class CredentialsService {
     };
   }
 
-  async verifySharedCredential(params: { token: string }) {
+  async verifySharedCredential(params: {
+    token: string;
+    file?: Express.Multer.File;
+  }) {
     if (!params.token) {
       throw new BadRequestException('กรุณาระบุลิงก์ตรวจสอบ');
     }
@@ -752,7 +897,14 @@ export class CredentialsService {
           include: {
             issuer: { select: { name: true, walletAddress: true } },
             holder: { select: { name: true, walletAddress: true } },
-            issuerStaff: { select: { name: true, email: true, staffPosition: true, staffDepartment: true } },
+            issuerStaff: {
+              select: {
+                name: true,
+                email: true,
+                staffPosition: true,
+                staffDepartment: true,
+              },
+            },
           },
         },
       },
@@ -771,23 +923,73 @@ export class CredentialsService {
     }
 
     const credential = shareLink.credential;
-    const blockchainCredential = await this.blockchainService.getCredentialFromChain(credential.credentialId);
-    const isDocumentHashMatched = credential.documentHash.toLowerCase() === blockchainCredential.documentHash.toLowerCase();
-    const isHolderAddressMatched = credential.holder.walletAddress?.toLowerCase() === blockchainCredential.holderAddress.toLowerCase();
+    const blockchainCredential =
+      await this.blockchainService.getCredentialFromChain(
+        credential.credentialId,
+      );
+    const isDocumentHashMatched =
+      credential.documentHash.toLowerCase() ===
+      blockchainCredential.documentHash.toLowerCase();
+    const isHolderAddressMatched =
+      credential.holder.walletAddress?.toLowerCase() ===
+      blockchainCredential.holderAddress.toLowerCase();
     const isDatabaseVerified = credential.status === 'VERIFIED';
-    const hasTransaction = Boolean(credential.transactionHash) && Boolean(credential.blockNumber) && Boolean(credential.network);
-    const isValid = isDocumentHashMatched && isHolderAddressMatched && isDatabaseVerified && hasTransaction;
+    const hasTransaction =
+      Boolean(credential.transactionHash) &&
+      Boolean(credential.blockNumber) &&
+      Boolean(credential.network);
+
+    let uploadedFileHash: string | undefined;
+    let isUploadedFileMatched: boolean | undefined;
+
+    if (params.file) {
+      if (params.file.mimetype !== 'application/pdf') {
+        throw new BadRequestException('รองรับเฉพาะไฟล์ PDF เท่านั้น');
+      }
+
+      uploadedFileHash = createHash('sha256')
+        .update(params.file.buffer)
+        .digest('hex');
+      isUploadedFileMatched =
+        uploadedFileHash.toLowerCase() ===
+        credential.documentHash.toLowerCase();
+    }
+
+    const isValid =
+      isDocumentHashMatched &&
+      isHolderAddressMatched &&
+      isDatabaseVerified &&
+      hasTransaction &&
+      (isUploadedFileMatched ?? true);
 
     return {
       message: isValid
-        ? 'ตรวจสอบเอกสารจากลิงก์สำเร็จ เอกสารนี้ถูกต้องและมีข้อมูลยืนยันในระบบ'
+        ? params.file
+          ? 'ตรวจสอบเอกสารจากลิงก์สำเร็จ ไฟล์ PDF ตรงกับข้อมูลที่ยืนยันไว้'
+          : 'ตรวจสอบเอกสารจากลิงก์สำเร็จ เอกสารนี้ถูกต้องและมีข้อมูลยืนยันในระบบ'
         : !isDatabaseVerified
           ? 'ตรวจสอบเอกสารจากลิงก์ไม่สำเร็จ เอกสารนี้ถูกเพิกถอนหรือยังไม่ถูกยืนยัน'
-          : 'ตรวจสอบเอกสารจากลิงก์ไม่สำเร็จ ข้อมูลไม่ตรงกับข้อมูลที่ยืนยันไว้',
+          : isUploadedFileMatched === false
+            ? 'ตรวจสอบเอกสารจากลิงก์ไม่สำเร็จ ไฟล์ PDF ไม่ตรงกับข้อมูลที่ยืนยันไว้'
+            : 'ตรวจสอบเอกสารจากลิงก์ไม่สำเร็จ ข้อมูลไม่ตรงกับข้อมูลที่ยืนยันไว้',
       isValid,
       verifiedAt: new Date().toISOString(),
       shareLink: { expiresAt: shareLink.expiresAt },
-      checks: { documentHashMatched: isDocumentHashMatched, holderAddressMatched: isHolderAddressMatched, databaseStatusVerified: isDatabaseVerified, hasTransaction },
+      checks: {
+        uploadedFileMatched: isUploadedFileMatched,
+        documentHashMatched: isDocumentHashMatched,
+        holderAddressMatched: isHolderAddressMatched,
+        databaseStatusVerified: isDatabaseVerified,
+        hasTransaction,
+      },
+      uploadedFile: params.file
+        ? {
+            fileName: decodeUploadedFileName(params.file.originalname),
+            fileSize: params.file.size,
+            mimeType: params.file.mimetype,
+            sha256Hash: uploadedFileHash,
+          }
+        : undefined,
       credential: {
         credentialId: credential.credentialId,
         documentTitle: credential.documentTitle,
@@ -801,14 +1003,30 @@ export class CredentialsService {
         issuedByPosition: credential.issuedByPosition,
         issuedByDepartment: credential.issuedByDepartment,
       },
-      issuer: { name: credential.issuer.name, walletAddress: credential.issuer.walletAddress },
-      issuedBy: {
-        name: credential.issuedByName ?? credential.issuerStaff?.name ?? credential.issuer.name,
-        email: credential.issuedByEmail ?? credential.issuerStaff?.email ?? null,
-        position: credential.issuedByPosition ?? credential.issuerStaff?.staffPosition ?? null,
-        department: credential.issuedByDepartment ?? credential.issuerStaff?.staffDepartment ?? null,
+      issuer: {
+        name: credential.issuer.name,
+        walletAddress: credential.issuer.walletAddress,
       },
-      holder: { name: credential.holder.name, walletAddress: credential.holder.walletAddress },
+      issuedBy: {
+        name:
+          credential.issuedByName ??
+          credential.issuerStaff?.name ??
+          credential.issuer.name,
+        email:
+          credential.issuedByEmail ?? credential.issuerStaff?.email ?? null,
+        position:
+          credential.issuedByPosition ??
+          credential.issuerStaff?.staffPosition ??
+          null,
+        department:
+          credential.issuedByDepartment ??
+          credential.issuerStaff?.staffDepartment ??
+          null,
+      },
+      holder: {
+        name: credential.holder.name,
+        walletAddress: credential.holder.walletAddress,
+      },
       blockchain: {
         network: credential.network,
         transactionHash: credential.transactionHash,
@@ -829,7 +1047,17 @@ export class CredentialsService {
 
     const shareLink = await this.prisma.credentialShareLink.findUnique({
       where: { token: params.token },
-      include: { credential: { select: { id: true, credentialId: true, documentTitle: true, studentName: true, status: true } } },
+      include: {
+        credential: {
+          select: {
+            id: true,
+            credentialId: true,
+            documentTitle: true,
+            studentName: true,
+            status: true,
+          },
+        },
+      },
     });
 
     if (!shareLink) {
@@ -847,7 +1075,16 @@ export class CredentialsService {
     const updatedShareLink = await this.prisma.credentialShareLink.update({
       where: { token: params.token },
       data: { revokedAt: new Date() },
-      include: { credential: { select: { credentialId: true, documentTitle: true, studentName: true, status: true } } },
+      include: {
+        credential: {
+          select: {
+            credentialId: true,
+            documentTitle: true,
+            studentName: true,
+            status: true,
+          },
+        },
+      },
     });
 
     return {
@@ -864,7 +1101,14 @@ export class CredentialsService {
   async listShareLinks(params: { credentialId: string; holderId: string }) {
     const credential = await this.prisma.credential.findUnique({
       where: { id: params.credentialId },
-      select: { id: true, credentialId: true, documentTitle: true, studentName: true, status: true, holderId: true },
+      select: {
+        id: true,
+        credentialId: true,
+        documentTitle: true,
+        studentName: true,
+        status: true,
+        holderId: true,
+      },
     });
 
     if (!credential) {
@@ -872,16 +1116,26 @@ export class CredentialsService {
     }
 
     if (credential.holderId !== params.holderId) {
-      throw new ForbiddenException('คุณไม่มีสิทธิ์ดูรายการลิงก์ตรวจสอบของเอกสารนี้');
+      throw new ForbiddenException(
+        'คุณไม่มีสิทธิ์ดูรายการลิงก์ตรวจสอบของเอกสารนี้',
+      );
     }
 
     const shareLinks = await this.prisma.credentialShareLink.findMany({
       where: { credentialId: credential.id, holderId: params.holderId },
       orderBy: { createdAt: 'desc' },
-      select: { token: true, expiresAt: true, revokedAt: true, createdAt: true, updatedAt: true },
+      select: {
+        token: true,
+        expiresAt: true,
+        revokedAt: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
-    const baseUrl = (process.env.APP_BASE_URL ?? 'http://localhost:4000').replace(/\/$/, '');
+    const baseUrl = (
+      process.env.APP_BASE_URL ?? 'http://localhost:4000'
+    ).replace(/\/$/, '');
     const now = new Date();
 
     return {
@@ -897,7 +1151,11 @@ export class CredentialsService {
       shareLinks: shareLinks.map((link) => ({
         token: link.token,
         verifyUrl: `${baseUrl}/credentials/share/${link.token}/verify`,
-        status: link.revokedAt ? 'REVOKED' : link.expiresAt < now ? 'EXPIRED' : 'ACTIVE',
+        status: link.revokedAt
+          ? 'REVOKED'
+          : link.expiresAt < now
+            ? 'EXPIRED'
+            : 'ACTIVE',
         expiresAt: link.expiresAt,
         revokedAt: link.revokedAt,
         createdAt: link.createdAt,
@@ -906,7 +1164,10 @@ export class CredentialsService {
     };
   }
 
-  async invalidateCredential(params: { credentialId: string; issuerId: string }) {
+  async invalidateCredential(params: {
+    credentialId: string;
+    issuerId: string;
+  }) {
     const context = await this.getIssuerContext(
       params.issuerId,
       PERMISSIONS.INVALIDATE_CREDENTIAL,
