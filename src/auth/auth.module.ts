@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { PrismaModule } from '../prisma/prisma.module';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -12,15 +13,8 @@ import { RolesGuard } from './guards/roles.guard';
  */
 @Module({
   imports: [
-    /**
-     * ต้อง import UsersModule
-     * เพราะ AuthService ต้องใช้ UsersService
-     */
     UsersModule,
-
-    /**
-     * ตั้งค่า JWT สำหรับสร้างและตรวจสอบ Token
-     */
+    PrismaModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
@@ -29,11 +23,12 @@ import { RolesGuard } from './guards/roles.guard';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, EmailVerificationService, JwtAuthGuard, RolesGuard],
-  /**
-   * Export Guard และ JwtModule
-   * เพื่อให้ Module อื่น เช่น CredentialsModule สามารถใช้ @UseGuards ได้
-   */
+  providers: [
+    AuthService,
+    EmailVerificationService,
+    JwtAuthGuard,
+    RolesGuard,
+  ],
   exports: [JwtModule, JwtAuthGuard, RolesGuard],
 })
 export class AuthModule {}

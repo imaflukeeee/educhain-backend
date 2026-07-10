@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
-import { IsDateString, IsOptional, IsString, IsUrl, ValidateIf } from 'class-validator';
+import {
+  IsDateString,
+  IsOptional,
+  IsString,
+  IsUrl,
+  Matches,
+  ValidateIf,
+} from 'class-validator';
 
 export class UpdateProfileDto {
   @IsOptional()
@@ -75,11 +82,41 @@ export class UpdateProfileDto {
   @IsString()
   staffDepartment?: string;
 
-  @ValidateIf((_, value) => value !== undefined && value !== null && value !== '')
+  @ValidateIf((_, value) =>
+    value !== undefined && value !== null && value !== '',
+  )
   @IsUrl({ require_protocol: true })
   website?: string;
 
   @IsOptional()
   @IsString()
   address?: string;
+
+  @IsOptional()
+  @IsString()
+  addressDetail?: string;
+
+  @IsOptional()
+  @IsString()
+  province?: string;
+
+  @IsOptional()
+  @IsString()
+  district?: string;
+
+  @IsOptional()
+  @IsString()
+  subDistrict?: string;
+
+  @IsOptional()
+  @Matches(/^\d{5}$/, {
+    message: 'รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก',
+  })
+  postalCode?: string;
+
+  @IsOptional()
+  @Matches(/^\d{13}$/, {
+    message: 'เลขบัตรประชาชนต้องเป็นตัวเลข 13 หลัก',
+  })
+  nationalId?: string;
 }

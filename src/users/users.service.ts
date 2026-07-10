@@ -49,6 +49,12 @@ const safeUserSelect = {
   staffDepartment: true,
   website: true,
   address: true,
+  addressDetail: true,
+  province: true,
+  district: true,
+  subDistrict: true,
+  postalCode: true,
+  universityId: true,
   issuerAccountType: true,
   universityOwnerId: true,
   universityOwner: {
@@ -94,6 +100,12 @@ export interface SafeUser {
   staffDepartment?: string | null;
   website?: string | null;
   address?: string | null;
+  addressDetail?: string | null;
+  province?: string | null;
+  district?: string | null;
+  subDistrict?: string | null;
+  postalCode?: string | null;
+  universityId?: string | null;
   issuerAccountType?: 'UNIVERSITY_ADMIN' | 'REGISTRAR_STAFF' | null;
   universityOwnerId?: string | null;
   universityOwner?: {
@@ -142,6 +154,13 @@ export type CreateUserData = {
   staffDepartment?: string | null;
   website?: string | null;
   address?: string | null;
+  addressDetail?: string | null;
+  province?: string | null;
+  district?: string | null;
+  subDistrict?: string | null;
+  postalCode?: string | null;
+  nationalIdHash?: string | null;
+  universityId?: string | null;
   issuerAccountType?: 'UNIVERSITY_ADMIN' | 'REGISTRAR_STAFF' | null;
   universityOwnerId?: string | null;
   permissions?: string[];

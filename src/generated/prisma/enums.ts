@@ -41,3 +41,11 @@ export const CredentialStatus = {
 } as const
 
 export type CredentialStatus = (typeof CredentialStatus)[keyof typeof CredentialStatus]
+
+
+export const UniversityStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type UniversityStatus = (typeof UniversityStatus)[keyof typeof UniversityStatus]

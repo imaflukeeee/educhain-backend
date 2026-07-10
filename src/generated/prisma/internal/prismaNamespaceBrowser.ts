@@ -52,6 +52,10 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  UniversityMaster: 'UniversityMaster',
+  University: 'University',
+  Faculty: 'Faculty',
+  Major: 'Major',
   Credential: 'Credential',
   CredentialShareLink: 'CredentialShareLink'
 } as const
@@ -99,6 +103,13 @@ export const UserScalarFieldEnum = {
   staffDepartment: 'staffDepartment',
   website: 'website',
   address: 'address',
+  addressDetail: 'addressDetail',
+  province: 'province',
+  district: 'district',
+  subDistrict: 'subDistrict',
+  postalCode: 'postalCode',
+  nationalIdHash: 'nationalIdHash',
+  universityId: 'universityId',
   issuerAccountType: 'issuerAccountType',
   universityOwnerId: 'universityOwnerId',
   permissions: 'permissions',
@@ -111,6 +122,63 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UniversityMasterScalarFieldEnum = {
+  id: 'id',
+  nameTh: 'nameTh',
+  nameEn: 'nameEn',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UniversityMasterScalarFieldEnum = (typeof UniversityMasterScalarFieldEnum)[keyof typeof UniversityMasterScalarFieldEnum]
+
+
+export const UniversityScalarFieldEnum = {
+  id: 'id',
+  masterId: 'masterId',
+  ownerUserId: 'ownerUserId',
+  phone: 'phone',
+  website: 'website',
+  addressDetail: 'addressDetail',
+  province: 'province',
+  district: 'district',
+  subDistrict: 'subDistrict',
+  postalCode: 'postalCode',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UniversityScalarFieldEnum = (typeof UniversityScalarFieldEnum)[keyof typeof UniversityScalarFieldEnum]
+
+
+export const FacultyScalarFieldEnum = {
+  id: 'id',
+  universityId: 'universityId',
+  nameTh: 'nameTh',
+  nameEn: 'nameEn',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FacultyScalarFieldEnum = (typeof FacultyScalarFieldEnum)[keyof typeof FacultyScalarFieldEnum]
+
+
+export const MajorScalarFieldEnum = {
+  id: 'id',
+  facultyId: 'facultyId',
+  nameTh: 'nameTh',
+  nameEn: 'nameEn',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MajorScalarFieldEnum = (typeof MajorScalarFieldEnum)[keyof typeof MajorScalarFieldEnum]
 
 
 export const CredentialScalarFieldEnum = {

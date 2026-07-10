@@ -84,6 +84,14 @@ export class RegisterDto {
   @IsString()
   major?: string;
 
+  @IsOptional()
+  @IsString()
+  universityMasterId?: string;
+
+  @IsOptional()
+  @IsString()
+  universityId?: string;
+
   @IsNotEmpty()
   @IsString()
   universityNameTh?: string;
@@ -124,7 +132,11 @@ export class RegisterDto {
   @IsUrl({ require_protocol: true })
   website?: string;
 
-  @IsNotEmpty()
-  @IsString()
-  address?: string;
+  @IsOptional() @IsString() address?: string;
+  @IsNotEmpty() @IsString() addressDetail!: string;
+  @IsNotEmpty() @IsString() province!: string;
+  @IsNotEmpty() @IsString() district!: string;
+  @IsNotEmpty() @IsString() subDistrict!: string;
+  @IsNotEmpty() @IsString() postalCode!: string;
+  @ValidateIf((o) => o.role === 'HOLDER') @IsNotEmpty() @IsString() nationalId?: string;
 }

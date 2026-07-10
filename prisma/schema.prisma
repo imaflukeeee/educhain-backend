@@ -30,6 +30,11 @@ enum CredentialStatus {
   INVALID
 }
 
+enum UniversityStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model User {
   id            String   @id @default(uuid())
   email         String   @unique
@@ -58,6 +63,16 @@ model User {
   staffDepartment    String?
   website           String?
   address           String?
+  addressDetail     String?
+  province          String?
+  district          String?
+  subDistrict       String?
+  postalCode        String?
+  nationalIdHash    String?
+
+  universityId      String?
+  university        University? @relation(fields: [universityId], references: [id], onDelete: SetNull)
+  ownedUniversity   University? @relation("UniversityOwner")
 
   issuerAccountType IssuerAccountType?
   universityOwnerId String?
@@ -79,6 +94,74 @@ model User {
 
   @@index([universityOwnerId])
   @@index([role, issuerAccountType])
+  @@index([universityId])
+  @@index([studentId, universityId])
+}
+
+model UniversityMaster {
+  id        String   @id @default(uuid())
+  nameTh    String   @unique
+  nameEn    String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  universities University[]
+}
+
+model University {
+  id                 String           @id @default(uuid())
+  masterId           String
+  ownerUserId        String           @unique
+  phone              String?
+  website            String?
+  addressDetail      String?
+  province           String?
+  district           String?
+  subDistrict        String?
+  postalCode         String?
+  status             UniversityStatus @default(ACTIVE)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  master             UniversityMaster @relation(fields: [masterId], references: [id], onDelete: Restrict)
+  owner              User             @relation("UniversityOwner", fields: [ownerUserId], references: [id], onDelete: Cascade)
+  users              User[]
+  faculties          Faculty[]
+
+  @@index([masterId])
+  @@index([status])
+}
+
+model Faculty {
+  id           String   @id @default(uuid())
+  universityId String
+  nameTh       String
+  nameEn       String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  majors     Major[]
+
+  @@unique([universityId, nameTh])
+  @@index([universityId, isActive])
+}
+
+model Major {
+  id        String   @id @default(uuid())
+  facultyId String
+  nameTh    String
+  nameEn    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  faculty Faculty @relation(fields: [facultyId], references: [id], onDelete: Cascade)
+
+  @@unique([facultyId, nameTh])
+  @@index([facultyId, isActive])
 }
 
 model Credential {

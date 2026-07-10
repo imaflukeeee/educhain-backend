@@ -9,6 +9,10 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
+export type * from './models/UniversityMaster.js'
+export type * from './models/University.js'
+export type * from './models/Faculty.js'
+export type * from './models/Major.js'
 export type * from './models/Credential.js'
 export type * from './models/CredentialShareLink.js'
 export type * from './commonInputTypes.js'

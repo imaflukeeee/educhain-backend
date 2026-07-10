@@ -8,8 +8,9 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { ethers } from 'ethers';
 import { createHash, randomBytes } from 'crypto';
+import { ethers } from 'ethers';
+import { PrismaService } from '../prisma/prisma.service';
 import {
   DEFAULT_STAFF_PERMISSIONS,
   STAFF_PERMISSIONS,
@@ -55,7 +56,12 @@ function compactName(...parts: Array<string | null | undefined>) {
   return parts.map((part) => part?.trim()).filter(Boolean).join(' ');
 }
 
-function getDisplayNameFromUser(user: Pick<SafeUser, 'name' | 'firstNameTh' | 'lastNameTh' | 'firstNameEn' | 'lastNameEn'>) {
+function getDisplayNameFromUser(
+  user: Pick<
+    SafeUser,
+    'name' | 'firstNameTh' | 'lastNameTh' | 'firstNameEn' | 'lastNameEn'
+  >,
+) {
   return (
     compactName(user.firstNameTh, user.lastNameTh) ||
     compactName(user.firstNameEn, user.lastNameEn) ||
@@ -69,6 +75,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly emailVerificationService: EmailVerificationService,
+    private readonly prisma: PrismaService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -81,10 +88,58 @@ export class AuthService {
     const passwordHash = await bcrypt.hash(dto.password, 10);
     const isIssuer = dto.role === 'ISSUER';
 
+    const master =
+      isIssuer && dto.universityMasterId
+        ? await this.prisma.universityMaster.findFirst({
+            where: {
+              id: dto.universityMasterId,
+              isActive: true,
+            },
+          })
+        : null;
+
+    const registeredUniversity =
+      !isIssuer && dto.universityId
+        ? await this.prisma.university.findFirst({
+            where: {
+              id: dto.universityId,
+              status: 'ACTIVE',
+            },
+            include: {
+              master: true,
+            },
+          })
+        : null;
+
+    if (isIssuer && !master) {
+      throw new BadRequestException('กรุณาเลือกมหาวิทยาลัยจากรายการ');
+    }
+
+    if (!isIssuer && !registeredUniversity) {
+      throw new BadRequestException(
+        'กรุณาเลือกมหาวิทยาลัยที่ลงทะเบียนในระบบ',
+      );
+    }
+
+    if (isIssuer && master) {
+      const universityAlreadyRegistered =
+        await this.prisma.university.findFirst({
+          where: {
+            masterId: master.id,
+            status: 'ACTIVE',
+          },
+          select: {
+            id: true,
+          },
+        });
+
+      if (universityAlreadyRegistered) {
+        throw new ConflictException('มหาวิทยาลัยนี้ลงทะเบียนในระบบแล้ว');
+      }
+    }
+
     const fallbackName = isIssuer
-      ? normalizeRequiredString(dto.universityNameTh) ||
-        normalizeRequiredString(dto.universityNameEn) ||
-        normalizeRequiredString(dto.name)
+      ? master?.nameTh || master?.nameEn || normalizeRequiredString(dto.name)
       : compactName(dto.firstNameTh, dto.lastNameTh) ||
         compactName(dto.firstNameEn, dto.lastNameEn) ||
         normalizeRequiredString(dto.name);
@@ -105,8 +160,13 @@ export class AuthService {
       studentId: normalizeNullableString(dto.studentId),
       faculty: normalizeNullableString(dto.faculty),
       major: normalizeNullableString(dto.major),
-      universityNameTh: normalizeNullableString(dto.universityNameTh),
-      universityNameEn: normalizeNullableString(dto.universityNameEn),
+      universityNameTh: isIssuer
+        ? (master?.nameTh ?? null)
+        : (registeredUniversity?.master.nameTh ?? null),
+      universityNameEn: isIssuer
+        ? (master?.nameEn ?? null)
+        : (registeredUniversity?.master.nameEn ?? null),
+      universityId: registeredUniversity?.id ?? null,
       contactFirstNameTh: normalizeNullableString(dto.contactFirstNameTh),
       contactLastNameTh: normalizeNullableString(dto.contactLastNameTh),
       contactFirstNameEn: normalizeNullableString(dto.contactFirstNameEn),
@@ -115,6 +175,14 @@ export class AuthService {
       staffDepartment: normalizeNullableString(dto.staffDepartment),
       website: normalizeNullableString(dto.website),
       address: normalizeNullableString(dto.address),
+      addressDetail: normalizeNullableString(dto.addressDetail),
+      province: normalizeNullableString(dto.province),
+      district: normalizeNullableString(dto.district),
+      subDistrict: normalizeNullableString(dto.subDistrict),
+      postalCode: normalizeNullableString(dto.postalCode),
+      nationalIdHash: dto.nationalId
+        ? createHash('sha256').update(dto.nationalId.trim()).digest('hex')
+        : null,
       issuerAccountType: isIssuer ? 'UNIVERSITY_ADMIN' : null,
       permissions: isIssuer
         ? [
@@ -128,8 +196,47 @@ export class AuthService {
       isActive: true,
     });
 
+    if (isIssuer && master) {
+      try {
+        const university = await this.prisma.university.create({
+          data: {
+            masterId: master.id,
+            ownerUserId: user.id,
+            phone: normalizeNullableString(dto.phone) ?? null,
+            website: normalizeNullableString(dto.website) ?? null,
+            addressDetail: normalizeNullableString(dto.addressDetail) ?? null,
+            province: normalizeNullableString(dto.province) ?? null,
+            district: normalizeNullableString(dto.district) ?? null,
+            subDistrict: normalizeNullableString(dto.subDistrict) ?? null,
+            postalCode: normalizeNullableString(dto.postalCode) ?? null,
+          },
+        });
+
+        await this.prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            universityId: university.id,
+          },
+        });
+      } catch (error) {
+        await this.prisma.user
+          .delete({
+            where: {
+              id: user.id,
+            },
+          })
+          .catch(() => undefined);
+
+        throw error;
+      }
+    }
+
     const rawVerificationToken = randomBytes(32).toString('hex');
-    const tokenHash = createHash('sha256').update(rawVerificationToken).digest('hex');
+    const tokenHash = createHash('sha256')
+      .update(rawVerificationToken)
+      .digest('hex');
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     await this.usersService.setEmailVerification({
@@ -138,8 +245,13 @@ export class AuthService {
       expiresAt,
     });
 
-    const frontendUrl = (process.env.FRONTEND_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
-    const verificationUrl = `${frontendUrl}/verify-email?token=${encodeURIComponent(rawVerificationToken)}&role=${encodeURIComponent(user.role)}`;
+    const frontendUrl = (
+      process.env.FRONTEND_BASE_URL ?? 'http://localhost:3000'
+    ).replace(/\/$/, '');
+    const verificationUrl =
+      `${frontendUrl}/verify-email` +
+      `?token=${encodeURIComponent(rawVerificationToken)}` +
+      `&role=${encodeURIComponent(user.role)}`;
 
     await this.emailVerificationService.sendVerificationEmail({
       email: user.email,
@@ -151,7 +263,9 @@ export class AuthService {
       message: 'ลงทะเบียนสำเร็จ กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี',
       email: user.email,
       requiresEmailVerification: true,
-      ...(process.env.EMAIL_DEV_RETURN_LINK === 'true' ? { verificationUrl } : {}),
+      ...(process.env.EMAIL_DEV_RETURN_LINK === 'true'
+        ? { verificationUrl }
+        : {}),
     };
   }
 
@@ -163,7 +277,9 @@ export class AuthService {
     }
 
     if (user.isActive === false) {
-      throw new UnauthorizedException('บัญชีนี้ถูกปิดการใช้งาน กรุณาติดต่อผู้ดูแลบัญชี');
+      throw new UnauthorizedException(
+        'บัญชีนี้ถูกปิดการใช้งาน กรุณาติดต่อผู้ดูแลบัญชี',
+      );
     }
 
     if (!user.emailVerifiedAt) {
@@ -187,33 +303,44 @@ export class AuthService {
     };
   }
 
-
   async verifyEmail(rawToken: string) {
     if (!rawToken?.trim()) {
       throw new BadRequestException('ไม่พบรหัสยืนยันอีเมล');
     }
 
-    const tokenHash = createHash('sha256').update(rawToken.trim()).digest('hex');
-    const user = await this.usersService.findByEmailVerificationTokenHash(tokenHash);
+    const tokenHash = createHash('sha256')
+      .update(rawToken.trim())
+      .digest('hex');
+    const user =
+      await this.usersService.findByEmailVerificationTokenHash(tokenHash);
 
     if (!user || !user.emailVerificationExpiresAt) {
-      throw new BadRequestException('ลิงก์ยืนยันอีเมลไม่ถูกต้องหรือถูกใช้งานแล้ว');
+      throw new BadRequestException(
+        'ลิงก์ยืนยันอีเมลไม่ถูกต้องหรือถูกใช้งานแล้ว',
+      );
     }
 
     if (new Date(user.emailVerificationExpiresAt).getTime() < Date.now()) {
-      throw new BadRequestException('ลิงก์ยืนยันอีเมลหมดอายุแล้ว กรุณาขอลิงก์ใหม่');
+      throw new BadRequestException(
+        'ลิงก์ยืนยันอีเมลหมดอายุแล้ว กรุณาขอลิงก์ใหม่',
+      );
     }
 
     await this.usersService.markEmailVerified(user.id);
 
-    return { message: 'ยืนยันอีเมลสำเร็จ คุณสามารถเข้าสู่ระบบได้แล้ว' };
+    return {
+      message: 'ยืนยันอีเมลสำเร็จ คุณสามารถเข้าสู่ระบบได้แล้ว',
+      role: user.role,
+    };
   }
 
   async resendVerificationEmail(email: string) {
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
-      return { message: 'หากอีเมลนี้มีอยู่ในระบบ ระบบจะส่งลิงก์ยืนยันให้ใหม่' };
+      return {
+        message: 'หากอีเมลนี้มีอยู่ในระบบ ระบบจะส่งลิงก์ยืนยันให้ใหม่',
+      };
     }
 
     if (user.emailVerifiedAt) {
@@ -221,13 +348,24 @@ export class AuthService {
     }
 
     const rawVerificationToken = randomBytes(32).toString('hex');
-    const tokenHash = createHash('sha256').update(rawVerificationToken).digest('hex');
+    const tokenHash = createHash('sha256')
+      .update(rawVerificationToken)
+      .digest('hex');
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
-    await this.usersService.setEmailVerification({ userId: user.id, tokenHash, expiresAt });
+    await this.usersService.setEmailVerification({
+      userId: user.id,
+      tokenHash,
+      expiresAt,
+    });
 
-    const frontendUrl = (process.env.FRONTEND_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
-    const verificationUrl = `${frontendUrl}/verify-email?token=${encodeURIComponent(rawVerificationToken)}&role=${encodeURIComponent(user.role)}`;
+    const frontendUrl = (
+      process.env.FRONTEND_BASE_URL ?? 'http://localhost:3000'
+    ).replace(/\/$/, '');
+    const verificationUrl =
+      `${frontendUrl}/verify-email` +
+      `?token=${encodeURIComponent(rawVerificationToken)}` +
+      `&role=${encodeURIComponent(user.role)}`;
 
     await this.emailVerificationService.sendVerificationEmail({
       email: user.email,
@@ -237,7 +375,9 @@ export class AuthService {
 
     return {
       message: 'ส่งลิงก์ยืนยันอีเมลใหม่แล้ว',
-      ...(process.env.EMAIL_DEV_RETURN_LINK === 'true' ? { verificationUrl } : {}),
+      ...(process.env.EMAIL_DEV_RETURN_LINK === 'true'
+        ? { verificationUrl }
+        : {}),
     };
   }
 
@@ -264,8 +404,13 @@ export class AuthService {
       throw new UnauthorizedException('ไม่พบบัญชีผู้ใช้งาน');
     }
 
-    if (user.role !== 'ISSUER' || user.issuerAccountType === 'REGISTRAR_STAFF') {
-      throw new ForbiddenException('เฉพาะบัญชีหลักของมหาวิทยาลัยเท่านั้นที่จัดการเจ้าหน้าที่ได้');
+    if (
+      user.role !== 'ISSUER' ||
+      user.issuerAccountType === 'REGISTRAR_STAFF'
+    ) {
+      throw new ForbiddenException(
+        'เฉพาะบัญชีหลักของมหาวิทยาลัยเท่านั้นที่จัดการเจ้าหน้าที่ได้',
+      );
     }
 
     if (user.isActive === false) {
@@ -285,7 +430,10 @@ export class AuthService {
     };
   }
 
-  async createStaffMember(params: { adminUserId: string; dto: CreateStaffDto }) {
+  async createStaffMember(params: {
+    adminUserId: string;
+    dto: CreateStaffDto;
+  }) {
     const admin = await this.getUniversityAdminOrThrow(params.adminUserId);
     const dto = params.dto;
     const existingUser = await this.usersService.findByEmail(dto.email);
@@ -307,6 +455,7 @@ export class AuthService {
       role: 'ISSUER',
       issuerAccountType: 'REGISTRAR_STAFF',
       universityOwnerId: admin.id,
+      universityId: admin.universityId ?? null,
       universityNameTh: admin.universityNameTh ?? admin.name,
       universityNameEn: admin.universityNameEn ?? null,
       firstNameTh: normalizeNullableString(dto.firstNameTh),
@@ -314,8 +463,10 @@ export class AuthService {
       firstNameEn: normalizeNullableString(dto.firstNameEn),
       lastNameEn: normalizeNullableString(dto.lastNameEn),
       phone: normalizeNullableString(dto.phone),
-      staffPosition: normalizeNullableString(dto.staffPosition) ?? 'เจ้าหน้าที่ทะเบียน',
-      staffDepartment: normalizeNullableString(dto.staffDepartment) ?? 'งานทะเบียน',
+      staffPosition:
+        normalizeNullableString(dto.staffPosition) ?? 'เจ้าหน้าที่ทะเบียน',
+      staffDepartment:
+        normalizeNullableString(dto.staffDepartment) ?? 'งานทะเบียน',
       permissions: dto.permissions?.length
         ? dto.permissions
         : DEFAULT_STAFF_PERMISSIONS,
@@ -350,8 +501,14 @@ export class AuthService {
     const lastNameEn = normalizeNullableString(dto.lastNameEn);
 
     const nextName =
-      compactName(firstNameTh ?? staff.firstNameTh, lastNameTh ?? staff.lastNameTh) ||
-      compactName(firstNameEn ?? staff.firstNameEn, lastNameEn ?? staff.lastNameEn) ||
+      compactName(
+        firstNameTh ?? staff.firstNameTh,
+        lastNameTh ?? staff.lastNameTh,
+      ) ||
+      compactName(
+        firstNameEn ?? staff.firstNameEn,
+        lastNameEn ?? staff.lastNameEn,
+      ) ||
       staff.name;
 
     const updatedStaff = await this.usersService.updateStaffMember({
@@ -384,7 +541,10 @@ export class AuthService {
     };
   }
 
-  async updateMyProfile(params: { userId: string; dto: UpdateProfileDto }) {
+  async updateMyProfile(params: {
+    userId: string;
+    dto: UpdateProfileDto;
+  }) {
     const dto = params.dto;
     const currentUser = await this.usersService.findById(params.userId);
 
@@ -392,17 +552,23 @@ export class AuthService {
       throw new UnauthorizedException('ไม่พบบัญชีผู้ใช้งาน');
     }
 
-    const isStaff = currentUser.issuerAccountType === 'REGISTRAR_STAFF';
+    const isStaff =
+      currentUser.issuerAccountType === 'REGISTRAR_STAFF';
     const isIssuer = currentUser.role === 'ISSUER';
-    const nextName = isIssuer && !isStaff
-      ? normalizeRequiredString(dto.universityNameTh) ||
-        normalizeRequiredString(dto.universityNameEn) ||
-        normalizeRequiredString(dto.name) ||
-        currentUser.name
+    const nextName = isIssuer
+      ? currentUser.name
       : compactName(dto.firstNameTh, dto.lastNameTh) ||
         compactName(dto.firstNameEn, dto.lastNameEn) ||
         normalizeRequiredString(dto.name) ||
         currentUser.name;
+
+    const commonAddressData = {
+      addressDetail: normalizeNullableString(dto.addressDetail),
+      province: normalizeNullableString(dto.province),
+      district: normalizeNullableString(dto.district),
+      subDistrict: normalizeNullableString(dto.subDistrict),
+      postalCode: normalizeNullableString(dto.postalCode),
+    };
 
     const profileData = isStaff
       ? {
@@ -416,11 +582,18 @@ export class AuthService {
             firstNameEn: normalizeNullableString(dto.firstNameEn),
             lastNameEn: normalizeNullableString(dto.lastNameEn),
             phone: normalizeNullableString(dto.phone),
+            ...commonAddressData,
+            nationalIdHash: dto.nationalId
+              ? createHash('sha256')
+                  .update(dto.nationalId.trim())
+                  .digest('hex')
+              : undefined,
           }
         : {
             phone: normalizeNullableString(dto.phone),
             website: normalizeNullableString(dto.website),
             address: normalizeNullableString(dto.address),
+            ...commonAddressData,
           };
 
     const user = await this.usersService.updateProfile({
@@ -428,13 +601,29 @@ export class AuthService {
       data: profileData,
     });
 
+    if (isIssuer && !isStaff && currentUser.universityId) {
+      await this.prisma.university.update({
+        where: {
+          id: currentUser.universityId,
+        },
+        data: {
+          phone: normalizeNullableString(dto.phone),
+          website: normalizeNullableString(dto.website),
+          ...commonAddressData,
+        },
+      });
+    }
+
     return {
       message: 'บันทึกข้อมูลบัญชีสำเร็จ',
       user,
     };
   }
 
-  async changeMyPassword(params: { userId: string; dto: ChangePasswordDto }) {
+  async changeMyPassword(params: {
+    userId: string;
+    dto: ChangePasswordDto;
+  }) {
     const user = await this.usersService.findById(params.userId);
     const userWithPassword = user
       ? await this.usersService.findByEmail(user.email)
