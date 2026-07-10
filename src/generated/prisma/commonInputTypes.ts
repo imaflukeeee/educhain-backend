@@ -440,40 +440,6 @@ export type EnumDocumentRequestStatusWithAggregatesFilter<$PrismaModel = never> 
   _max?: Prisma.NestedEnumDocumentRequestStatusFilter<$PrismaModel>
 }
 
-export type EnumDocumentTemplateStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.DocumentTemplateStatus | Prisma.EnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.DocumentTemplateStatus[] | Prisma.ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.DocumentTemplateStatus[] | Prisma.ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumDocumentTemplateStatusFilter<$PrismaModel> | $Enums.DocumentTemplateStatus
-}
-
-export type EnumDocumentTemplateStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.DocumentTemplateStatus | Prisma.EnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.DocumentTemplateStatus[] | Prisma.ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.DocumentTemplateStatus[] | Prisma.ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumDocumentTemplateStatusWithAggregatesFilter<$PrismaModel> | $Enums.DocumentTemplateStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumDocumentTemplateStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumDocumentTemplateStatusFilter<$PrismaModel>
-}
-
-export type EnumCredentialBatchStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.CredentialBatchStatus | Prisma.EnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.CredentialBatchStatus[] | Prisma.ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.CredentialBatchStatus[] | Prisma.ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumCredentialBatchStatusFilter<$PrismaModel> | $Enums.CredentialBatchStatus
-}
-
-export type EnumCredentialBatchStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.CredentialBatchStatus | Prisma.EnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.CredentialBatchStatus[] | Prisma.ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.CredentialBatchStatus[] | Prisma.ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumCredentialBatchStatusWithAggregatesFilter<$PrismaModel> | $Enums.CredentialBatchStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumCredentialBatchStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumCredentialBatchStatusFilter<$PrismaModel>
-}
-
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -884,40 +850,6 @@ export type NestedEnumDocumentRequestStatusWithAggregatesFilter<$PrismaModel = n
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDocumentRequestStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDocumentRequestStatusFilter<$PrismaModel>
-}
-
-export type NestedEnumDocumentTemplateStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.DocumentTemplateStatus | Prisma.EnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.DocumentTemplateStatus[] | Prisma.ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.DocumentTemplateStatus[] | Prisma.ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumDocumentTemplateStatusFilter<$PrismaModel> | $Enums.DocumentTemplateStatus
-}
-
-export type NestedEnumDocumentTemplateStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.DocumentTemplateStatus | Prisma.EnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.DocumentTemplateStatus[] | Prisma.ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.DocumentTemplateStatus[] | Prisma.ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumDocumentTemplateStatusWithAggregatesFilter<$PrismaModel> | $Enums.DocumentTemplateStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumDocumentTemplateStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumDocumentTemplateStatusFilter<$PrismaModel>
-}
-
-export type NestedEnumCredentialBatchStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.CredentialBatchStatus | Prisma.EnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.CredentialBatchStatus[] | Prisma.ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.CredentialBatchStatus[] | Prisma.ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumCredentialBatchStatusFilter<$PrismaModel> | $Enums.CredentialBatchStatus
-}
-
-export type NestedEnumCredentialBatchStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.CredentialBatchStatus | Prisma.EnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.CredentialBatchStatus[] | Prisma.ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.CredentialBatchStatus[] | Prisma.ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumCredentialBatchStatusWithAggregatesFilter<$PrismaModel> | $Enums.CredentialBatchStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumCredentialBatchStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumCredentialBatchStatusFilter<$PrismaModel>
 }
 
 

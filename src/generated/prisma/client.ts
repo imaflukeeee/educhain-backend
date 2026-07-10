@@ -99,13 +99,3 @@ export type AuditLog = Prisma.AuditLogModel
  * 
  */
 export type DocumentRequest = Prisma.DocumentRequestModel
-/**
- * Model DocumentTemplate
- * 
- */
-export type DocumentTemplate = Prisma.DocumentTemplateModel
-/**
- * Model CredentialBatch
- * 
- */
-export type CredentialBatch = Prisma.CredentialBatchModel

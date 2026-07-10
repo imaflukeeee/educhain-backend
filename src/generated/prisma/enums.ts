@@ -125,25 +125,3 @@ export const DocumentRequestStatus = {
 } as const
 
 export type DocumentRequestStatus = (typeof DocumentRequestStatus)[keyof typeof DocumentRequestStatus]
-
-
-export const CredentialBatchStatus = {
-  DRAFT: 'DRAFT',
-  PREPARING: 'PREPARING',
-  PENDING_REVIEW: 'PENDING_REVIEW',
-  PENDING_APPROVAL: 'PENDING_APPROVAL',
-  PROCESSING: 'PROCESSING',
-  COMPLETED: 'COMPLETED',
-  PARTIALLY_COMPLETED: 'PARTIALLY_COMPLETED',
-  FAILED: 'FAILED'
-} as const
-
-export type CredentialBatchStatus = (typeof CredentialBatchStatus)[keyof typeof CredentialBatchStatus]
-
-
-export const DocumentTemplateStatus = {
-  ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE'
-} as const
-
-export type DocumentTemplateStatus = (typeof DocumentTemplateStatus)[keyof typeof DocumentTemplateStatus]

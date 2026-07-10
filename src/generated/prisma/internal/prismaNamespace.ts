@@ -395,9 +395,7 @@ export const ModelName = {
   ClaimAttempt: 'ClaimAttempt',
   Notification: 'Notification',
   AuditLog: 'AuditLog',
-  DocumentRequest: 'DocumentRequest',
-  DocumentTemplate: 'DocumentTemplate',
-  CredentialBatch: 'CredentialBatch'
+  DocumentRequest: 'DocumentRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "universityMaster" | "university" | "faculty" | "major" | "credential" | "credentialShareLink" | "studentRecord" | "claimAttempt" | "notification" | "auditLog" | "documentRequest" | "documentTemplate" | "credentialBatch"
+    modelProps: "user" | "universityMaster" | "university" | "faculty" | "major" | "credential" | "credentialShareLink" | "studentRecord" | "claimAttempt" | "notification" | "auditLog" | "documentRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1305,154 +1303,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    DocumentTemplate: {
-      payload: Prisma.$DocumentTemplatePayload<ExtArgs>
-      fields: Prisma.DocumentTemplateFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.DocumentTemplateFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.DocumentTemplateFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
-        }
-        findFirst: {
-          args: Prisma.DocumentTemplateFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.DocumentTemplateFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
-        }
-        findMany: {
-          args: Prisma.DocumentTemplateFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>[]
-        }
-        create: {
-          args: Prisma.DocumentTemplateCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
-        }
-        createMany: {
-          args: Prisma.DocumentTemplateCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.DocumentTemplateCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>[]
-        }
-        delete: {
-          args: Prisma.DocumentTemplateDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
-        }
-        update: {
-          args: Prisma.DocumentTemplateUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
-        }
-        deleteMany: {
-          args: Prisma.DocumentTemplateDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.DocumentTemplateUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.DocumentTemplateUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>[]
-        }
-        upsert: {
-          args: Prisma.DocumentTemplateUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
-        }
-        aggregate: {
-          args: Prisma.DocumentTemplateAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateDocumentTemplate>
-        }
-        groupBy: {
-          args: Prisma.DocumentTemplateGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DocumentTemplateGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.DocumentTemplateCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DocumentTemplateCountAggregateOutputType> | number
-        }
-      }
-    }
-    CredentialBatch: {
-      payload: Prisma.$CredentialBatchPayload<ExtArgs>
-      fields: Prisma.CredentialBatchFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.CredentialBatchFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.CredentialBatchFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>
-        }
-        findFirst: {
-          args: Prisma.CredentialBatchFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.CredentialBatchFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>
-        }
-        findMany: {
-          args: Prisma.CredentialBatchFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>[]
-        }
-        create: {
-          args: Prisma.CredentialBatchCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>
-        }
-        createMany: {
-          args: Prisma.CredentialBatchCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.CredentialBatchCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>[]
-        }
-        delete: {
-          args: Prisma.CredentialBatchDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>
-        }
-        update: {
-          args: Prisma.CredentialBatchUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>
-        }
-        deleteMany: {
-          args: Prisma.CredentialBatchDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.CredentialBatchUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.CredentialBatchUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>[]
-        }
-        upsert: {
-          args: Prisma.CredentialBatchUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CredentialBatchPayload>
-        }
-        aggregate: {
-          args: Prisma.CredentialBatchAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCredentialBatch>
-        }
-        groupBy: {
-          args: Prisma.CredentialBatchGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CredentialBatchGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.CredentialBatchCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CredentialBatchCountAggregateOutputType> | number
-        }
-      }
-    }
   }
 } & {
   other: {
@@ -1628,7 +1478,6 @@ export const CredentialScalarFieldEnum = {
   reviewedAt: 'reviewedAt',
   approvedAt: 'approvedAt',
   requestId: 'requestId',
-  batchId: 'batchId',
   version: 'version',
   parentCredentialId: 'parentCredentialId',
   replacedById: 'replacedById',
@@ -1749,50 +1598,6 @@ export const DocumentRequestScalarFieldEnum = {
 } as const
 
 export type DocumentRequestScalarFieldEnum = (typeof DocumentRequestScalarFieldEnum)[keyof typeof DocumentRequestScalarFieldEnum]
-
-
-export const DocumentTemplateScalarFieldEnum = {
-  id: 'id',
-  universityId: 'universityId',
-  name: 'name',
-  documentType: 'documentType',
-  customTypeName: 'customTypeName',
-  description: 'description',
-  content: 'content',
-  status: 'status',
-  createdById: 'createdById',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type DocumentTemplateScalarFieldEnum = (typeof DocumentTemplateScalarFieldEnum)[keyof typeof DocumentTemplateScalarFieldEnum]
-
-
-export const CredentialBatchScalarFieldEnum = {
-  id: 'id',
-  universityId: 'universityId',
-  templateId: 'templateId',
-  name: 'name',
-  documentType: 'documentType',
-  academicYear: 'academicYear',
-  facultyId: 'facultyId',
-  majorId: 'majorId',
-  status: 'status',
-  totalCount: 'totalCount',
-  successCount: 'successCount',
-  failedCount: 'failedCount',
-  createdById: 'createdById',
-  reviewedById: 'reviewedById',
-  approvedById: 'approvedById',
-  note: 'note',
-  createdAt: 'createdAt',
-  reviewedAt: 'reviewedAt',
-  approvedAt: 'approvedAt',
-  completedAt: 'completedAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CredentialBatchScalarFieldEnum = (typeof CredentialBatchScalarFieldEnum)[keyof typeof CredentialBatchScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2060,34 +1865,6 @@ export type ListEnumDocumentRequestStatusFieldRefInput<$PrismaModel> = FieldRefI
 
 
 /**
- * Reference to a field of type 'DocumentTemplateStatus'
- */
-export type EnumDocumentTemplateStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentTemplateStatus'>
-    
-
-
-/**
- * Reference to a field of type 'DocumentTemplateStatus[]'
- */
-export type ListEnumDocumentTemplateStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DocumentTemplateStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'CredentialBatchStatus'
- */
-export type EnumCredentialBatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CredentialBatchStatus'>
-    
-
-
-/**
- * Reference to a field of type 'CredentialBatchStatus[]'
- */
-export type ListEnumCredentialBatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CredentialBatchStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2222,8 +1999,6 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   auditLog?: Prisma.AuditLogOmit
   documentRequest?: Prisma.DocumentRequestOmit
-  documentTemplate?: Prisma.DocumentTemplateOmit
-  credentialBatch?: Prisma.CredentialBatchOmit
 }
 
 /* Types for Logging */

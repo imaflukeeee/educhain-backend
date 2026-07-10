@@ -62,9 +62,7 @@ export const ModelName = {
   ClaimAttempt: 'ClaimAttempt',
   Notification: 'Notification',
   AuditLog: 'AuditLog',
-  DocumentRequest: 'DocumentRequest',
-  DocumentTemplate: 'DocumentTemplate',
-  CredentialBatch: 'CredentialBatch'
+  DocumentRequest: 'DocumentRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -219,7 +217,6 @@ export const CredentialScalarFieldEnum = {
   reviewedAt: 'reviewedAt',
   approvedAt: 'approvedAt',
   requestId: 'requestId',
-  batchId: 'batchId',
   version: 'version',
   parentCredentialId: 'parentCredentialId',
   replacedById: 'replacedById',
@@ -340,50 +337,6 @@ export const DocumentRequestScalarFieldEnum = {
 } as const
 
 export type DocumentRequestScalarFieldEnum = (typeof DocumentRequestScalarFieldEnum)[keyof typeof DocumentRequestScalarFieldEnum]
-
-
-export const DocumentTemplateScalarFieldEnum = {
-  id: 'id',
-  universityId: 'universityId',
-  name: 'name',
-  documentType: 'documentType',
-  customTypeName: 'customTypeName',
-  description: 'description',
-  content: 'content',
-  status: 'status',
-  createdById: 'createdById',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type DocumentTemplateScalarFieldEnum = (typeof DocumentTemplateScalarFieldEnum)[keyof typeof DocumentTemplateScalarFieldEnum]
-
-
-export const CredentialBatchScalarFieldEnum = {
-  id: 'id',
-  universityId: 'universityId',
-  templateId: 'templateId',
-  name: 'name',
-  documentType: 'documentType',
-  academicYear: 'academicYear',
-  facultyId: 'facultyId',
-  majorId: 'majorId',
-  status: 'status',
-  totalCount: 'totalCount',
-  successCount: 'successCount',
-  failedCount: 'failedCount',
-  createdById: 'createdById',
-  reviewedById: 'reviewedById',
-  approvedById: 'approvedById',
-  note: 'note',
-  createdAt: 'createdAt',
-  reviewedAt: 'reviewedAt',
-  approvedAt: 'approvedAt',
-  completedAt: 'completedAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CredentialBatchScalarFieldEnum = (typeof CredentialBatchScalarFieldEnum)[keyof typeof CredentialBatchScalarFieldEnum]
 
 
 export const SortOrder = {

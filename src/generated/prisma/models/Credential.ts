@@ -69,7 +69,6 @@ export type CredentialMinAggregateOutputType = {
   reviewedAt: Date | null
   approvedAt: Date | null
   requestId: string | null
-  batchId: string | null
   version: number | null
   parentCredentialId: string | null
   replacedById: string | null
@@ -113,7 +112,6 @@ export type CredentialMaxAggregateOutputType = {
   reviewedAt: Date | null
   approvedAt: Date | null
   requestId: string | null
-  batchId: string | null
   version: number | null
   parentCredentialId: string | null
   replacedById: string | null
@@ -157,7 +155,6 @@ export type CredentialCountAggregateOutputType = {
   reviewedAt: number
   approvedAt: number
   requestId: number
-  batchId: number
   version: number
   parentCredentialId: number
   replacedById: number
@@ -215,7 +212,6 @@ export type CredentialMinAggregateInputType = {
   reviewedAt?: true
   approvedAt?: true
   requestId?: true
-  batchId?: true
   version?: true
   parentCredentialId?: true
   replacedById?: true
@@ -259,7 +255,6 @@ export type CredentialMaxAggregateInputType = {
   reviewedAt?: true
   approvedAt?: true
   requestId?: true
-  batchId?: true
   version?: true
   parentCredentialId?: true
   replacedById?: true
@@ -303,7 +298,6 @@ export type CredentialCountAggregateInputType = {
   reviewedAt?: true
   approvedAt?: true
   requestId?: true
-  batchId?: true
   version?: true
   parentCredentialId?: true
   replacedById?: true
@@ -434,7 +428,6 @@ export type CredentialGroupByOutputType = {
   reviewedAt: Date | null
   approvedAt: Date | null
   requestId: string | null
-  batchId: string | null
   version: number
   parentCredentialId: string | null
   replacedById: string | null
@@ -501,7 +494,6 @@ export type CredentialWhereInput = {
   reviewedAt?: Prisma.DateTimeNullableFilter<"Credential"> | Date | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"Credential"> | Date | string | null
   requestId?: Prisma.StringNullableFilter<"Credential"> | string | null
-  batchId?: Prisma.StringNullableFilter<"Credential"> | string | null
   version?: Prisma.IntFilter<"Credential"> | number
   parentCredentialId?: Prisma.StringNullableFilter<"Credential"> | string | null
   replacedById?: Prisma.StringNullableFilter<"Credential"> | string | null
@@ -519,7 +511,6 @@ export type CredentialWhereInput = {
   reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   approvedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   request?: Prisma.XOR<Prisma.DocumentRequestNullableScalarRelationFilter, Prisma.DocumentRequestWhereInput> | null
-  batch?: Prisma.XOR<Prisma.CredentialBatchNullableScalarRelationFilter, Prisma.CredentialBatchWhereInput> | null
   parentCredential?: Prisma.XOR<Prisma.CredentialNullableScalarRelationFilter, Prisma.CredentialWhereInput> | null
   versions?: Prisma.CredentialListRelationFilter
   replacedBy?: Prisma.XOR<Prisma.CredentialNullableScalarRelationFilter, Prisma.CredentialWhereInput> | null
@@ -558,7 +549,6 @@ export type CredentialOrderByWithRelationInput = {
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   requestId?: Prisma.SortOrderInput | Prisma.SortOrder
-  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
   parentCredentialId?: Prisma.SortOrderInput | Prisma.SortOrder
   replacedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -576,7 +566,6 @@ export type CredentialOrderByWithRelationInput = {
   reviewedBy?: Prisma.UserOrderByWithRelationInput
   approvedBy?: Prisma.UserOrderByWithRelationInput
   request?: Prisma.DocumentRequestOrderByWithRelationInput
-  batch?: Prisma.CredentialBatchOrderByWithRelationInput
   parentCredential?: Prisma.CredentialOrderByWithRelationInput
   versions?: Prisma.CredentialOrderByRelationAggregateInput
   replacedBy?: Prisma.CredentialOrderByWithRelationInput
@@ -619,7 +608,6 @@ export type CredentialWhereUniqueInput = Prisma.AtLeast<{
   submittedAt?: Prisma.DateTimeNullableFilter<"Credential"> | Date | string | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"Credential"> | Date | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"Credential"> | Date | string | null
-  batchId?: Prisma.StringNullableFilter<"Credential"> | string | null
   version?: Prisma.IntFilter<"Credential"> | number
   parentCredentialId?: Prisma.StringNullableFilter<"Credential"> | string | null
   revokedReason?: Prisma.StringNullableFilter<"Credential"> | string | null
@@ -636,7 +624,6 @@ export type CredentialWhereUniqueInput = Prisma.AtLeast<{
   reviewedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   approvedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   request?: Prisma.XOR<Prisma.DocumentRequestNullableScalarRelationFilter, Prisma.DocumentRequestWhereInput> | null
-  batch?: Prisma.XOR<Prisma.CredentialBatchNullableScalarRelationFilter, Prisma.CredentialBatchWhereInput> | null
   parentCredential?: Prisma.XOR<Prisma.CredentialNullableScalarRelationFilter, Prisma.CredentialWhereInput> | null
   versions?: Prisma.CredentialListRelationFilter
   replacedBy?: Prisma.XOR<Prisma.CredentialNullableScalarRelationFilter, Prisma.CredentialWhereInput> | null
@@ -675,7 +662,6 @@ export type CredentialOrderByWithAggregationInput = {
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   requestId?: Prisma.SortOrderInput | Prisma.SortOrder
-  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
   parentCredentialId?: Prisma.SortOrderInput | Prisma.SortOrder
   replacedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -727,7 +713,6 @@ export type CredentialScalarWhereWithAggregatesInput = {
   reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Credential"> | Date | string | null
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Credential"> | Date | string | null
   requestId?: Prisma.StringNullableWithAggregatesFilter<"Credential"> | string | null
-  batchId?: Prisma.StringNullableWithAggregatesFilter<"Credential"> | string | null
   version?: Prisma.IntWithAggregatesFilter<"Credential"> | number
   parentCredentialId?: Prisma.StringNullableWithAggregatesFilter<"Credential"> | string | null
   replacedById?: Prisma.StringNullableWithAggregatesFilter<"Credential"> | string | null
@@ -779,7 +764,6 @@ export type CredentialCreateInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -818,7 +802,6 @@ export type CredentialUncheckedCreateInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -873,7 +856,6 @@ export type CredentialUpdateInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -912,7 +894,6 @@ export type CredentialUncheckedUpdateInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -959,7 +940,6 @@ export type CredentialCreateManyInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -1037,7 +1017,6 @@ export type CredentialUncheckedUpdateManyInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1096,7 +1075,6 @@ export type CredentialCountOrderByAggregateInput = {
   reviewedAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
-  batchId?: Prisma.SortOrder
   version?: Prisma.SortOrder
   parentCredentialId?: Prisma.SortOrder
   replacedById?: Prisma.SortOrder
@@ -1146,7 +1124,6 @@ export type CredentialMaxOrderByAggregateInput = {
   reviewedAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
-  batchId?: Prisma.SortOrder
   version?: Prisma.SortOrder
   parentCredentialId?: Prisma.SortOrder
   replacedById?: Prisma.SortOrder
@@ -1190,7 +1167,6 @@ export type CredentialMinOrderByAggregateInput = {
   reviewedAt?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
-  batchId?: Prisma.SortOrder
   version?: Prisma.SortOrder
   parentCredentialId?: Prisma.SortOrder
   replacedById?: Prisma.SortOrder
@@ -1642,48 +1618,6 @@ export type CredentialUncheckedUpdateOneWithoutRequestNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CredentialUpdateToOneWithWhereWithoutRequestInput, Prisma.CredentialUpdateWithoutRequestInput>, Prisma.CredentialUncheckedUpdateWithoutRequestInput>
 }
 
-export type CredentialCreateNestedManyWithoutBatchInput = {
-  create?: Prisma.XOR<Prisma.CredentialCreateWithoutBatchInput, Prisma.CredentialUncheckedCreateWithoutBatchInput> | Prisma.CredentialCreateWithoutBatchInput[] | Prisma.CredentialUncheckedCreateWithoutBatchInput[]
-  connectOrCreate?: Prisma.CredentialCreateOrConnectWithoutBatchInput | Prisma.CredentialCreateOrConnectWithoutBatchInput[]
-  createMany?: Prisma.CredentialCreateManyBatchInputEnvelope
-  connect?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-}
-
-export type CredentialUncheckedCreateNestedManyWithoutBatchInput = {
-  create?: Prisma.XOR<Prisma.CredentialCreateWithoutBatchInput, Prisma.CredentialUncheckedCreateWithoutBatchInput> | Prisma.CredentialCreateWithoutBatchInput[] | Prisma.CredentialUncheckedCreateWithoutBatchInput[]
-  connectOrCreate?: Prisma.CredentialCreateOrConnectWithoutBatchInput | Prisma.CredentialCreateOrConnectWithoutBatchInput[]
-  createMany?: Prisma.CredentialCreateManyBatchInputEnvelope
-  connect?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-}
-
-export type CredentialUpdateManyWithoutBatchNestedInput = {
-  create?: Prisma.XOR<Prisma.CredentialCreateWithoutBatchInput, Prisma.CredentialUncheckedCreateWithoutBatchInput> | Prisma.CredentialCreateWithoutBatchInput[] | Prisma.CredentialUncheckedCreateWithoutBatchInput[]
-  connectOrCreate?: Prisma.CredentialCreateOrConnectWithoutBatchInput | Prisma.CredentialCreateOrConnectWithoutBatchInput[]
-  upsert?: Prisma.CredentialUpsertWithWhereUniqueWithoutBatchInput | Prisma.CredentialUpsertWithWhereUniqueWithoutBatchInput[]
-  createMany?: Prisma.CredentialCreateManyBatchInputEnvelope
-  set?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-  disconnect?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-  delete?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-  connect?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-  update?: Prisma.CredentialUpdateWithWhereUniqueWithoutBatchInput | Prisma.CredentialUpdateWithWhereUniqueWithoutBatchInput[]
-  updateMany?: Prisma.CredentialUpdateManyWithWhereWithoutBatchInput | Prisma.CredentialUpdateManyWithWhereWithoutBatchInput[]
-  deleteMany?: Prisma.CredentialScalarWhereInput | Prisma.CredentialScalarWhereInput[]
-}
-
-export type CredentialUncheckedUpdateManyWithoutBatchNestedInput = {
-  create?: Prisma.XOR<Prisma.CredentialCreateWithoutBatchInput, Prisma.CredentialUncheckedCreateWithoutBatchInput> | Prisma.CredentialCreateWithoutBatchInput[] | Prisma.CredentialUncheckedCreateWithoutBatchInput[]
-  connectOrCreate?: Prisma.CredentialCreateOrConnectWithoutBatchInput | Prisma.CredentialCreateOrConnectWithoutBatchInput[]
-  upsert?: Prisma.CredentialUpsertWithWhereUniqueWithoutBatchInput | Prisma.CredentialUpsertWithWhereUniqueWithoutBatchInput[]
-  createMany?: Prisma.CredentialCreateManyBatchInputEnvelope
-  set?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-  disconnect?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-  delete?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-  connect?: Prisma.CredentialWhereUniqueInput | Prisma.CredentialWhereUniqueInput[]
-  update?: Prisma.CredentialUpdateWithWhereUniqueWithoutBatchInput | Prisma.CredentialUpdateWithWhereUniqueWithoutBatchInput[]
-  updateMany?: Prisma.CredentialUpdateManyWithWhereWithoutBatchInput | Prisma.CredentialUpdateManyWithWhereWithoutBatchInput[]
-  deleteMany?: Prisma.CredentialScalarWhereInput | Prisma.CredentialScalarWhereInput[]
-}
-
 export type CredentialCreateWithoutIssuerInput = {
   id?: string
   credentialId?: string
@@ -1722,7 +1656,6 @@ export type CredentialCreateWithoutIssuerInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -1760,7 +1693,6 @@ export type CredentialUncheckedCreateWithoutIssuerInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -1824,7 +1756,6 @@ export type CredentialCreateWithoutHolderInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -1862,7 +1793,6 @@ export type CredentialUncheckedCreateWithoutHolderInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -1926,7 +1856,6 @@ export type CredentialCreateWithoutIssuerStaffInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -1964,7 +1893,6 @@ export type CredentialUncheckedCreateWithoutIssuerStaffInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -2028,7 +1956,6 @@ export type CredentialCreateWithoutPreparedByInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -2066,7 +1993,6 @@ export type CredentialUncheckedCreateWithoutPreparedByInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -2130,7 +2056,6 @@ export type CredentialCreateWithoutReviewedByInput = {
   preparedBy?: Prisma.UserCreateNestedOneWithoutPreparedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -2168,7 +2093,6 @@ export type CredentialUncheckedCreateWithoutReviewedByInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -2232,7 +2156,6 @@ export type CredentialCreateWithoutApprovedByInput = {
   preparedBy?: Prisma.UserCreateNestedOneWithoutPreparedCredentialsInput
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -2270,7 +2193,6 @@ export type CredentialUncheckedCreateWithoutApprovedByInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -2346,7 +2268,6 @@ export type CredentialScalarWhereInput = {
   reviewedAt?: Prisma.DateTimeNullableFilter<"Credential"> | Date | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"Credential"> | Date | string | null
   requestId?: Prisma.StringNullableFilter<"Credential"> | string | null
-  batchId?: Prisma.StringNullableFilter<"Credential"> | string | null
   version?: Prisma.IntFilter<"Credential"> | number
   parentCredentialId?: Prisma.StringNullableFilter<"Credential"> | string | null
   replacedById?: Prisma.StringNullableFilter<"Credential"> | string | null
@@ -2478,7 +2399,6 @@ export type CredentialCreateWithoutVersionsInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
   replaces?: Prisma.CredentialCreateNestedOneWithoutReplacedByInput
@@ -2516,7 +2436,6 @@ export type CredentialUncheckedCreateWithoutVersionsInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -2575,7 +2494,6 @@ export type CredentialCreateWithoutParentCredentialInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
   replaces?: Prisma.CredentialCreateNestedOneWithoutReplacedByInput
@@ -2613,7 +2531,6 @@ export type CredentialUncheckedCreateWithoutParentCredentialInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   replacedById?: string | null
   revokedReason?: string | null
@@ -2677,7 +2594,6 @@ export type CredentialCreateWithoutReplacesInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -2715,7 +2631,6 @@ export type CredentialUncheckedCreateWithoutReplacesInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -2774,7 +2689,6 @@ export type CredentialCreateWithoutReplacedByInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replaces?: Prisma.CredentialCreateNestedOneWithoutReplacedByInput
@@ -2812,7 +2726,6 @@ export type CredentialUncheckedCreateWithoutReplacedByInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   revokedReason?: string | null
@@ -2882,7 +2795,6 @@ export type CredentialUpdateWithoutVersionsInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
   replaces?: Prisma.CredentialUpdateOneWithoutReplacedByNestedInput
@@ -2920,7 +2832,6 @@ export type CredentialUncheckedUpdateWithoutVersionsInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3001,7 +2912,6 @@ export type CredentialUpdateWithoutReplacesInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -3039,7 +2949,6 @@ export type CredentialUncheckedUpdateWithoutReplacesInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3104,7 +3013,6 @@ export type CredentialUpdateWithoutReplacedByInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replaces?: Prisma.CredentialUpdateOneWithoutReplacedByNestedInput
@@ -3142,7 +3050,6 @@ export type CredentialUncheckedUpdateWithoutReplacedByInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revokedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3196,7 +3103,6 @@ export type CredentialCreateWithoutShareLinksInput = {
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
   request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -3234,7 +3140,6 @@ export type CredentialUncheckedCreateWithoutShareLinksInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -3304,7 +3209,6 @@ export type CredentialUpdateWithoutShareLinksInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -3342,7 +3246,6 @@ export type CredentialUncheckedUpdateWithoutShareLinksInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3395,7 +3298,6 @@ export type CredentialCreateWithoutRequestInput = {
   preparedBy?: Prisma.UserCreateNestedOneWithoutPreparedCredentialsInput
   reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
   approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
-  batch?: Prisma.CredentialBatchCreateNestedOneWithoutCredentialsInput
   parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
   versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
   replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
@@ -3433,7 +3335,6 @@ export type CredentialUncheckedCreateWithoutRequestInput = {
   submittedAt?: Date | string | null
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -3503,7 +3404,6 @@ export type CredentialUpdateWithoutRequestInput = {
   preparedBy?: Prisma.UserUpdateOneWithoutPreparedCredentialsNestedInput
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -3541,7 +3441,6 @@ export type CredentialUncheckedUpdateWithoutRequestInput = {
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3555,124 +3454,6 @@ export type CredentialUncheckedUpdateWithoutRequestInput = {
   versions?: Prisma.CredentialUncheckedUpdateManyWithoutParentCredentialNestedInput
   replaces?: Prisma.CredentialUncheckedUpdateOneWithoutReplacedByNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutCredentialNestedInput
-}
-
-export type CredentialCreateWithoutBatchInput = {
-  id?: string
-  credentialId?: string
-  issuedByName?: string | null
-  issuedByEmail?: string | null
-  issuedByPosition?: string | null
-  issuedByDepartment?: string | null
-  studentName: string
-  studentId: string
-  faculty?: string | null
-  major?: string | null
-  documentTitle: string
-  issuedAt: Date | string
-  fileName: string
-  fileSize: number
-  mimeType: string
-  storagePath: string
-  documentHash: string
-  status?: $Enums.CredentialStatus
-  workflowStatus?: $Enums.CredentialWorkflowStatus
-  workflowNote?: string | null
-  submittedAt?: Date | string | null
-  reviewedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  version?: number
-  revokedReason?: string | null
-  revokedAt?: Date | string | null
-  network?: string | null
-  transactionHash?: string | null
-  blockNumber?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  issuer: Prisma.UserCreateNestedOneWithoutIssuedCredentialsInput
-  holder: Prisma.UserCreateNestedOneWithoutOwnedCredentialsInput
-  issuerStaff?: Prisma.UserCreateNestedOneWithoutStaffIssuedCredentialsInput
-  preparedBy?: Prisma.UserCreateNestedOneWithoutPreparedCredentialsInput
-  reviewedBy?: Prisma.UserCreateNestedOneWithoutReviewedCredentialsInput
-  approvedBy?: Prisma.UserCreateNestedOneWithoutApprovedCredentialsInput
-  request?: Prisma.DocumentRequestCreateNestedOneWithoutCredentialInput
-  parentCredential?: Prisma.CredentialCreateNestedOneWithoutVersionsInput
-  versions?: Prisma.CredentialCreateNestedManyWithoutParentCredentialInput
-  replacedBy?: Prisma.CredentialCreateNestedOneWithoutReplacesInput
-  replaces?: Prisma.CredentialCreateNestedOneWithoutReplacedByInput
-  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutCredentialInput
-}
-
-export type CredentialUncheckedCreateWithoutBatchInput = {
-  id?: string
-  credentialId?: string
-  issuerId: string
-  holderId: string
-  issuerStaffId?: string | null
-  issuedByName?: string | null
-  issuedByEmail?: string | null
-  issuedByPosition?: string | null
-  issuedByDepartment?: string | null
-  studentName: string
-  studentId: string
-  faculty?: string | null
-  major?: string | null
-  documentTitle: string
-  issuedAt: Date | string
-  fileName: string
-  fileSize: number
-  mimeType: string
-  storagePath: string
-  documentHash: string
-  status?: $Enums.CredentialStatus
-  workflowStatus?: $Enums.CredentialWorkflowStatus
-  preparedById?: string | null
-  reviewedById?: string | null
-  approvedById?: string | null
-  workflowNote?: string | null
-  submittedAt?: Date | string | null
-  reviewedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  requestId?: string | null
-  version?: number
-  parentCredentialId?: string | null
-  replacedById?: string | null
-  revokedReason?: string | null
-  revokedAt?: Date | string | null
-  network?: string | null
-  transactionHash?: string | null
-  blockNumber?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  versions?: Prisma.CredentialUncheckedCreateNestedManyWithoutParentCredentialInput
-  replaces?: Prisma.CredentialUncheckedCreateNestedOneWithoutReplacedByInput
-  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutCredentialInput
-}
-
-export type CredentialCreateOrConnectWithoutBatchInput = {
-  where: Prisma.CredentialWhereUniqueInput
-  create: Prisma.XOR<Prisma.CredentialCreateWithoutBatchInput, Prisma.CredentialUncheckedCreateWithoutBatchInput>
-}
-
-export type CredentialCreateManyBatchInputEnvelope = {
-  data: Prisma.CredentialCreateManyBatchInput | Prisma.CredentialCreateManyBatchInput[]
-  skipDuplicates?: boolean
-}
-
-export type CredentialUpsertWithWhereUniqueWithoutBatchInput = {
-  where: Prisma.CredentialWhereUniqueInput
-  update: Prisma.XOR<Prisma.CredentialUpdateWithoutBatchInput, Prisma.CredentialUncheckedUpdateWithoutBatchInput>
-  create: Prisma.XOR<Prisma.CredentialCreateWithoutBatchInput, Prisma.CredentialUncheckedCreateWithoutBatchInput>
-}
-
-export type CredentialUpdateWithWhereUniqueWithoutBatchInput = {
-  where: Prisma.CredentialWhereUniqueInput
-  data: Prisma.XOR<Prisma.CredentialUpdateWithoutBatchInput, Prisma.CredentialUncheckedUpdateWithoutBatchInput>
-}
-
-export type CredentialUpdateManyWithWhereWithoutBatchInput = {
-  where: Prisma.CredentialScalarWhereInput
-  data: Prisma.XOR<Prisma.CredentialUpdateManyMutationInput, Prisma.CredentialUncheckedUpdateManyWithoutBatchInput>
 }
 
 export type CredentialCreateManyIssuerInput = {
@@ -3705,7 +3486,6 @@ export type CredentialCreateManyIssuerInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -3748,7 +3528,6 @@ export type CredentialCreateManyHolderInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -3791,7 +3570,6 @@ export type CredentialCreateManyIssuerStaffInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -3834,7 +3612,6 @@ export type CredentialCreateManyPreparedByInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -3877,7 +3654,6 @@ export type CredentialCreateManyReviewedByInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -3920,7 +3696,6 @@ export type CredentialCreateManyApprovedByInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   parentCredentialId?: string | null
   replacedById?: string | null
@@ -3971,7 +3746,6 @@ export type CredentialUpdateWithoutIssuerInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -4009,7 +3783,6 @@ export type CredentialUncheckedUpdateWithoutIssuerInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4055,7 +3828,6 @@ export type CredentialUncheckedUpdateManyWithoutIssuerInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4106,7 +3878,6 @@ export type CredentialUpdateWithoutHolderInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -4144,7 +3915,6 @@ export type CredentialUncheckedUpdateWithoutHolderInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4190,7 +3960,6 @@ export type CredentialUncheckedUpdateManyWithoutHolderInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4241,7 +4010,6 @@ export type CredentialUpdateWithoutIssuerStaffInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -4279,7 +4047,6 @@ export type CredentialUncheckedUpdateWithoutIssuerStaffInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4325,7 +4092,6 @@ export type CredentialUncheckedUpdateManyWithoutIssuerStaffInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4376,7 +4142,6 @@ export type CredentialUpdateWithoutPreparedByInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -4414,7 +4179,6 @@ export type CredentialUncheckedUpdateWithoutPreparedByInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4460,7 +4224,6 @@ export type CredentialUncheckedUpdateManyWithoutPreparedByInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4511,7 +4274,6 @@ export type CredentialUpdateWithoutReviewedByInput = {
   preparedBy?: Prisma.UserUpdateOneWithoutPreparedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -4549,7 +4311,6 @@ export type CredentialUncheckedUpdateWithoutReviewedByInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4595,7 +4356,6 @@ export type CredentialUncheckedUpdateManyWithoutReviewedByInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4646,7 +4406,6 @@ export type CredentialUpdateWithoutApprovedByInput = {
   preparedBy?: Prisma.UserUpdateOneWithoutPreparedCredentialsNestedInput
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
@@ -4684,7 +4443,6 @@ export type CredentialUncheckedUpdateWithoutApprovedByInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4730,7 +4488,6 @@ export type CredentialUncheckedUpdateManyWithoutApprovedByInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4774,7 +4531,6 @@ export type CredentialCreateManyParentCredentialInput = {
   reviewedAt?: Date | string | null
   approvedAt?: Date | string | null
   requestId?: string | null
-  batchId?: string | null
   version?: number
   replacedById?: string | null
   revokedReason?: string | null
@@ -4825,7 +4581,6 @@ export type CredentialUpdateWithoutParentCredentialInput = {
   reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
   approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
   request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  batch?: Prisma.CredentialBatchUpdateOneWithoutCredentialsNestedInput
   versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
   replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
   replaces?: Prisma.CredentialUpdateOneWithoutReplacedByNestedInput
@@ -4863,7 +4618,6 @@ export type CredentialUncheckedUpdateWithoutParentCredentialInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revokedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4909,186 +4663,7 @@ export type CredentialUncheckedUpdateManyWithoutParentCredentialInput = {
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  revokedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  network?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transactionHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  blockNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type CredentialCreateManyBatchInput = {
-  id?: string
-  credentialId?: string
-  issuerId: string
-  holderId: string
-  issuerStaffId?: string | null
-  issuedByName?: string | null
-  issuedByEmail?: string | null
-  issuedByPosition?: string | null
-  issuedByDepartment?: string | null
-  studentName: string
-  studentId: string
-  faculty?: string | null
-  major?: string | null
-  documentTitle: string
-  issuedAt: Date | string
-  fileName: string
-  fileSize: number
-  mimeType: string
-  storagePath: string
-  documentHash: string
-  status?: $Enums.CredentialStatus
-  workflowStatus?: $Enums.CredentialWorkflowStatus
-  preparedById?: string | null
-  reviewedById?: string | null
-  approvedById?: string | null
-  workflowNote?: string | null
-  submittedAt?: Date | string | null
-  reviewedAt?: Date | string | null
-  approvedAt?: Date | string | null
-  requestId?: string | null
-  version?: number
-  parentCredentialId?: string | null
-  replacedById?: string | null
-  revokedReason?: string | null
-  revokedAt?: Date | string | null
-  network?: string | null
-  transactionHash?: string | null
-  blockNumber?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type CredentialUpdateWithoutBatchInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  credentialId?: Prisma.StringFieldUpdateOperationsInput | string
-  issuedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  studentName?: Prisma.StringFieldUpdateOperationsInput | string
-  studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
-  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
-  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
-  documentHash?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCredentialStatusFieldUpdateOperationsInput | $Enums.CredentialStatus
-  workflowStatus?: Prisma.EnumCredentialWorkflowStatusFieldUpdateOperationsInput | $Enums.CredentialWorkflowStatus
-  workflowNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  version?: Prisma.IntFieldUpdateOperationsInput | number
-  revokedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  network?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transactionHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  blockNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  issuer?: Prisma.UserUpdateOneRequiredWithoutIssuedCredentialsNestedInput
-  holder?: Prisma.UserUpdateOneRequiredWithoutOwnedCredentialsNestedInput
-  issuerStaff?: Prisma.UserUpdateOneWithoutStaffIssuedCredentialsNestedInput
-  preparedBy?: Prisma.UserUpdateOneWithoutPreparedCredentialsNestedInput
-  reviewedBy?: Prisma.UserUpdateOneWithoutReviewedCredentialsNestedInput
-  approvedBy?: Prisma.UserUpdateOneWithoutApprovedCredentialsNestedInput
-  request?: Prisma.DocumentRequestUpdateOneWithoutCredentialNestedInput
-  parentCredential?: Prisma.CredentialUpdateOneWithoutVersionsNestedInput
-  versions?: Prisma.CredentialUpdateManyWithoutParentCredentialNestedInput
-  replacedBy?: Prisma.CredentialUpdateOneWithoutReplacesNestedInput
-  replaces?: Prisma.CredentialUpdateOneWithoutReplacedByNestedInput
-  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutCredentialNestedInput
-}
-
-export type CredentialUncheckedUpdateWithoutBatchInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  credentialId?: Prisma.StringFieldUpdateOperationsInput | string
-  issuerId?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.StringFieldUpdateOperationsInput | string
-  issuerStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  studentName?: Prisma.StringFieldUpdateOperationsInput | string
-  studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
-  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
-  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
-  documentHash?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCredentialStatusFieldUpdateOperationsInput | $Enums.CredentialStatus
-  workflowStatus?: Prisma.EnumCredentialWorkflowStatusFieldUpdateOperationsInput | $Enums.CredentialWorkflowStatus
-  preparedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workflowNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  version?: Prisma.IntFieldUpdateOperationsInput | number
-  parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  revokedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  network?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transactionHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  blockNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versions?: Prisma.CredentialUncheckedUpdateManyWithoutParentCredentialNestedInput
-  replaces?: Prisma.CredentialUncheckedUpdateOneWithoutReplacedByNestedInput
-  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutCredentialNestedInput
-}
-
-export type CredentialUncheckedUpdateManyWithoutBatchInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  credentialId?: Prisma.StringFieldUpdateOperationsInput | string
-  issuerId?: Prisma.StringFieldUpdateOperationsInput | string
-  holderId?: Prisma.StringFieldUpdateOperationsInput | string
-  issuerStaffId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  issuedByDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  studentName?: Prisma.StringFieldUpdateOperationsInput | string
-  studentId?: Prisma.StringFieldUpdateOperationsInput | string
-  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  documentTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  fileSize?: Prisma.IntFieldUpdateOperationsInput | number
-  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
-  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
-  documentHash?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.EnumCredentialStatusFieldUpdateOperationsInput | $Enums.CredentialStatus
-  workflowStatus?: Prisma.EnumCredentialWorkflowStatusFieldUpdateOperationsInput | $Enums.CredentialWorkflowStatus
-  preparedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  reviewedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workflowNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  requestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  version?: Prisma.IntFieldUpdateOperationsInput | number
-  parentCredentialId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   replacedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revokedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revokedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5170,7 +4745,6 @@ export type CredentialSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   reviewedAt?: boolean
   approvedAt?: boolean
   requestId?: boolean
-  batchId?: boolean
   version?: boolean
   parentCredentialId?: boolean
   replacedById?: boolean
@@ -5188,7 +4762,6 @@ export type CredentialSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   reviewedBy?: boolean | Prisma.Credential$reviewedByArgs<ExtArgs>
   approvedBy?: boolean | Prisma.Credential$approvedByArgs<ExtArgs>
   request?: boolean | Prisma.Credential$requestArgs<ExtArgs>
-  batch?: boolean | Prisma.Credential$batchArgs<ExtArgs>
   parentCredential?: boolean | Prisma.Credential$parentCredentialArgs<ExtArgs>
   versions?: boolean | Prisma.Credential$versionsArgs<ExtArgs>
   replacedBy?: boolean | Prisma.Credential$replacedByArgs<ExtArgs>
@@ -5228,7 +4801,6 @@ export type CredentialSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   reviewedAt?: boolean
   approvedAt?: boolean
   requestId?: boolean
-  batchId?: boolean
   version?: boolean
   parentCredentialId?: boolean
   replacedById?: boolean
@@ -5246,7 +4818,6 @@ export type CredentialSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   reviewedBy?: boolean | Prisma.Credential$reviewedByArgs<ExtArgs>
   approvedBy?: boolean | Prisma.Credential$approvedByArgs<ExtArgs>
   request?: boolean | Prisma.Credential$requestArgs<ExtArgs>
-  batch?: boolean | Prisma.Credential$batchArgs<ExtArgs>
   parentCredential?: boolean | Prisma.Credential$parentCredentialArgs<ExtArgs>
   replacedBy?: boolean | Prisma.Credential$replacedByArgs<ExtArgs>
 }, ExtArgs["result"]["credential"]>
@@ -5282,7 +4853,6 @@ export type CredentialSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   reviewedAt?: boolean
   approvedAt?: boolean
   requestId?: boolean
-  batchId?: boolean
   version?: boolean
   parentCredentialId?: boolean
   replacedById?: boolean
@@ -5300,7 +4870,6 @@ export type CredentialSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   reviewedBy?: boolean | Prisma.Credential$reviewedByArgs<ExtArgs>
   approvedBy?: boolean | Prisma.Credential$approvedByArgs<ExtArgs>
   request?: boolean | Prisma.Credential$requestArgs<ExtArgs>
-  batch?: boolean | Prisma.Credential$batchArgs<ExtArgs>
   parentCredential?: boolean | Prisma.Credential$parentCredentialArgs<ExtArgs>
   replacedBy?: boolean | Prisma.Credential$replacedByArgs<ExtArgs>
 }, ExtArgs["result"]["credential"]>
@@ -5336,7 +4905,6 @@ export type CredentialSelectScalar = {
   reviewedAt?: boolean
   approvedAt?: boolean
   requestId?: boolean
-  batchId?: boolean
   version?: boolean
   parentCredentialId?: boolean
   replacedById?: boolean
@@ -5349,7 +4917,7 @@ export type CredentialSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CredentialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "credentialId" | "issuerId" | "holderId" | "issuerStaffId" | "issuedByName" | "issuedByEmail" | "issuedByPosition" | "issuedByDepartment" | "studentName" | "studentId" | "faculty" | "major" | "documentTitle" | "issuedAt" | "fileName" | "fileSize" | "mimeType" | "storagePath" | "documentHash" | "status" | "workflowStatus" | "preparedById" | "reviewedById" | "approvedById" | "workflowNote" | "submittedAt" | "reviewedAt" | "approvedAt" | "requestId" | "batchId" | "version" | "parentCredentialId" | "replacedById" | "revokedReason" | "revokedAt" | "network" | "transactionHash" | "blockNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["credential"]>
+export type CredentialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "credentialId" | "issuerId" | "holderId" | "issuerStaffId" | "issuedByName" | "issuedByEmail" | "issuedByPosition" | "issuedByDepartment" | "studentName" | "studentId" | "faculty" | "major" | "documentTitle" | "issuedAt" | "fileName" | "fileSize" | "mimeType" | "storagePath" | "documentHash" | "status" | "workflowStatus" | "preparedById" | "reviewedById" | "approvedById" | "workflowNote" | "submittedAt" | "reviewedAt" | "approvedAt" | "requestId" | "version" | "parentCredentialId" | "replacedById" | "revokedReason" | "revokedAt" | "network" | "transactionHash" | "blockNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["credential"]>
 export type CredentialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   issuer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   holder?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -5358,7 +4926,6 @@ export type CredentialInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   reviewedBy?: boolean | Prisma.Credential$reviewedByArgs<ExtArgs>
   approvedBy?: boolean | Prisma.Credential$approvedByArgs<ExtArgs>
   request?: boolean | Prisma.Credential$requestArgs<ExtArgs>
-  batch?: boolean | Prisma.Credential$batchArgs<ExtArgs>
   parentCredential?: boolean | Prisma.Credential$parentCredentialArgs<ExtArgs>
   versions?: boolean | Prisma.Credential$versionsArgs<ExtArgs>
   replacedBy?: boolean | Prisma.Credential$replacedByArgs<ExtArgs>
@@ -5374,7 +4941,6 @@ export type CredentialIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.E
   reviewedBy?: boolean | Prisma.Credential$reviewedByArgs<ExtArgs>
   approvedBy?: boolean | Prisma.Credential$approvedByArgs<ExtArgs>
   request?: boolean | Prisma.Credential$requestArgs<ExtArgs>
-  batch?: boolean | Prisma.Credential$batchArgs<ExtArgs>
   parentCredential?: boolean | Prisma.Credential$parentCredentialArgs<ExtArgs>
   replacedBy?: boolean | Prisma.Credential$replacedByArgs<ExtArgs>
 }
@@ -5386,7 +4952,6 @@ export type CredentialIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   reviewedBy?: boolean | Prisma.Credential$reviewedByArgs<ExtArgs>
   approvedBy?: boolean | Prisma.Credential$approvedByArgs<ExtArgs>
   request?: boolean | Prisma.Credential$requestArgs<ExtArgs>
-  batch?: boolean | Prisma.Credential$batchArgs<ExtArgs>
   parentCredential?: boolean | Prisma.Credential$parentCredentialArgs<ExtArgs>
   replacedBy?: boolean | Prisma.Credential$replacedByArgs<ExtArgs>
 }
@@ -5401,7 +4966,6 @@ export type $CredentialPayload<ExtArgs extends runtime.Types.Extensions.Internal
     reviewedBy: Prisma.$UserPayload<ExtArgs> | null
     approvedBy: Prisma.$UserPayload<ExtArgs> | null
     request: Prisma.$DocumentRequestPayload<ExtArgs> | null
-    batch: Prisma.$CredentialBatchPayload<ExtArgs> | null
     parentCredential: Prisma.$CredentialPayload<ExtArgs> | null
     versions: Prisma.$CredentialPayload<ExtArgs>[]
     replacedBy: Prisma.$CredentialPayload<ExtArgs> | null
@@ -5439,7 +5003,6 @@ export type $CredentialPayload<ExtArgs extends runtime.Types.Extensions.Internal
     reviewedAt: Date | null
     approvedAt: Date | null
     requestId: string | null
-    batchId: string | null
     version: number
     parentCredentialId: string | null
     replacedById: string | null
@@ -5851,7 +5414,6 @@ export interface Prisma__CredentialClient<T, Null = never, ExtArgs extends runti
   reviewedBy<T extends Prisma.Credential$reviewedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Credential$reviewedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   approvedBy<T extends Prisma.Credential$approvedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Credential$approvedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   request<T extends Prisma.Credential$requestArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Credential$requestArgs<ExtArgs>>): Prisma.Prisma__DocumentRequestClient<runtime.Types.Result.GetResult<Prisma.$DocumentRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  batch<T extends Prisma.Credential$batchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Credential$batchArgs<ExtArgs>>): Prisma.Prisma__CredentialBatchClient<runtime.Types.Result.GetResult<Prisma.$CredentialBatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   parentCredential<T extends Prisma.Credential$parentCredentialArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Credential$parentCredentialArgs<ExtArgs>>): Prisma.Prisma__CredentialClient<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   versions<T extends Prisma.Credential$versionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Credential$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   replacedBy<T extends Prisma.Credential$replacedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Credential$replacedByArgs<ExtArgs>>): Prisma.Prisma__CredentialClient<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -5916,7 +5478,6 @@ export interface CredentialFieldRefs {
   readonly reviewedAt: Prisma.FieldRef<"Credential", 'DateTime'>
   readonly approvedAt: Prisma.FieldRef<"Credential", 'DateTime'>
   readonly requestId: Prisma.FieldRef<"Credential", 'String'>
-  readonly batchId: Prisma.FieldRef<"Credential", 'String'>
   readonly version: Prisma.FieldRef<"Credential", 'Int'>
   readonly parentCredentialId: Prisma.FieldRef<"Credential", 'String'>
   readonly replacedById: Prisma.FieldRef<"Credential", 'String'>
@@ -6420,25 +5981,6 @@ export type Credential$requestArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   include?: Prisma.DocumentRequestInclude<ExtArgs> | null
   where?: Prisma.DocumentRequestWhereInput
-}
-
-/**
- * Credential.batch
- */
-export type Credential$batchArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CredentialBatch
-   */
-  select?: Prisma.CredentialBatchSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CredentialBatch
-   */
-  omit?: Prisma.CredentialBatchOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CredentialBatchInclude<ExtArgs> | null
-  where?: Prisma.CredentialBatchWhereInput
 }
 
 /**
