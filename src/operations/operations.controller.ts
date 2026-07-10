@@ -1,17 +1,32 @@
-import { Controller, Get, Param, Patch, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Req,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import type { AuthenticatedRequest } from '../auth/types/authenticated-request.type';
-import { Phase3Service } from './phase3.service';
+import { OperationsService } from './operations.service';
 
-@Controller('phase3')
+/**
+ * ใช้ /operations เป็น route หลัก
+ * และคง /phase3 ชั่วคราวเพื่อไม่ให้ Frontend เวอร์ชันเดิมเสียทันที
+ */
+@Controller(['operations', 'phase3'])
 @UseGuards(JwtAuthGuard, RolesGuard)
-export class Phase3Controller {
-  constructor(private readonly service: Phase3Service) {}
+export class OperationsController {
+  constructor(private readonly service: OperationsService) {}
 
   private user(request: AuthenticatedRequest) {
-    if (!request.user) throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งาน');
+    if (!request.user) {
+      throw new UnauthorizedException('ไม่พบข้อมูลผู้ใช้งาน');
+    }
+
     return request.user;
   }
 

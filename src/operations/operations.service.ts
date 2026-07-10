@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
-export class Phase3Service {
+export class OperationsService {
   constructor(private readonly prisma: PrismaService) {}
 
   private async universityId(userId: string) {

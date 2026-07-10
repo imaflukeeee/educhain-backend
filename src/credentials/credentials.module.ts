@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from '../auth/auth.module';
+import { SecurityModule } from '../security/security.module';
 import { BlockchainModule } from '../blockchain/blockchain.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { StorageModule } from '../storage/storage.module';
@@ -14,7 +14,7 @@ import { CredentialsService } from './credentials.service';
   imports: [
     PrismaModule,
     StorageModule,
-    AuthModule,
+    SecurityModule,
 
     /**
      * ใช้ BlockchainService สำหรับบันทึก documentHash ลง Smart Contract

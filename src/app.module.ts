@@ -8,7 +8,7 @@ import { UsersModule } from './users/users.module';
 import { BlockchainModule } from './blockchain/blockchain.module';
 import { UniversitiesModule } from './universities/universities.module';
 import { StudentsModule } from './students/students.module';
-import { Phase3Module } from './phase3/phase3.module';
+import { OperationsModule } from './operations/operations.module';
 import { WorkflowModule } from './workflow/workflow.module';
 
 /**
@@ -31,7 +31,7 @@ import { WorkflowModule } from './workflow/workflow.module';
     BlockchainModule,
     UniversitiesModule,
     StudentsModule,
-    Phase3Module,
+    OperationsModule,
     WorkflowModule,
   ],
 })
