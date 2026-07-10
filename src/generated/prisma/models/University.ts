@@ -250,6 +250,10 @@ export type UniversityWhereInput = {
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   users?: Prisma.UserListRelationFilter
   faculties?: Prisma.FacultyListRelationFilter
+  studentRecords?: Prisma.StudentRecordListRelationFilter
+  claimAttempts?: Prisma.ClaimAttemptListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }
 
 export type UniversityOrderByWithRelationInput = {
@@ -270,6 +274,10 @@ export type UniversityOrderByWithRelationInput = {
   owner?: Prisma.UserOrderByWithRelationInput
   users?: Prisma.UserOrderByRelationAggregateInput
   faculties?: Prisma.FacultyOrderByRelationAggregateInput
+  studentRecords?: Prisma.StudentRecordOrderByRelationAggregateInput
+  claimAttempts?: Prisma.ClaimAttemptOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
 }
 
 export type UniversityWhereUniqueInput = Prisma.AtLeast<{
@@ -293,6 +301,10 @@ export type UniversityWhereUniqueInput = Prisma.AtLeast<{
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   users?: Prisma.UserListRelationFilter
   faculties?: Prisma.FacultyListRelationFilter
+  studentRecords?: Prisma.StudentRecordListRelationFilter
+  claimAttempts?: Prisma.ClaimAttemptListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }, "id" | "ownerUserId">
 
 export type UniversityOrderByWithAggregationInput = {
@@ -349,6 +361,10 @@ export type UniversityCreateInput = {
   owner: Prisma.UserCreateNestedOneWithoutOwnedUniversityInput
   users?: Prisma.UserCreateNestedManyWithoutUniversityInput
   faculties?: Prisma.FacultyCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityUncheckedCreateInput = {
@@ -367,6 +383,10 @@ export type UniversityUncheckedCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityInput
   faculties?: Prisma.FacultyUncheckedCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityUpdateInput = {
@@ -385,6 +405,10 @@ export type UniversityUpdateInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutOwnedUniversityNestedInput
   users?: Prisma.UserUpdateManyWithoutUniversityNestedInput
   faculties?: Prisma.FacultyUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityUncheckedUpdateInput = {
@@ -403,6 +427,10 @@ export type UniversityUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutUniversityNestedInput
   faculties?: Prisma.FacultyUncheckedUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityCreateManyInput = {
@@ -627,6 +655,66 @@ export type UniversityUpdateOneRequiredWithoutFacultiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UniversityUpdateToOneWithWhereWithoutFacultiesInput, Prisma.UniversityUpdateWithoutFacultiesInput>, Prisma.UniversityUncheckedUpdateWithoutFacultiesInput>
 }
 
+export type UniversityCreateNestedOneWithoutStudentRecordsInput = {
+  create?: Prisma.XOR<Prisma.UniversityCreateWithoutStudentRecordsInput, Prisma.UniversityUncheckedCreateWithoutStudentRecordsInput>
+  connectOrCreate?: Prisma.UniversityCreateOrConnectWithoutStudentRecordsInput
+  connect?: Prisma.UniversityWhereUniqueInput
+}
+
+export type UniversityUpdateOneRequiredWithoutStudentRecordsNestedInput = {
+  create?: Prisma.XOR<Prisma.UniversityCreateWithoutStudentRecordsInput, Prisma.UniversityUncheckedCreateWithoutStudentRecordsInput>
+  connectOrCreate?: Prisma.UniversityCreateOrConnectWithoutStudentRecordsInput
+  upsert?: Prisma.UniversityUpsertWithoutStudentRecordsInput
+  connect?: Prisma.UniversityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UniversityUpdateToOneWithWhereWithoutStudentRecordsInput, Prisma.UniversityUpdateWithoutStudentRecordsInput>, Prisma.UniversityUncheckedUpdateWithoutStudentRecordsInput>
+}
+
+export type UniversityCreateNestedOneWithoutClaimAttemptsInput = {
+  create?: Prisma.XOR<Prisma.UniversityCreateWithoutClaimAttemptsInput, Prisma.UniversityUncheckedCreateWithoutClaimAttemptsInput>
+  connectOrCreate?: Prisma.UniversityCreateOrConnectWithoutClaimAttemptsInput
+  connect?: Prisma.UniversityWhereUniqueInput
+}
+
+export type UniversityUpdateOneRequiredWithoutClaimAttemptsNestedInput = {
+  create?: Prisma.XOR<Prisma.UniversityCreateWithoutClaimAttemptsInput, Prisma.UniversityUncheckedCreateWithoutClaimAttemptsInput>
+  connectOrCreate?: Prisma.UniversityCreateOrConnectWithoutClaimAttemptsInput
+  upsert?: Prisma.UniversityUpsertWithoutClaimAttemptsInput
+  connect?: Prisma.UniversityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UniversityUpdateToOneWithWhereWithoutClaimAttemptsInput, Prisma.UniversityUpdateWithoutClaimAttemptsInput>, Prisma.UniversityUncheckedUpdateWithoutClaimAttemptsInput>
+}
+
+export type UniversityCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UniversityCreateWithoutNotificationsInput, Prisma.UniversityUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UniversityCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UniversityWhereUniqueInput
+}
+
+export type UniversityUpdateOneWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UniversityCreateWithoutNotificationsInput, Prisma.UniversityUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UniversityCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UniversityUpsertWithoutNotificationsInput
+  disconnect?: Prisma.UniversityWhereInput | boolean
+  delete?: Prisma.UniversityWhereInput | boolean
+  connect?: Prisma.UniversityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UniversityUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UniversityUpdateWithoutNotificationsInput>, Prisma.UniversityUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UniversityCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.UniversityCreateWithoutAuditLogsInput, Prisma.UniversityUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UniversityCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.UniversityWhereUniqueInput
+}
+
+export type UniversityUpdateOneWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UniversityCreateWithoutAuditLogsInput, Prisma.UniversityUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UniversityCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.UniversityUpsertWithoutAuditLogsInput
+  disconnect?: Prisma.UniversityWhereInput | boolean
+  delete?: Prisma.UniversityWhereInput | boolean
+  connect?: Prisma.UniversityWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UniversityUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.UniversityUpdateWithoutAuditLogsInput>, Prisma.UniversityUncheckedUpdateWithoutAuditLogsInput>
+}
+
 export type UniversityCreateWithoutUsersInput = {
   id?: string
   phone?: string | null
@@ -642,6 +730,10 @@ export type UniversityCreateWithoutUsersInput = {
   master: Prisma.UniversityMasterCreateNestedOneWithoutUniversitiesInput
   owner: Prisma.UserCreateNestedOneWithoutOwnedUniversityInput
   faculties?: Prisma.FacultyCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityUncheckedCreateWithoutUsersInput = {
@@ -659,6 +751,10 @@ export type UniversityUncheckedCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   faculties?: Prisma.FacultyUncheckedCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityCreateOrConnectWithoutUsersInput = {
@@ -681,6 +777,10 @@ export type UniversityCreateWithoutOwnerInput = {
   master: Prisma.UniversityMasterCreateNestedOneWithoutUniversitiesInput
   users?: Prisma.UserCreateNestedManyWithoutUniversityInput
   faculties?: Prisma.FacultyCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityUncheckedCreateWithoutOwnerInput = {
@@ -698,6 +798,10 @@ export type UniversityUncheckedCreateWithoutOwnerInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityInput
   faculties?: Prisma.FacultyUncheckedCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityCreateOrConnectWithoutOwnerInput = {
@@ -731,6 +835,10 @@ export type UniversityUpdateWithoutUsersInput = {
   master?: Prisma.UniversityMasterUpdateOneRequiredWithoutUniversitiesNestedInput
   owner?: Prisma.UserUpdateOneRequiredWithoutOwnedUniversityNestedInput
   faculties?: Prisma.FacultyUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityUncheckedUpdateWithoutUsersInput = {
@@ -748,6 +856,10 @@ export type UniversityUncheckedUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   faculties?: Prisma.FacultyUncheckedUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityUpsertWithoutOwnerInput = {
@@ -776,6 +888,10 @@ export type UniversityUpdateWithoutOwnerInput = {
   master?: Prisma.UniversityMasterUpdateOneRequiredWithoutUniversitiesNestedInput
   users?: Prisma.UserUpdateManyWithoutUniversityNestedInput
   faculties?: Prisma.FacultyUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityUncheckedUpdateWithoutOwnerInput = {
@@ -793,6 +909,10 @@ export type UniversityUncheckedUpdateWithoutOwnerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutUniversityNestedInput
   faculties?: Prisma.FacultyUncheckedUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityCreateWithoutMasterInput = {
@@ -810,6 +930,10 @@ export type UniversityCreateWithoutMasterInput = {
   owner: Prisma.UserCreateNestedOneWithoutOwnedUniversityInput
   users?: Prisma.UserCreateNestedManyWithoutUniversityInput
   faculties?: Prisma.FacultyCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityUncheckedCreateWithoutMasterInput = {
@@ -827,6 +951,10 @@ export type UniversityUncheckedCreateWithoutMasterInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityInput
   faculties?: Prisma.FacultyUncheckedCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityCreateOrConnectWithoutMasterInput = {
@@ -889,6 +1017,10 @@ export type UniversityCreateWithoutFacultiesInput = {
   master: Prisma.UniversityMasterCreateNestedOneWithoutUniversitiesInput
   owner: Prisma.UserCreateNestedOneWithoutOwnedUniversityInput
   users?: Prisma.UserCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityUncheckedCreateWithoutFacultiesInput = {
@@ -906,6 +1038,10 @@ export type UniversityUncheckedCreateWithoutFacultiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUniversityInput
 }
 
 export type UniversityCreateOrConnectWithoutFacultiesInput = {
@@ -939,6 +1075,10 @@ export type UniversityUpdateWithoutFacultiesInput = {
   master?: Prisma.UniversityMasterUpdateOneRequiredWithoutUniversitiesNestedInput
   owner?: Prisma.UserUpdateOneRequiredWithoutOwnedUniversityNestedInput
   users?: Prisma.UserUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityUncheckedUpdateWithoutFacultiesInput = {
@@ -956,6 +1096,410 @@ export type UniversityUncheckedUpdateWithoutFacultiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUniversityNestedInput
+}
+
+export type UniversityCreateWithoutStudentRecordsInput = {
+  id?: string
+  phone?: string | null
+  website?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  status?: $Enums.UniversityStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  master: Prisma.UniversityMasterCreateNestedOneWithoutUniversitiesInput
+  owner: Prisma.UserCreateNestedOneWithoutOwnedUniversityInput
+  users?: Prisma.UserCreateNestedManyWithoutUniversityInput
+  faculties?: Prisma.FacultyCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUniversityInput
+}
+
+export type UniversityUncheckedCreateWithoutStudentRecordsInput = {
+  id?: string
+  masterId: string
+  ownerUserId: string
+  phone?: string | null
+  website?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  status?: $Enums.UniversityStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityInput
+  faculties?: Prisma.FacultyUncheckedCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUniversityInput
+}
+
+export type UniversityCreateOrConnectWithoutStudentRecordsInput = {
+  where: Prisma.UniversityWhereUniqueInput
+  create: Prisma.XOR<Prisma.UniversityCreateWithoutStudentRecordsInput, Prisma.UniversityUncheckedCreateWithoutStudentRecordsInput>
+}
+
+export type UniversityUpsertWithoutStudentRecordsInput = {
+  update: Prisma.XOR<Prisma.UniversityUpdateWithoutStudentRecordsInput, Prisma.UniversityUncheckedUpdateWithoutStudentRecordsInput>
+  create: Prisma.XOR<Prisma.UniversityCreateWithoutStudentRecordsInput, Prisma.UniversityUncheckedCreateWithoutStudentRecordsInput>
+  where?: Prisma.UniversityWhereInput
+}
+
+export type UniversityUpdateToOneWithWhereWithoutStudentRecordsInput = {
+  where?: Prisma.UniversityWhereInput
+  data: Prisma.XOR<Prisma.UniversityUpdateWithoutStudentRecordsInput, Prisma.UniversityUncheckedUpdateWithoutStudentRecordsInput>
+}
+
+export type UniversityUpdateWithoutStudentRecordsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUniversityStatusFieldUpdateOperationsInput | $Enums.UniversityStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  master?: Prisma.UniversityMasterUpdateOneRequiredWithoutUniversitiesNestedInput
+  owner?: Prisma.UserUpdateOneRequiredWithoutOwnedUniversityNestedInput
+  users?: Prisma.UserUpdateManyWithoutUniversityNestedInput
+  faculties?: Prisma.FacultyUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUniversityNestedInput
+}
+
+export type UniversityUncheckedUpdateWithoutStudentRecordsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  masterId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUniversityStatusFieldUpdateOperationsInput | $Enums.UniversityStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutUniversityNestedInput
+  faculties?: Prisma.FacultyUncheckedUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUniversityNestedInput
+}
+
+export type UniversityCreateWithoutClaimAttemptsInput = {
+  id?: string
+  phone?: string | null
+  website?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  status?: $Enums.UniversityStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  master: Prisma.UniversityMasterCreateNestedOneWithoutUniversitiesInput
+  owner: Prisma.UserCreateNestedOneWithoutOwnedUniversityInput
+  users?: Prisma.UserCreateNestedManyWithoutUniversityInput
+  faculties?: Prisma.FacultyCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUniversityInput
+}
+
+export type UniversityUncheckedCreateWithoutClaimAttemptsInput = {
+  id?: string
+  masterId: string
+  ownerUserId: string
+  phone?: string | null
+  website?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  status?: $Enums.UniversityStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityInput
+  faculties?: Prisma.FacultyUncheckedCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUniversityInput
+}
+
+export type UniversityCreateOrConnectWithoutClaimAttemptsInput = {
+  where: Prisma.UniversityWhereUniqueInput
+  create: Prisma.XOR<Prisma.UniversityCreateWithoutClaimAttemptsInput, Prisma.UniversityUncheckedCreateWithoutClaimAttemptsInput>
+}
+
+export type UniversityUpsertWithoutClaimAttemptsInput = {
+  update: Prisma.XOR<Prisma.UniversityUpdateWithoutClaimAttemptsInput, Prisma.UniversityUncheckedUpdateWithoutClaimAttemptsInput>
+  create: Prisma.XOR<Prisma.UniversityCreateWithoutClaimAttemptsInput, Prisma.UniversityUncheckedCreateWithoutClaimAttemptsInput>
+  where?: Prisma.UniversityWhereInput
+}
+
+export type UniversityUpdateToOneWithWhereWithoutClaimAttemptsInput = {
+  where?: Prisma.UniversityWhereInput
+  data: Prisma.XOR<Prisma.UniversityUpdateWithoutClaimAttemptsInput, Prisma.UniversityUncheckedUpdateWithoutClaimAttemptsInput>
+}
+
+export type UniversityUpdateWithoutClaimAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUniversityStatusFieldUpdateOperationsInput | $Enums.UniversityStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  master?: Prisma.UniversityMasterUpdateOneRequiredWithoutUniversitiesNestedInput
+  owner?: Prisma.UserUpdateOneRequiredWithoutOwnedUniversityNestedInput
+  users?: Prisma.UserUpdateManyWithoutUniversityNestedInput
+  faculties?: Prisma.FacultyUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUniversityNestedInput
+}
+
+export type UniversityUncheckedUpdateWithoutClaimAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  masterId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUniversityStatusFieldUpdateOperationsInput | $Enums.UniversityStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutUniversityNestedInput
+  faculties?: Prisma.FacultyUncheckedUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUniversityNestedInput
+}
+
+export type UniversityCreateWithoutNotificationsInput = {
+  id?: string
+  phone?: string | null
+  website?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  status?: $Enums.UniversityStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  master: Prisma.UniversityMasterCreateNestedOneWithoutUniversitiesInput
+  owner: Prisma.UserCreateNestedOneWithoutOwnedUniversityInput
+  users?: Prisma.UserCreateNestedManyWithoutUniversityInput
+  faculties?: Prisma.FacultyCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUniversityInput
+}
+
+export type UniversityUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  masterId: string
+  ownerUserId: string
+  phone?: string | null
+  website?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  status?: $Enums.UniversityStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityInput
+  faculties?: Prisma.FacultyUncheckedCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUniversityInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUniversityInput
+}
+
+export type UniversityCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UniversityWhereUniqueInput
+  create: Prisma.XOR<Prisma.UniversityCreateWithoutNotificationsInput, Prisma.UniversityUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UniversityUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UniversityUpdateWithoutNotificationsInput, Prisma.UniversityUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UniversityCreateWithoutNotificationsInput, Prisma.UniversityUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UniversityWhereInput
+}
+
+export type UniversityUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UniversityWhereInput
+  data: Prisma.XOR<Prisma.UniversityUpdateWithoutNotificationsInput, Prisma.UniversityUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UniversityUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUniversityStatusFieldUpdateOperationsInput | $Enums.UniversityStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  master?: Prisma.UniversityMasterUpdateOneRequiredWithoutUniversitiesNestedInput
+  owner?: Prisma.UserUpdateOneRequiredWithoutOwnedUniversityNestedInput
+  users?: Prisma.UserUpdateManyWithoutUniversityNestedInput
+  faculties?: Prisma.FacultyUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUniversityNestedInput
+}
+
+export type UniversityUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  masterId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUniversityStatusFieldUpdateOperationsInput | $Enums.UniversityStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutUniversityNestedInput
+  faculties?: Prisma.FacultyUncheckedUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUniversityNestedInput
+}
+
+export type UniversityCreateWithoutAuditLogsInput = {
+  id?: string
+  phone?: string | null
+  website?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  status?: $Enums.UniversityStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  master: Prisma.UniversityMasterCreateNestedOneWithoutUniversitiesInput
+  owner: Prisma.UserCreateNestedOneWithoutOwnedUniversityInput
+  users?: Prisma.UserCreateNestedManyWithoutUniversityInput
+  faculties?: Prisma.FacultyCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUniversityInput
+}
+
+export type UniversityUncheckedCreateWithoutAuditLogsInput = {
+  id?: string
+  masterId: string
+  ownerUserId: string
+  phone?: string | null
+  website?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  status?: $Enums.UniversityStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityInput
+  faculties?: Prisma.FacultyUncheckedCreateNestedManyWithoutUniversityInput
+  studentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutUniversityInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUniversityInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUniversityInput
+}
+
+export type UniversityCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.UniversityWhereUniqueInput
+  create: Prisma.XOR<Prisma.UniversityCreateWithoutAuditLogsInput, Prisma.UniversityUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type UniversityUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.UniversityUpdateWithoutAuditLogsInput, Prisma.UniversityUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.UniversityCreateWithoutAuditLogsInput, Prisma.UniversityUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.UniversityWhereInput
+}
+
+export type UniversityUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.UniversityWhereInput
+  data: Prisma.XOR<Prisma.UniversityUpdateWithoutAuditLogsInput, Prisma.UniversityUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type UniversityUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUniversityStatusFieldUpdateOperationsInput | $Enums.UniversityStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  master?: Prisma.UniversityMasterUpdateOneRequiredWithoutUniversitiesNestedInput
+  owner?: Prisma.UserUpdateOneRequiredWithoutOwnedUniversityNestedInput
+  users?: Prisma.UserUpdateManyWithoutUniversityNestedInput
+  faculties?: Prisma.FacultyUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUniversityNestedInput
+}
+
+export type UniversityUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  masterId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUniversityStatusFieldUpdateOperationsInput | $Enums.UniversityStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutUniversityNestedInput
+  faculties?: Prisma.FacultyUncheckedUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityCreateManyMasterInput = {
@@ -988,6 +1532,10 @@ export type UniversityUpdateWithoutMasterInput = {
   owner?: Prisma.UserUpdateOneRequiredWithoutOwnedUniversityNestedInput
   users?: Prisma.UserUpdateManyWithoutUniversityNestedInput
   faculties?: Prisma.FacultyUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityUncheckedUpdateWithoutMasterInput = {
@@ -1005,6 +1553,10 @@ export type UniversityUncheckedUpdateWithoutMasterInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutUniversityNestedInput
   faculties?: Prisma.FacultyUncheckedUpdateManyWithoutUniversityNestedInput
+  studentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutUniversityNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUniversityNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUniversityNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUniversityNestedInput
 }
 
 export type UniversityUncheckedUpdateManyWithoutMasterInput = {
@@ -1030,11 +1582,19 @@ export type UniversityUncheckedUpdateManyWithoutMasterInput = {
 export type UniversityCountOutputType = {
   users: number
   faculties: number
+  studentRecords: number
+  claimAttempts: number
+  notifications: number
+  auditLogs: number
 }
 
 export type UniversityCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | UniversityCountOutputTypeCountUsersArgs
   faculties?: boolean | UniversityCountOutputTypeCountFacultiesArgs
+  studentRecords?: boolean | UniversityCountOutputTypeCountStudentRecordsArgs
+  claimAttempts?: boolean | UniversityCountOutputTypeCountClaimAttemptsArgs
+  notifications?: boolean | UniversityCountOutputTypeCountNotificationsArgs
+  auditLogs?: boolean | UniversityCountOutputTypeCountAuditLogsArgs
 }
 
 /**
@@ -1061,6 +1621,34 @@ export type UniversityCountOutputTypeCountFacultiesArgs<ExtArgs extends runtime.
   where?: Prisma.FacultyWhereInput
 }
 
+/**
+ * UniversityCountOutputType without action
+ */
+export type UniversityCountOutputTypeCountStudentRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StudentRecordWhereInput
+}
+
+/**
+ * UniversityCountOutputType without action
+ */
+export type UniversityCountOutputTypeCountClaimAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClaimAttemptWhereInput
+}
+
+/**
+ * UniversityCountOutputType without action
+ */
+export type UniversityCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UniversityCountOutputType without action
+ */
+export type UniversityCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
+}
+
 
 export type UniversitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1080,6 +1668,10 @@ export type UniversitySelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   users?: boolean | Prisma.University$usersArgs<ExtArgs>
   faculties?: boolean | Prisma.University$facultiesArgs<ExtArgs>
+  studentRecords?: boolean | Prisma.University$studentRecordsArgs<ExtArgs>
+  claimAttempts?: boolean | Prisma.University$claimAttemptsArgs<ExtArgs>
+  notifications?: boolean | Prisma.University$notificationsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.University$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UniversityCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["university"]>
 
@@ -1141,6 +1733,10 @@ export type UniversityInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   users?: boolean | Prisma.University$usersArgs<ExtArgs>
   faculties?: boolean | Prisma.University$facultiesArgs<ExtArgs>
+  studentRecords?: boolean | Prisma.University$studentRecordsArgs<ExtArgs>
+  claimAttempts?: boolean | Prisma.University$claimAttemptsArgs<ExtArgs>
+  notifications?: boolean | Prisma.University$notificationsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.University$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UniversityCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UniversityIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1159,6 +1755,10 @@ export type $UniversityPayload<ExtArgs extends runtime.Types.Extensions.Internal
     owner: Prisma.$UserPayload<ExtArgs>
     users: Prisma.$UserPayload<ExtArgs>[]
     faculties: Prisma.$FacultyPayload<ExtArgs>[]
+    studentRecords: Prisma.$StudentRecordPayload<ExtArgs>[]
+    claimAttempts: Prisma.$ClaimAttemptPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1572,6 +2172,10 @@ export interface Prisma__UniversityClient<T, Null = never, ExtArgs extends runti
   owner<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   users<T extends Prisma.University$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.University$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   faculties<T extends Prisma.University$facultiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.University$facultiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FacultyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  studentRecords<T extends Prisma.University$studentRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.University$studentRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  claimAttempts<T extends Prisma.University$claimAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.University$claimAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClaimAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.University$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.University$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.University$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.University$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2060,6 +2664,102 @@ export type University$facultiesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.FacultyScalarFieldEnum | Prisma.FacultyScalarFieldEnum[]
+}
+
+/**
+ * University.studentRecords
+ */
+export type University$studentRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentRecord
+   */
+  select?: Prisma.StudentRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudentRecord
+   */
+  omit?: Prisma.StudentRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentRecordInclude<ExtArgs> | null
+  where?: Prisma.StudentRecordWhereInput
+  orderBy?: Prisma.StudentRecordOrderByWithRelationInput | Prisma.StudentRecordOrderByWithRelationInput[]
+  cursor?: Prisma.StudentRecordWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudentRecordScalarFieldEnum | Prisma.StudentRecordScalarFieldEnum[]
+}
+
+/**
+ * University.claimAttempts
+ */
+export type University$claimAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClaimAttempt
+   */
+  select?: Prisma.ClaimAttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClaimAttempt
+   */
+  omit?: Prisma.ClaimAttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClaimAttemptInclude<ExtArgs> | null
+  where?: Prisma.ClaimAttemptWhereInput
+  orderBy?: Prisma.ClaimAttemptOrderByWithRelationInput | Prisma.ClaimAttemptOrderByWithRelationInput[]
+  cursor?: Prisma.ClaimAttemptWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClaimAttemptScalarFieldEnum | Prisma.ClaimAttemptScalarFieldEnum[]
+}
+
+/**
+ * University.notifications
+ */
+export type University$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * University.auditLogs
+ */
+export type University$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
 }
 
 /**

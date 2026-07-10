@@ -49,3 +49,54 @@ export const UniversityStatus = {
 } as const
 
 export type UniversityStatus = (typeof UniversityStatus)[keyof typeof UniversityStatus]
+
+
+export const StudentClaimStatus = {
+  UNCLAIMED: 'UNCLAIMED',
+  CLAIMED: 'CLAIMED',
+  REVIEW_REQUIRED: 'REVIEW_REQUIRED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type StudentClaimStatus = (typeof StudentClaimStatus)[keyof typeof StudentClaimStatus]
+
+
+export const CredentialWorkflowStatus = {
+  DRAFT: 'DRAFT',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  CHANGES_REQUESTED: 'CHANGES_REQUESTED',
+  PENDING_APPROVAL: 'PENDING_APPROVAL',
+  REJECTED: 'REJECTED',
+  APPROVED: 'APPROVED',
+  ISSUED: 'ISSUED'
+} as const
+
+export type CredentialWorkflowStatus = (typeof CredentialWorkflowStatus)[keyof typeof CredentialWorkflowStatus]
+
+
+export const NotificationType = {
+  STUDENT_CLAIMED: 'STUDENT_CLAIMED',
+  CLAIM_REVIEW_REQUIRED: 'CLAIM_REVIEW_REQUIRED',
+  CREDENTIAL_REVIEW: 'CREDENTIAL_REVIEW',
+  CREDENTIAL_APPROVAL: 'CREDENTIAL_APPROVAL',
+  CREDENTIAL_CHANGES: 'CREDENTIAL_CHANGES',
+  CREDENTIAL_ISSUED: 'CREDENTIAL_ISSUED',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const AuditAction = {
+  STUDENT_CREATED: 'STUDENT_CREATED',
+  STUDENT_IMPORTED: 'STUDENT_IMPORTED',
+  STUDENT_CLAIMED: 'STUDENT_CLAIMED',
+  CLAIM_REVIEWED: 'CLAIM_REVIEWED',
+  WORKFLOW_SUBMITTED: 'WORKFLOW_SUBMITTED',
+  WORKFLOW_REVIEWED: 'WORKFLOW_REVIEWED',
+  WORKFLOW_APPROVED: 'WORKFLOW_APPROVED',
+  WORKFLOW_REJECTED: 'WORKFLOW_REJECTED',
+  WORKFLOW_CHANGES_REQUESTED: 'WORKFLOW_CHANGES_REQUESTED'
+} as const
+
+export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction]

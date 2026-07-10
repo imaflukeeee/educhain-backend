@@ -74,3 +74,23 @@ export type Credential = Prisma.CredentialModel
  * 
  */
 export type CredentialShareLink = Prisma.CredentialShareLinkModel
+/**
+ * Model StudentRecord
+ * 
+ */
+export type StudentRecord = Prisma.StudentRecordModel
+/**
+ * Model ClaimAttempt
+ * 
+ */
+export type ClaimAttempt = Prisma.ClaimAttemptModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel

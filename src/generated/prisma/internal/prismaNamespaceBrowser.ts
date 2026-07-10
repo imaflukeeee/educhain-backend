@@ -57,7 +57,11 @@ export const ModelName = {
   Faculty: 'Faculty',
   Major: 'Major',
   Credential: 'Credential',
-  CredentialShareLink: 'CredentialShareLink'
+  CredentialShareLink: 'CredentialShareLink',
+  StudentRecord: 'StudentRecord',
+  ClaimAttempt: 'ClaimAttempt',
+  Notification: 'Notification',
+  AuditLog: 'AuditLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -203,6 +207,14 @@ export const CredentialScalarFieldEnum = {
   storagePath: 'storagePath',
   documentHash: 'documentHash',
   status: 'status',
+  workflowStatus: 'workflowStatus',
+  preparedById: 'preparedById',
+  reviewedById: 'reviewedById',
+  approvedById: 'approvedById',
+  workflowNote: 'workflowNote',
+  submittedAt: 'submittedAt',
+  reviewedAt: 'reviewedAt',
+  approvedAt: 'approvedAt',
   network: 'network',
   transactionHash: 'transactionHash',
   blockNumber: 'blockNumber',
@@ -227,12 +239,90 @@ export const CredentialShareLinkScalarFieldEnum = {
 export type CredentialShareLinkScalarFieldEnum = (typeof CredentialShareLinkScalarFieldEnum)[keyof typeof CredentialShareLinkScalarFieldEnum]
 
 
+export const StudentRecordScalarFieldEnum = {
+  id: 'id',
+  universityId: 'universityId',
+  studentId: 'studentId',
+  namePrefix: 'namePrefix',
+  firstNameTh: 'firstNameTh',
+  lastNameTh: 'lastNameTh',
+  firstNameEn: 'firstNameEn',
+  lastNameEn: 'lastNameEn',
+  birthDate: 'birthDate',
+  nationalIdHash: 'nationalIdHash',
+  email: 'email',
+  facultyId: 'facultyId',
+  majorId: 'majorId',
+  claimStatus: 'claimStatus',
+  claimedById: 'claimedById',
+  claimedAt: 'claimedAt',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudentRecordScalarFieldEnum = (typeof StudentRecordScalarFieldEnum)[keyof typeof StudentRecordScalarFieldEnum]
+
+
+export const ClaimAttemptScalarFieldEnum = {
+  id: 'id',
+  universityId: 'universityId',
+  studentRecordId: 'studentRecordId',
+  userId: 'userId',
+  studentId: 'studentId',
+  matched: 'matched',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type ClaimAttemptScalarFieldEnum = (typeof ClaimAttemptScalarFieldEnum)[keyof typeof ClaimAttemptScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  universityId: 'universityId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  link: 'link',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  actorId: 'actorId',
+  universityId: 'universityId',
+  action: 'action',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  beforeData: 'beforeData',
+  afterData: 'afterData',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -249,4 +339,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

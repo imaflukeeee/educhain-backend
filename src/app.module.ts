@@ -7,6 +7,9 @@ import { StorageModule } from './storage/storage.module';
 import { UsersModule } from './users/users.module';
 import { BlockchainModule } from './blockchain/blockchain.module';
 import { UniversitiesModule } from './universities/universities.module';
+import { StudentsModule } from './students/students.module';
+import { Phase3Module } from './phase3/phase3.module';
+import { WorkflowModule } from './workflow/workflow.module';
 
 /**
  * AppModule คือ Module หลักของ Backend
@@ -27,6 +30,9 @@ import { UniversitiesModule } from './universities/universities.module';
     CredentialsModule,
     BlockchainModule,
     UniversitiesModule,
+    StudentsModule,
+    Phase3Module,
+    WorkflowModule,
   ],
 })
 export class AppModule {}

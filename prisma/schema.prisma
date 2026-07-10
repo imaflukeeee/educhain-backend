@@ -35,6 +35,45 @@ enum UniversityStatus {
   INACTIVE
 }
 
+enum StudentClaimStatus {
+  UNCLAIMED
+  CLAIMED
+  REVIEW_REQUIRED
+  REJECTED
+}
+
+enum CredentialWorkflowStatus {
+  DRAFT
+  PENDING_REVIEW
+  CHANGES_REQUESTED
+  PENDING_APPROVAL
+  REJECTED
+  APPROVED
+  ISSUED
+}
+
+enum NotificationType {
+  STUDENT_CLAIMED
+  CLAIM_REVIEW_REQUIRED
+  CREDENTIAL_REVIEW
+  CREDENTIAL_APPROVAL
+  CREDENTIAL_CHANGES
+  CREDENTIAL_ISSUED
+  SYSTEM
+}
+
+enum AuditAction {
+  STUDENT_CREATED
+  STUDENT_IMPORTED
+  STUDENT_CLAIMED
+  CLAIM_REVIEWED
+  WORKFLOW_SUBMITTED
+  WORKFLOW_REVIEWED
+  WORKFLOW_APPROVED
+  WORKFLOW_REJECTED
+  WORKFLOW_CHANGES_REQUESTED
+}
+
 model User {
   id            String   @id @default(uuid())
   email         String   @unique
@@ -91,6 +130,14 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   shareLinks CredentialShareLink[] @relation("HolderShareLinks")
+  claimedStudentRecord StudentRecord? @relation("ClaimedStudent")
+  createdStudentRecords StudentRecord[] @relation("StudentRecordCreator")
+  claimAttempts ClaimAttempt[]
+  notifications Notification[]
+  auditLogs AuditLog[] @relation("AuditActor")
+  preparedCredentials Credential[] @relation("CredentialPreparer")
+  reviewedCredentials Credential[] @relation("CredentialReviewer")
+  approvedCredentials Credential[] @relation("CredentialApprover")
 
   @@index([universityOwnerId])
   @@index([role, issuerAccountType])
@@ -128,6 +175,10 @@ model University {
   owner              User             @relation("UniversityOwner", fields: [ownerUserId], references: [id], onDelete: Cascade)
   users              User[]
   faculties          Faculty[]
+  studentRecords     StudentRecord[]
+  claimAttempts      ClaimAttempt[]
+  notifications      Notification[]
+  auditLogs          AuditLog[]
 
   @@index([masterId])
   @@index([status])
@@ -144,6 +195,7 @@ model Faculty {
 
   university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
   majors     Major[]
+  studentRecords StudentRecord[]
 
   @@unique([universityId, nameTh])
   @@index([universityId, isActive])
@@ -159,6 +211,7 @@ model Major {
   updatedAt DateTime @updatedAt
 
   faculty Faculty @relation(fields: [facultyId], references: [id], onDelete: Cascade)
+  studentRecords StudentRecord[]
 
   @@unique([facultyId, nameTh])
   @@index([facultyId, isActive])
@@ -197,6 +250,17 @@ model Credential {
   documentHash String
 
   status CredentialStatus @default(PENDING)
+  workflowStatus CredentialWorkflowStatus @default(DRAFT)
+  preparedById String?
+  reviewedById String?
+  approvedById String?
+  workflowNote String?
+  submittedAt DateTime?
+  reviewedAt DateTime?
+  approvedAt DateTime?
+  preparedBy User? @relation("CredentialPreparer", fields: [preparedById], references: [id], onDelete: SetNull)
+  reviewedBy User? @relation("CredentialReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  approvedBy User? @relation("CredentialApprover", fields: [approvedById], references: [id], onDelete: SetNull)
 
   network         String?
   transactionHash String?
@@ -210,6 +274,10 @@ model Credential {
   @@index([issuerId])
   @@index([issuerStaffId])
   @@index([holderId])
+  @@index([workflowStatus])
+  @@index([preparedById])
+  @@index([reviewedById])
+  @@index([approvedById])
 }
 
 model CredentialShareLink {
@@ -231,4 +299,94 @@ model CredentialShareLink {
   @@index([credentialId])
   @@index([holderId])
   @@index([token])
+}
+
+
+model StudentRecord {
+  id             String             @id @default(uuid())
+  universityId   String
+  studentId      String
+  namePrefix     NamePrefix?
+  firstNameTh    String
+  lastNameTh     String
+  firstNameEn    String?
+  lastNameEn     String?
+  birthDate      DateTime
+  nationalIdHash String?
+  email          String?
+  facultyId      String?
+  majorId        String?
+  claimStatus    StudentClaimStatus @default(UNCLAIMED)
+  claimedById    String?            @unique
+  claimedAt      DateTime?
+  isActive       Boolean            @default(true)
+  createdById    String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  faculty Faculty? @relation(fields: [facultyId], references: [id], onDelete: SetNull)
+  major Major? @relation(fields: [majorId], references: [id], onDelete: SetNull)
+  claimedBy User? @relation("ClaimedStudent", fields: [claimedById], references: [id], onDelete: SetNull)
+  createdBy User? @relation("StudentRecordCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  claimAttempts ClaimAttempt[]
+
+  @@unique([universityId, studentId])
+  @@index([universityId, claimStatus])
+  @@index([facultyId])
+  @@index([majorId])
+}
+
+model ClaimAttempt {
+  id              String   @id @default(uuid())
+  universityId    String
+  studentRecordId String?
+  userId          String
+  studentId       String
+  matched         Boolean
+  reason          String?
+  createdAt       DateTime @default(now())
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  studentRecord StudentRecord? @relation(fields: [studentRecordId], references: [id], onDelete: SetNull)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([universityId, createdAt])
+  @@index([userId])
+}
+
+model Notification {
+  id           String           @id @default(uuid())
+  userId       String
+  universityId String?
+  type         NotificationType
+  title        String
+  message      String
+  link         String?
+  readAt       DateTime?
+  createdAt    DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  university University? @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt, createdAt])
+  @@index([universityId])
+}
+
+model AuditLog {
+  id           String      @id @default(uuid())
+  actorId      String?
+  universityId String?
+  action       AuditAction
+  entityType   String
+  entityId     String?
+  beforeData   Json?
+  afterData    Json?
+  createdAt    DateTime    @default(now())
+
+  actor User? @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+  university University? @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  @@index([universityId, createdAt])
+  @@index([actorId])
 }

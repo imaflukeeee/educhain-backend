@@ -191,6 +191,13 @@ export class AuthService {
             STAFF_PERMISSIONS.REGISTER_CREDENTIAL,
             STAFF_PERMISSIONS.VIEW_ALL_CREDENTIALS,
             STAFF_PERMISSIONS.INVALIDATE_CREDENTIAL,
+            STAFF_PERMISSIONS.MANAGE_STUDENTS,
+            STAFF_PERMISSIONS.IMPORT_STUDENTS,
+            STAFF_PERMISSIONS.PREPARE_CREDENTIAL,
+            STAFF_PERMISSIONS.REVIEW_CREDENTIAL,
+            STAFF_PERMISSIONS.APPROVE_CREDENTIAL,
+            STAFF_PERMISSIONS.VIEW_DASHBOARD,
+            STAFF_PERMISSIONS.VIEW_AUDIT_LOG,
           ]
         : [],
       isActive: true,
@@ -232,6 +239,113 @@ export class AuthService {
         throw error;
       }
     }
+
+
+if (!isIssuer && registeredUniversity && dto.studentId && dto.birthDate) {
+  const studentId = dto.studentId.trim();
+  const nationalIdHash = dto.nationalId
+    ? createHash('sha256').update(dto.nationalId.trim()).digest('hex')
+    : null;
+
+  const candidate = await this.prisma.studentRecord.findUnique({
+    where: {
+      universityId_studentId: {
+        universityId: registeredUniversity.id,
+        studentId: studentId,
+      },
+    },
+  });
+
+  const birthMatches =
+    candidate &&
+    candidate.birthDate.toISOString().slice(0, 10) === dto.birthDate;
+  const nationalIdMatches =
+    candidate &&
+    (!candidate.nationalIdHash ||
+      (nationalIdHash && candidate.nationalIdHash === nationalIdHash));
+
+  if (
+    candidate &&
+    candidate.claimStatus === 'UNCLAIMED' &&
+    birthMatches &&
+    nationalIdMatches
+  ) {
+    await this.prisma.$transaction([
+      this.prisma.studentRecord.update({
+        where: { id: candidate.id },
+        data: {
+          claimStatus: 'CLAIMED',
+          claimedById: user.id,
+          claimedAt: new Date(),
+        },
+      }),
+      this.prisma.claimAttempt.create({
+        data: {
+          universityId: registeredUniversity.id,
+          studentRecordId: candidate.id,
+          userId: user.id,
+          studentId: studentId,
+          matched: true,
+        },
+      }),
+      this.prisma.auditLog.create({
+        data: {
+          actorId: user.id,
+          universityId: registeredUniversity.id,
+          action: 'STUDENT_CLAIMED',
+          entityType: 'StudentRecord',
+          entityId: candidate.id,
+        },
+      }),
+    ]);
+  } else {
+    await this.prisma.claimAttempt.create({
+      data: {
+        universityId: registeredUniversity.id,
+        studentRecordId: candidate?.id ?? null,
+        userId: user.id,
+        studentId: studentId,
+        matched: false,
+        reason: !candidate
+          ? 'ไม่พบรหัสนักศึกษา'
+          : candidate.claimStatus !== 'UNCLAIMED'
+            ? 'ข้อมูลนักศึกษาถูก Claim แล้ว'
+            : !birthMatches
+              ? 'วันเกิดไม่ตรงกัน'
+              : 'เลขบัตรประชาชนไม่ตรงกัน',
+      },
+    });
+
+    if (candidate && candidate.claimStatus === 'UNCLAIMED') {
+      await this.prisma.studentRecord.update({
+        where: { id: candidate.id },
+        data: { claimStatus: 'REVIEW_REQUIRED' },
+      });
+    }
+
+    const admins = await this.prisma.user.findMany({
+      where: {
+        universityId: registeredUniversity.id,
+        role: 'ISSUER',
+        isActive: true,
+      },
+      select: { id: true },
+    });
+
+    if (admins.length) {
+      await this.prisma.notification.createMany({
+        data: admins.map((admin) => ({
+          userId: admin.id,
+          universityId: registeredUniversity.id,
+          type: 'CLAIM_REVIEW_REQUIRED' as const,
+          title: 'มีรายการ Claim ที่ต้องตรวจสอบ',
+          message: `รหัสนักศึกษา ${studentId} ไม่สามารถ Claim อัตโนมัติได้`,
+          link: '/issuer/students?status=REVIEW_REQUIRED',
+        })),
+      });
+    }
+  }
+}
 
     const rawVerificationToken = randomBytes(32).toString('hex');
     const tokenHash = createHash('sha256')
@@ -346,6 +460,8 @@ export class AuthService {
     if (user.emailVerifiedAt) {
       return { message: 'อีเมลนี้ได้รับการยืนยันแล้ว' };
     }
+
+
 
     const rawVerificationToken = randomBytes(32).toString('hex');
     const tokenHash = createHash('sha256')

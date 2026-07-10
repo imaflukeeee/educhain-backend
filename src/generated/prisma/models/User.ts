@@ -482,6 +482,14 @@ export type UserWhereInput = {
   ownedCredentials?: Prisma.CredentialListRelationFilter
   staffIssuedCredentials?: Prisma.CredentialListRelationFilter
   shareLinks?: Prisma.CredentialShareLinkListRelationFilter
+  claimedStudentRecord?: Prisma.XOR<Prisma.StudentRecordNullableScalarRelationFilter, Prisma.StudentRecordWhereInput> | null
+  createdStudentRecords?: Prisma.StudentRecordListRelationFilter
+  claimAttempts?: Prisma.ClaimAttemptListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
+  preparedCredentials?: Prisma.CredentialListRelationFilter
+  reviewedCredentials?: Prisma.CredentialListRelationFilter
+  approvedCredentials?: Prisma.CredentialListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -535,6 +543,14 @@ export type UserOrderByWithRelationInput = {
   ownedCredentials?: Prisma.CredentialOrderByRelationAggregateInput
   staffIssuedCredentials?: Prisma.CredentialOrderByRelationAggregateInput
   shareLinks?: Prisma.CredentialShareLinkOrderByRelationAggregateInput
+  claimedStudentRecord?: Prisma.StudentRecordOrderByWithRelationInput
+  createdStudentRecords?: Prisma.StudentRecordOrderByRelationAggregateInput
+  claimAttempts?: Prisma.ClaimAttemptOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
+  preparedCredentials?: Prisma.CredentialOrderByRelationAggregateInput
+  reviewedCredentials?: Prisma.CredentialOrderByRelationAggregateInput
+  approvedCredentials?: Prisma.CredentialOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -591,6 +607,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   ownedCredentials?: Prisma.CredentialListRelationFilter
   staffIssuedCredentials?: Prisma.CredentialListRelationFilter
   shareLinks?: Prisma.CredentialShareLinkListRelationFilter
+  claimedStudentRecord?: Prisma.XOR<Prisma.StudentRecordNullableScalarRelationFilter, Prisma.StudentRecordWhereInput> | null
+  createdStudentRecords?: Prisma.StudentRecordListRelationFilter
+  claimAttempts?: Prisma.ClaimAttemptListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
+  preparedCredentials?: Prisma.CredentialListRelationFilter
+  reviewedCredentials?: Prisma.CredentialListRelationFilter
+  approvedCredentials?: Prisma.CredentialListRelationFilter
 }, "id" | "email" | "emailVerificationTokenHash">
 
 export type UserOrderByWithAggregationInput = {
@@ -738,6 +762,14 @@ export type UserCreateInput = {
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -789,6 +821,14 @@ export type UserUncheckedCreateInput = {
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUpdateInput = {
@@ -840,6 +880,14 @@ export type UserUpdateInput = {
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -891,6 +939,14 @@ export type UserUncheckedUpdateInput = {
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1360,6 +1416,24 @@ export type UserCreateNestedOneWithoutStaffIssuedCredentialsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutPreparedCredentialsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPreparedCredentialsInput, Prisma.UserUncheckedCreateWithoutPreparedCredentialsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPreparedCredentialsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutReviewedCredentialsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedCredentialsInput, Prisma.UserUncheckedCreateWithoutReviewedCredentialsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedCredentialsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutApprovedCredentialsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutApprovedCredentialsInput, Prisma.UserUncheckedCreateWithoutApprovedCredentialsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutApprovedCredentialsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneRequiredWithoutIssuedCredentialsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutIssuedCredentialsInput, Prisma.UserUncheckedCreateWithoutIssuedCredentialsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutIssuedCredentialsInput
@@ -1386,6 +1460,36 @@ export type UserUpdateOneWithoutStaffIssuedCredentialsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStaffIssuedCredentialsInput, Prisma.UserUpdateWithoutStaffIssuedCredentialsInput>, Prisma.UserUncheckedUpdateWithoutStaffIssuedCredentialsInput>
 }
 
+export type UserUpdateOneWithoutPreparedCredentialsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPreparedCredentialsInput, Prisma.UserUncheckedCreateWithoutPreparedCredentialsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPreparedCredentialsInput
+  upsert?: Prisma.UserUpsertWithoutPreparedCredentialsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPreparedCredentialsInput, Prisma.UserUpdateWithoutPreparedCredentialsInput>, Prisma.UserUncheckedUpdateWithoutPreparedCredentialsInput>
+}
+
+export type UserUpdateOneWithoutReviewedCredentialsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedCredentialsInput, Prisma.UserUncheckedCreateWithoutReviewedCredentialsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedCredentialsInput
+  upsert?: Prisma.UserUpsertWithoutReviewedCredentialsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewedCredentialsInput, Prisma.UserUpdateWithoutReviewedCredentialsInput>, Prisma.UserUncheckedUpdateWithoutReviewedCredentialsInput>
+}
+
+export type UserUpdateOneWithoutApprovedCredentialsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutApprovedCredentialsInput, Prisma.UserUncheckedCreateWithoutApprovedCredentialsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutApprovedCredentialsInput
+  upsert?: Prisma.UserUpsertWithoutApprovedCredentialsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApprovedCredentialsInput, Prisma.UserUpdateWithoutApprovedCredentialsInput>, Prisma.UserUncheckedUpdateWithoutApprovedCredentialsInput>
+}
+
 export type UserCreateNestedOneWithoutShareLinksInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutShareLinksInput, Prisma.UserUncheckedCreateWithoutShareLinksInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutShareLinksInput
@@ -1398,6 +1502,82 @@ export type UserUpdateOneRequiredWithoutShareLinksNestedInput = {
   upsert?: Prisma.UserUpsertWithoutShareLinksInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutShareLinksInput, Prisma.UserUpdateWithoutShareLinksInput>, Prisma.UserUncheckedUpdateWithoutShareLinksInput>
+}
+
+export type UserCreateNestedOneWithoutClaimedStudentRecordInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClaimedStudentRecordInput, Prisma.UserUncheckedCreateWithoutClaimedStudentRecordInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClaimedStudentRecordInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutCreatedStudentRecordsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedStudentRecordsInput, Prisma.UserUncheckedCreateWithoutCreatedStudentRecordsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedStudentRecordsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutClaimedStudentRecordNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClaimedStudentRecordInput, Prisma.UserUncheckedCreateWithoutClaimedStudentRecordInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClaimedStudentRecordInput
+  upsert?: Prisma.UserUpsertWithoutClaimedStudentRecordInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClaimedStudentRecordInput, Prisma.UserUpdateWithoutClaimedStudentRecordInput>, Prisma.UserUncheckedUpdateWithoutClaimedStudentRecordInput>
+}
+
+export type UserUpdateOneWithoutCreatedStudentRecordsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedStudentRecordsInput, Prisma.UserUncheckedCreateWithoutCreatedStudentRecordsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedStudentRecordsInput
+  upsert?: Prisma.UserUpsertWithoutCreatedStudentRecordsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedStudentRecordsInput, Prisma.UserUpdateWithoutCreatedStudentRecordsInput>, Prisma.UserUncheckedUpdateWithoutCreatedStudentRecordsInput>
+}
+
+export type UserCreateNestedOneWithoutClaimAttemptsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClaimAttemptsInput, Prisma.UserUncheckedCreateWithoutClaimAttemptsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClaimAttemptsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutClaimAttemptsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClaimAttemptsInput, Prisma.UserUncheckedCreateWithoutClaimAttemptsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClaimAttemptsInput
+  upsert?: Prisma.UserUpsertWithoutClaimAttemptsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClaimAttemptsInput, Prisma.UserUpdateWithoutClaimAttemptsInput>, Prisma.UserUncheckedUpdateWithoutClaimAttemptsInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.UserUpsertWithoutAuditLogsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.UserUpdateWithoutAuditLogsInput>, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
 }
 
 export type UserCreateWithoutStaffMembersInput = {
@@ -1448,6 +1628,14 @@ export type UserCreateWithoutStaffMembersInput = {
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateWithoutStaffMembersInput = {
@@ -1498,6 +1686,14 @@ export type UserUncheckedCreateWithoutStaffMembersInput = {
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserCreateOrConnectWithoutStaffMembersInput = {
@@ -1553,6 +1749,14 @@ export type UserCreateWithoutUniversityOwnerInput = {
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateWithoutUniversityOwnerInput = {
@@ -1603,6 +1807,14 @@ export type UserUncheckedCreateWithoutUniversityOwnerInput = {
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserCreateOrConnectWithoutUniversityOwnerInput = {
@@ -1674,6 +1886,14 @@ export type UserUpdateWithoutStaffMembersInput = {
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStaffMembersInput = {
@@ -1724,6 +1944,14 @@ export type UserUncheckedUpdateWithoutStaffMembersInput = {
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutUniversityOwnerInput = {
@@ -1838,6 +2066,14 @@ export type UserCreateWithoutOwnedUniversityInput = {
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateWithoutOwnedUniversityInput = {
@@ -1888,6 +2124,14 @@ export type UserUncheckedCreateWithoutOwnedUniversityInput = {
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserCreateOrConnectWithoutOwnedUniversityInput = {
@@ -1943,6 +2187,14 @@ export type UserCreateWithoutUniversityInput = {
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateWithoutUniversityInput = {
@@ -1993,6 +2245,14 @@ export type UserUncheckedCreateWithoutUniversityInput = {
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserCreateOrConnectWithoutUniversityInput = {
@@ -2064,6 +2324,14 @@ export type UserUpdateWithoutOwnedUniversityInput = {
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOwnedUniversityInput = {
@@ -2114,6 +2382,14 @@ export type UserUncheckedUpdateWithoutOwnedUniversityInput = {
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutUniversityInput = {
@@ -2180,6 +2456,14 @@ export type UserCreateWithoutIssuedCredentialsInput = {
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateWithoutIssuedCredentialsInput = {
@@ -2230,6 +2514,14 @@ export type UserUncheckedCreateWithoutIssuedCredentialsInput = {
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserCreateOrConnectWithoutIssuedCredentialsInput = {
@@ -2285,6 +2577,14 @@ export type UserCreateWithoutOwnedCredentialsInput = {
   issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
   staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateWithoutOwnedCredentialsInput = {
@@ -2335,6 +2635,14 @@ export type UserUncheckedCreateWithoutOwnedCredentialsInput = {
   issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserCreateOrConnectWithoutOwnedCredentialsInput = {
@@ -2390,6 +2698,14 @@ export type UserCreateWithoutStaffIssuedCredentialsInput = {
   issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
   shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateWithoutStaffIssuedCredentialsInput = {
@@ -2440,11 +2756,382 @@ export type UserUncheckedCreateWithoutStaffIssuedCredentialsInput = {
   issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserCreateOrConnectWithoutStaffIssuedCredentialsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutStaffIssuedCredentialsInput, Prisma.UserUncheckedCreateWithoutStaffIssuedCredentialsInput>
+}
+
+export type UserCreateWithoutPreparedCredentialsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  university?: Prisma.UniversityCreateNestedOneWithoutUsersInput
+  ownedUniversity?: Prisma.UniversityCreateNestedOneWithoutOwnerInput
+  universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
+  staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserUncheckedCreateWithoutPreparedCredentialsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  universityId?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  universityOwnerId?: string | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedCreateNestedOneWithoutOwnerInput
+  staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserCreateOrConnectWithoutPreparedCredentialsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPreparedCredentialsInput, Prisma.UserUncheckedCreateWithoutPreparedCredentialsInput>
+}
+
+export type UserCreateWithoutReviewedCredentialsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  university?: Prisma.UniversityCreateNestedOneWithoutUsersInput
+  ownedUniversity?: Prisma.UniversityCreateNestedOneWithoutOwnerInput
+  universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
+  staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserUncheckedCreateWithoutReviewedCredentialsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  universityId?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  universityOwnerId?: string | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedCreateNestedOneWithoutOwnerInput
+  staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserCreateOrConnectWithoutReviewedCredentialsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedCredentialsInput, Prisma.UserUncheckedCreateWithoutReviewedCredentialsInput>
+}
+
+export type UserCreateWithoutApprovedCredentialsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  university?: Prisma.UniversityCreateNestedOneWithoutUsersInput
+  ownedUniversity?: Prisma.UniversityCreateNestedOneWithoutOwnerInput
+  universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
+  staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserUncheckedCreateWithoutApprovedCredentialsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  universityId?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  universityOwnerId?: string | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedCreateNestedOneWithoutOwnerInput
+  staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+}
+
+export type UserCreateOrConnectWithoutApprovedCredentialsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutApprovedCredentialsInput, Prisma.UserUncheckedCreateWithoutApprovedCredentialsInput>
 }
 
 export type UserUpsertWithoutIssuedCredentialsInput = {
@@ -2506,6 +3193,14 @@ export type UserUpdateWithoutIssuedCredentialsInput = {
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIssuedCredentialsInput = {
@@ -2556,6 +3251,14 @@ export type UserUncheckedUpdateWithoutIssuedCredentialsInput = {
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUpsertWithoutOwnedCredentialsInput = {
@@ -2617,6 +3320,14 @@ export type UserUpdateWithoutOwnedCredentialsInput = {
   issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
   staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOwnedCredentialsInput = {
@@ -2667,6 +3378,14 @@ export type UserUncheckedUpdateWithoutOwnedCredentialsInput = {
   issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUpsertWithoutStaffIssuedCredentialsInput = {
@@ -2728,6 +3447,14 @@ export type UserUpdateWithoutStaffIssuedCredentialsInput = {
   issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
   shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStaffIssuedCredentialsInput = {
@@ -2778,6 +3505,395 @@ export type UserUncheckedUpdateWithoutStaffIssuedCredentialsInput = {
   issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUpsertWithoutPreparedCredentialsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPreparedCredentialsInput, Prisma.UserUncheckedUpdateWithoutPreparedCredentialsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPreparedCredentialsInput, Prisma.UserUncheckedCreateWithoutPreparedCredentialsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPreparedCredentialsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPreparedCredentialsInput, Prisma.UserUncheckedUpdateWithoutPreparedCredentialsInput>
+}
+
+export type UserUpdateWithoutPreparedCredentialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  university?: Prisma.UniversityUpdateOneWithoutUsersNestedInput
+  ownedUniversity?: Prisma.UniversityUpdateOneWithoutOwnerNestedInput
+  universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
+  staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPreparedCredentialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedUpdateOneWithoutOwnerNestedInput
+  staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUpsertWithoutReviewedCredentialsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewedCredentialsInput, Prisma.UserUncheckedUpdateWithoutReviewedCredentialsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedCredentialsInput, Prisma.UserUncheckedCreateWithoutReviewedCredentialsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewedCredentialsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewedCredentialsInput, Prisma.UserUncheckedUpdateWithoutReviewedCredentialsInput>
+}
+
+export type UserUpdateWithoutReviewedCredentialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  university?: Prisma.UniversityUpdateOneWithoutUsersNestedInput
+  ownedUniversity?: Prisma.UniversityUpdateOneWithoutOwnerNestedInput
+  universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
+  staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewedCredentialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedUpdateOneWithoutOwnerNestedInput
+  staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUpsertWithoutApprovedCredentialsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutApprovedCredentialsInput, Prisma.UserUncheckedUpdateWithoutApprovedCredentialsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutApprovedCredentialsInput, Prisma.UserUncheckedCreateWithoutApprovedCredentialsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutApprovedCredentialsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutApprovedCredentialsInput, Prisma.UserUncheckedUpdateWithoutApprovedCredentialsInput>
+}
+
+export type UserUpdateWithoutApprovedCredentialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  university?: Prisma.UniversityUpdateOneWithoutUsersNestedInput
+  ownedUniversity?: Prisma.UniversityUpdateOneWithoutOwnerNestedInput
+  universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
+  staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutApprovedCredentialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedUpdateOneWithoutOwnerNestedInput
+  staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
 }
 
 export type UserCreateWithoutShareLinksInput = {
@@ -2828,6 +3944,14 @@ export type UserCreateWithoutShareLinksInput = {
   issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
   ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserUncheckedCreateWithoutShareLinksInput = {
@@ -2878,6 +4002,14 @@ export type UserUncheckedCreateWithoutShareLinksInput = {
   issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
   ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
 }
 
 export type UserCreateOrConnectWithoutShareLinksInput = {
@@ -2944,6 +4076,14 @@ export type UserUpdateWithoutShareLinksInput = {
   issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutShareLinksInput = {
@@ -2994,6 +4134,1254 @@ export type UserUncheckedUpdateWithoutShareLinksInput = {
   issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserCreateWithoutClaimedStudentRecordInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  university?: Prisma.UniversityCreateNestedOneWithoutUsersInput
+  ownedUniversity?: Prisma.UniversityCreateNestedOneWithoutOwnerInput
+  universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
+  staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserUncheckedCreateWithoutClaimedStudentRecordInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  universityId?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  universityOwnerId?: string | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedCreateNestedOneWithoutOwnerInput
+  staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserCreateOrConnectWithoutClaimedStudentRecordInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutClaimedStudentRecordInput, Prisma.UserUncheckedCreateWithoutClaimedStudentRecordInput>
+}
+
+export type UserCreateWithoutCreatedStudentRecordsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  university?: Prisma.UniversityCreateNestedOneWithoutUsersInput
+  ownedUniversity?: Prisma.UniversityCreateNestedOneWithoutOwnerInput
+  universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
+  staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserUncheckedCreateWithoutCreatedStudentRecordsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  universityId?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  universityOwnerId?: string | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedCreateNestedOneWithoutOwnerInput
+  staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserCreateOrConnectWithoutCreatedStudentRecordsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedStudentRecordsInput, Prisma.UserUncheckedCreateWithoutCreatedStudentRecordsInput>
+}
+
+export type UserUpsertWithoutClaimedStudentRecordInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutClaimedStudentRecordInput, Prisma.UserUncheckedUpdateWithoutClaimedStudentRecordInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutClaimedStudentRecordInput, Prisma.UserUncheckedCreateWithoutClaimedStudentRecordInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutClaimedStudentRecordInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutClaimedStudentRecordInput, Prisma.UserUncheckedUpdateWithoutClaimedStudentRecordInput>
+}
+
+export type UserUpdateWithoutClaimedStudentRecordInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  university?: Prisma.UniversityUpdateOneWithoutUsersNestedInput
+  ownedUniversity?: Prisma.UniversityUpdateOneWithoutOwnerNestedInput
+  universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
+  staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutClaimedStudentRecordInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedUpdateOneWithoutOwnerNestedInput
+  staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUpsertWithoutCreatedStudentRecordsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedStudentRecordsInput, Prisma.UserUncheckedUpdateWithoutCreatedStudentRecordsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedStudentRecordsInput, Prisma.UserUncheckedCreateWithoutCreatedStudentRecordsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedStudentRecordsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedStudentRecordsInput, Prisma.UserUncheckedUpdateWithoutCreatedStudentRecordsInput>
+}
+
+export type UserUpdateWithoutCreatedStudentRecordsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  university?: Prisma.UniversityUpdateOneWithoutUsersNestedInput
+  ownedUniversity?: Prisma.UniversityUpdateOneWithoutOwnerNestedInput
+  universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
+  staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedStudentRecordsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedUpdateOneWithoutOwnerNestedInput
+  staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserCreateWithoutClaimAttemptsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  university?: Prisma.UniversityCreateNestedOneWithoutUsersInput
+  ownedUniversity?: Prisma.UniversityCreateNestedOneWithoutOwnerInput
+  universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
+  staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserUncheckedCreateWithoutClaimAttemptsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  universityId?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  universityOwnerId?: string | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedCreateNestedOneWithoutOwnerInput
+  staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserCreateOrConnectWithoutClaimAttemptsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutClaimAttemptsInput, Prisma.UserUncheckedCreateWithoutClaimAttemptsInput>
+}
+
+export type UserUpsertWithoutClaimAttemptsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutClaimAttemptsInput, Prisma.UserUncheckedUpdateWithoutClaimAttemptsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutClaimAttemptsInput, Prisma.UserUncheckedCreateWithoutClaimAttemptsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutClaimAttemptsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutClaimAttemptsInput, Prisma.UserUncheckedUpdateWithoutClaimAttemptsInput>
+}
+
+export type UserUpdateWithoutClaimAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  university?: Prisma.UniversityUpdateOneWithoutUsersNestedInput
+  ownedUniversity?: Prisma.UniversityUpdateOneWithoutOwnerNestedInput
+  universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
+  staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutClaimAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedUpdateOneWithoutOwnerNestedInput
+  staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  university?: Prisma.UniversityCreateNestedOneWithoutUsersInput
+  ownedUniversity?: Prisma.UniversityCreateNestedOneWithoutOwnerInput
+  universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
+  staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  universityId?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  universityOwnerId?: string | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedCreateNestedOneWithoutOwnerInput
+  staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  university?: Prisma.UniversityUpdateOneWithoutUsersNestedInput
+  ownedUniversity?: Prisma.UniversityUpdateOneWithoutOwnerNestedInput
+  universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
+  staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedUpdateOneWithoutOwnerNestedInput
+  staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserCreateWithoutAuditLogsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  university?: Prisma.UniversityCreateNestedOneWithoutUsersInput
+  ownedUniversity?: Prisma.UniversityCreateNestedOneWithoutOwnerInput
+  universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
+  staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  preparedCredentials?: Prisma.CredentialCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserUncheckedCreateWithoutAuditLogsInput = {
+  id?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  name: string
+  walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
+  firstNameTh?: string | null
+  lastNameTh?: string | null
+  firstNameEn?: string | null
+  lastNameEn?: string | null
+  phone?: string | null
+  birthDate?: Date | string | null
+  studentId?: string | null
+  faculty?: string | null
+  major?: string | null
+  universityNameTh?: string | null
+  universityNameEn?: string | null
+  contactFirstNameTh?: string | null
+  contactLastNameTh?: string | null
+  contactFirstNameEn?: string | null
+  contactLastNameEn?: string | null
+  staffPosition?: string | null
+  staffDepartment?: string | null
+  website?: string | null
+  address?: string | null
+  addressDetail?: string | null
+  province?: string | null
+  district?: string | null
+  subDistrict?: string | null
+  postalCode?: string | null
+  nationalIdHash?: string | null
+  universityId?: string | null
+  issuerAccountType?: $Enums.IssuerAccountType | null
+  universityOwnerId?: string | null
+  permissions?: Prisma.UserCreatepermissionsInput | string[]
+  isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedCreateNestedOneWithoutOwnerInput
+  staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
+  issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
+  ownedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutHolderInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerStaffInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedCreateNestedManyWithoutHolderInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedCreateNestedOneWithoutClaimedByInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedCreateNestedManyWithoutCreatedByInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  preparedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutPreparedByInput
+  reviewedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutReviewedByInput
+  approvedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutApprovedByInput
+}
+
+export type UserCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type UserUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type UserUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  university?: Prisma.UniversityUpdateOneWithoutUsersNestedInput
+  ownedUniversity?: Prisma.UniversityUpdateOneWithoutOwnerNestedInput
+  universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
+  staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
+  firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  major?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactFirstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactLastNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staffDepartment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addressDetail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  district?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subDistrict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationalIdHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  universityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
+  universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permissions?: Prisma.UserUpdatepermissionsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ownedUniversity?: Prisma.UniversityUncheckedUpdateOneWithoutOwnerNestedInput
+  staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
+  issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
+  ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
+  staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
+  shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserCreateManyUniversityOwnerInput = {
@@ -3088,6 +5476,14 @@ export type UserUpdateWithoutUniversityOwnerInput = {
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUniversityOwnerInput = {
@@ -3138,6 +5534,14 @@ export type UserUncheckedUpdateWithoutUniversityOwnerInput = {
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutUniversityOwnerInput = {
@@ -3276,6 +5680,14 @@ export type UserUpdateWithoutUniversityInput = {
   ownedCredentials?: Prisma.CredentialUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUniversityInput = {
@@ -3326,6 +5738,14 @@ export type UserUncheckedUpdateWithoutUniversityInput = {
   ownedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutHolderNestedInput
   staffIssuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerStaffNestedInput
   shareLinks?: Prisma.CredentialShareLinkUncheckedUpdateManyWithoutHolderNestedInput
+  claimedStudentRecord?: Prisma.StudentRecordUncheckedUpdateOneWithoutClaimedByNestedInput
+  createdStudentRecords?: Prisma.StudentRecordUncheckedUpdateManyWithoutCreatedByNestedInput
+  claimAttempts?: Prisma.ClaimAttemptUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  preparedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutPreparedByNestedInput
+  reviewedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutReviewedByNestedInput
+  approvedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutApprovedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutUniversityInput = {
@@ -3383,6 +5803,13 @@ export type UserCountOutputType = {
   ownedCredentials: number
   staffIssuedCredentials: number
   shareLinks: number
+  createdStudentRecords: number
+  claimAttempts: number
+  notifications: number
+  auditLogs: number
+  preparedCredentials: number
+  reviewedCredentials: number
+  approvedCredentials: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3391,6 +5818,13 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   ownedCredentials?: boolean | UserCountOutputTypeCountOwnedCredentialsArgs
   staffIssuedCredentials?: boolean | UserCountOutputTypeCountStaffIssuedCredentialsArgs
   shareLinks?: boolean | UserCountOutputTypeCountShareLinksArgs
+  createdStudentRecords?: boolean | UserCountOutputTypeCountCreatedStudentRecordsArgs
+  claimAttempts?: boolean | UserCountOutputTypeCountClaimAttemptsArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+  preparedCredentials?: boolean | UserCountOutputTypeCountPreparedCredentialsArgs
+  reviewedCredentials?: boolean | UserCountOutputTypeCountReviewedCredentialsArgs
+  approvedCredentials?: boolean | UserCountOutputTypeCountApprovedCredentialsArgs
 }
 
 /**
@@ -3436,6 +5870,55 @@ export type UserCountOutputTypeCountStaffIssuedCredentialsArgs<ExtArgs extends r
  */
 export type UserCountOutputTypeCountShareLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CredentialShareLinkWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedStudentRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StudentRecordWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountClaimAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClaimAttemptWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPreparedCredentialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CredentialWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewedCredentialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CredentialWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountApprovedCredentialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CredentialWhereInput
 }
 
 
@@ -3490,6 +5973,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   ownedCredentials?: boolean | Prisma.User$ownedCredentialsArgs<ExtArgs>
   staffIssuedCredentials?: boolean | Prisma.User$staffIssuedCredentialsArgs<ExtArgs>
   shareLinks?: boolean | Prisma.User$shareLinksArgs<ExtArgs>
+  claimedStudentRecord?: boolean | Prisma.User$claimedStudentRecordArgs<ExtArgs>
+  createdStudentRecords?: boolean | Prisma.User$createdStudentRecordsArgs<ExtArgs>
+  claimAttempts?: boolean | Prisma.User$claimAttemptsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  preparedCredentials?: boolean | Prisma.User$preparedCredentialsArgs<ExtArgs>
+  reviewedCredentials?: boolean | Prisma.User$reviewedCredentialsArgs<ExtArgs>
+  approvedCredentials?: boolean | Prisma.User$approvedCredentialsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3642,6 +6133,14 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   ownedCredentials?: boolean | Prisma.User$ownedCredentialsArgs<ExtArgs>
   staffIssuedCredentials?: boolean | Prisma.User$staffIssuedCredentialsArgs<ExtArgs>
   shareLinks?: boolean | Prisma.User$shareLinksArgs<ExtArgs>
+  claimedStudentRecord?: boolean | Prisma.User$claimedStudentRecordArgs<ExtArgs>
+  createdStudentRecords?: boolean | Prisma.User$createdStudentRecordsArgs<ExtArgs>
+  claimAttempts?: boolean | Prisma.User$claimAttemptsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  preparedCredentials?: boolean | Prisma.User$preparedCredentialsArgs<ExtArgs>
+  reviewedCredentials?: boolean | Prisma.User$reviewedCredentialsArgs<ExtArgs>
+  approvedCredentials?: boolean | Prisma.User$approvedCredentialsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3664,6 +6163,14 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     ownedCredentials: Prisma.$CredentialPayload<ExtArgs>[]
     staffIssuedCredentials: Prisma.$CredentialPayload<ExtArgs>[]
     shareLinks: Prisma.$CredentialShareLinkPayload<ExtArgs>[]
+    claimedStudentRecord: Prisma.$StudentRecordPayload<ExtArgs> | null
+    createdStudentRecords: Prisma.$StudentRecordPayload<ExtArgs>[]
+    claimAttempts: Prisma.$ClaimAttemptPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    preparedCredentials: Prisma.$CredentialPayload<ExtArgs>[]
+    reviewedCredentials: Prisma.$CredentialPayload<ExtArgs>[]
+    approvedCredentials: Prisma.$CredentialPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -4110,6 +6617,14 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   ownedCredentials<T extends Prisma.User$ownedCredentialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ownedCredentialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   staffIssuedCredentials<T extends Prisma.User$staffIssuedCredentialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$staffIssuedCredentialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   shareLinks<T extends Prisma.User$shareLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$shareLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialShareLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  claimedStudentRecord<T extends Prisma.User$claimedStudentRecordArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$claimedStudentRecordArgs<ExtArgs>>): Prisma.Prisma__StudentRecordClient<runtime.Types.Result.GetResult<Prisma.$StudentRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  createdStudentRecords<T extends Prisma.User$createdStudentRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdStudentRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  claimAttempts<T extends Prisma.User$claimAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$claimAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClaimAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  preparedCredentials<T extends Prisma.User$preparedCredentialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$preparedCredentialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewedCredentials<T extends Prisma.User$reviewedCredentialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewedCredentialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  approvedCredentials<T extends Prisma.User$approvedCredentialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$approvedCredentialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4756,6 +7271,193 @@ export type User$shareLinksArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.CredentialShareLinkScalarFieldEnum | Prisma.CredentialShareLinkScalarFieldEnum[]
+}
+
+/**
+ * User.claimedStudentRecord
+ */
+export type User$claimedStudentRecordArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentRecord
+   */
+  select?: Prisma.StudentRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudentRecord
+   */
+  omit?: Prisma.StudentRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentRecordInclude<ExtArgs> | null
+  where?: Prisma.StudentRecordWhereInput
+}
+
+/**
+ * User.createdStudentRecords
+ */
+export type User$createdStudentRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentRecord
+   */
+  select?: Prisma.StudentRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudentRecord
+   */
+  omit?: Prisma.StudentRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentRecordInclude<ExtArgs> | null
+  where?: Prisma.StudentRecordWhereInput
+  orderBy?: Prisma.StudentRecordOrderByWithRelationInput | Prisma.StudentRecordOrderByWithRelationInput[]
+  cursor?: Prisma.StudentRecordWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudentRecordScalarFieldEnum | Prisma.StudentRecordScalarFieldEnum[]
+}
+
+/**
+ * User.claimAttempts
+ */
+export type User$claimAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClaimAttempt
+   */
+  select?: Prisma.ClaimAttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClaimAttempt
+   */
+  omit?: Prisma.ClaimAttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClaimAttemptInclude<ExtArgs> | null
+  where?: Prisma.ClaimAttemptWhereInput
+  orderBy?: Prisma.ClaimAttemptOrderByWithRelationInput | Prisma.ClaimAttemptOrderByWithRelationInput[]
+  cursor?: Prisma.ClaimAttemptWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClaimAttemptScalarFieldEnum | Prisma.ClaimAttemptScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.auditLogs
+ */
+export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
+ * User.preparedCredentials
+ */
+export type User$preparedCredentialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Credential
+   */
+  select?: Prisma.CredentialSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Credential
+   */
+  omit?: Prisma.CredentialOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CredentialInclude<ExtArgs> | null
+  where?: Prisma.CredentialWhereInput
+  orderBy?: Prisma.CredentialOrderByWithRelationInput | Prisma.CredentialOrderByWithRelationInput[]
+  cursor?: Prisma.CredentialWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CredentialScalarFieldEnum | Prisma.CredentialScalarFieldEnum[]
+}
+
+/**
+ * User.reviewedCredentials
+ */
+export type User$reviewedCredentialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Credential
+   */
+  select?: Prisma.CredentialSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Credential
+   */
+  omit?: Prisma.CredentialOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CredentialInclude<ExtArgs> | null
+  where?: Prisma.CredentialWhereInput
+  orderBy?: Prisma.CredentialOrderByWithRelationInput | Prisma.CredentialOrderByWithRelationInput[]
+  cursor?: Prisma.CredentialWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CredentialScalarFieldEnum | Prisma.CredentialScalarFieldEnum[]
+}
+
+/**
+ * User.approvedCredentials
+ */
+export type User$approvedCredentialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Credential
+   */
+  select?: Prisma.CredentialSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Credential
+   */
+  omit?: Prisma.CredentialOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CredentialInclude<ExtArgs> | null
+  where?: Prisma.CredentialWhereInput
+  orderBy?: Prisma.CredentialOrderByWithRelationInput | Prisma.CredentialOrderByWithRelationInput[]
+  cursor?: Prisma.CredentialWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CredentialScalarFieldEnum | Prisma.CredentialScalarFieldEnum[]
 }
 
 /**
