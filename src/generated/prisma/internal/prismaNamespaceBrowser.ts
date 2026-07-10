@@ -102,6 +102,9 @@ export const UserScalarFieldEnum = {
   universityOwnerId: 'universityOwnerId',
   permissions: 'permissions',
   isActive: 'isActive',
+  emailVerifiedAt: 'emailVerifiedAt',
+  emailVerificationTokenHash: 'emailVerificationTokenHash',
+  emailVerificationExpiresAt: 'emailVerificationExpiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

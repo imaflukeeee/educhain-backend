@@ -53,6 +53,9 @@ export type UserMinAggregateOutputType = {
   issuerAccountType: $Enums.IssuerAccountType | null
   universityOwnerId: string | null
   isActive: boolean | null
+  emailVerifiedAt: Date | null
+  emailVerificationTokenHash: string | null
+  emailVerificationExpiresAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -86,6 +89,9 @@ export type UserMaxAggregateOutputType = {
   issuerAccountType: $Enums.IssuerAccountType | null
   universityOwnerId: string | null
   isActive: boolean | null
+  emailVerifiedAt: Date | null
+  emailVerificationTokenHash: string | null
+  emailVerificationExpiresAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -120,6 +126,9 @@ export type UserCountAggregateOutputType = {
   universityOwnerId: number
   permissions: number
   isActive: number
+  emailVerifiedAt: number
+  emailVerificationTokenHash: number
+  emailVerificationExpiresAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -155,6 +164,9 @@ export type UserMinAggregateInputType = {
   issuerAccountType?: true
   universityOwnerId?: true
   isActive?: true
+  emailVerifiedAt?: true
+  emailVerificationTokenHash?: true
+  emailVerificationExpiresAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -188,6 +200,9 @@ export type UserMaxAggregateInputType = {
   issuerAccountType?: true
   universityOwnerId?: true
   isActive?: true
+  emailVerifiedAt?: true
+  emailVerificationTokenHash?: true
+  emailVerificationExpiresAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -222,6 +237,9 @@ export type UserCountAggregateInputType = {
   universityOwnerId?: true
   permissions?: true
   isActive?: true
+  emailVerifiedAt?: true
+  emailVerificationTokenHash?: true
+  emailVerificationExpiresAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -329,6 +347,9 @@ export type UserGroupByOutputType = {
   universityOwnerId: string | null
   permissions: string[]
   isActive: boolean
+  emailVerifiedAt: Date | null
+  emailVerificationTokenHash: string | null
+  emailVerificationExpiresAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -384,6 +405,9 @@ export type UserWhereInput = {
   universityOwnerId?: Prisma.StringNullableFilter<"User"> | string | null
   permissions?: Prisma.StringNullableListFilter<"User">
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationTokenHash?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerificationExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   universityOwner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -424,6 +448,9 @@ export type UserOrderByWithRelationInput = {
   universityOwnerId?: Prisma.SortOrderInput | Prisma.SortOrder
   permissions?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   universityOwner?: Prisma.UserOrderByWithRelationInput
@@ -437,6 +464,7 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  emailVerificationTokenHash?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -467,6 +495,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   universityOwnerId?: Prisma.StringNullableFilter<"User"> | string | null
   permissions?: Prisma.StringNullableListFilter<"User">
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   universityOwner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -475,7 +505,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   ownedCredentials?: Prisma.CredentialListRelationFilter
   staffIssuedCredentials?: Prisma.CredentialListRelationFilter
   shareLinks?: Prisma.CredentialShareLinkListRelationFilter
-}, "id" | "email">
+}, "id" | "email" | "emailVerificationTokenHash">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -507,6 +537,9 @@ export type UserOrderByWithAggregationInput = {
   universityOwnerId?: Prisma.SortOrderInput | Prisma.SortOrder
   permissions?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -547,6 +580,9 @@ export type UserScalarWhereWithAggregatesInput = {
   universityOwnerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   permissions?: Prisma.StringNullableListFilter<"User">
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  emailVerificationTokenHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  emailVerificationExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -580,6 +616,9 @@ export type UserCreateInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
@@ -620,6 +659,9 @@ export type UserUncheckedCreateInput = {
   universityOwnerId?: string | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
@@ -658,6 +700,9 @@ export type UserUpdateInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
@@ -698,6 +743,9 @@ export type UserUncheckedUpdateInput = {
   universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
@@ -737,6 +785,9 @@ export type UserCreateManyInput = {
   universityOwnerId?: string | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -770,6 +821,9 @@ export type UserUpdateManyMutationInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -804,6 +858,9 @@ export type UserUncheckedUpdateManyInput = {
   universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -861,6 +918,9 @@ export type UserCountOrderByAggregateInput = {
   universityOwnerId?: Prisma.SortOrder
   permissions?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  emailVerificationTokenHash?: Prisma.SortOrder
+  emailVerificationExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -894,6 +954,9 @@ export type UserMaxOrderByAggregateInput = {
   issuerAccountType?: Prisma.SortOrder
   universityOwnerId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  emailVerificationTokenHash?: Prisma.SortOrder
+  emailVerificationExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -927,6 +990,9 @@ export type UserMinOrderByAggregateInput = {
   issuerAccountType?: Prisma.SortOrder
   universityOwnerId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  emailVerificationTokenHash?: Prisma.SortOrder
+  emailVerificationExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -1118,6 +1184,9 @@ export type UserCreateWithoutStaffMembersInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
@@ -1157,6 +1226,9 @@ export type UserUncheckedCreateWithoutStaffMembersInput = {
   universityOwnerId?: string | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   issuedCredentials?: Prisma.CredentialUncheckedCreateNestedManyWithoutIssuerInput
@@ -1199,6 +1271,9 @@ export type UserCreateWithoutUniversityOwnerInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   staffMembers?: Prisma.UserCreateNestedManyWithoutUniversityOwnerInput
@@ -1237,6 +1312,9 @@ export type UserUncheckedCreateWithoutUniversityOwnerInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
@@ -1296,6 +1374,9 @@ export type UserUpdateWithoutStaffMembersInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
@@ -1335,6 +1416,9 @@ export type UserUncheckedUpdateWithoutStaffMembersInput = {
   universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   issuedCredentials?: Prisma.CredentialUncheckedUpdateManyWithoutIssuerNestedInput
@@ -1392,6 +1476,9 @@ export type UserScalarWhereInput = {
   universityOwnerId?: Prisma.StringNullableFilter<"User"> | string | null
   permissions?: Prisma.StringNullableListFilter<"User">
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationTokenHash?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerificationExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
@@ -1425,6 +1512,9 @@ export type UserCreateWithoutIssuedCredentialsInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
@@ -1464,6 +1554,9 @@ export type UserUncheckedCreateWithoutIssuedCredentialsInput = {
   universityOwnerId?: string | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
@@ -1506,6 +1599,9 @@ export type UserCreateWithoutOwnedCredentialsInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
@@ -1545,6 +1641,9 @@ export type UserUncheckedCreateWithoutOwnedCredentialsInput = {
   universityOwnerId?: string | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
@@ -1587,6 +1686,9 @@ export type UserCreateWithoutStaffIssuedCredentialsInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
@@ -1626,6 +1728,9 @@ export type UserUncheckedCreateWithoutStaffIssuedCredentialsInput = {
   universityOwnerId?: string | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
@@ -1679,6 +1784,9 @@ export type UserUpdateWithoutIssuedCredentialsInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
@@ -1718,6 +1826,9 @@ export type UserUncheckedUpdateWithoutIssuedCredentialsInput = {
   universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
@@ -1766,6 +1877,9 @@ export type UserUpdateWithoutOwnedCredentialsInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
@@ -1805,6 +1919,9 @@ export type UserUncheckedUpdateWithoutOwnedCredentialsInput = {
   universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
@@ -1853,6 +1970,9 @@ export type UserUpdateWithoutStaffIssuedCredentialsInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
@@ -1892,6 +2012,9 @@ export type UserUncheckedUpdateWithoutStaffIssuedCredentialsInput = {
   universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
@@ -1929,6 +2052,9 @@ export type UserCreateWithoutShareLinksInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   universityOwner?: Prisma.UserCreateNestedOneWithoutStaffMembersInput
@@ -1968,6 +2094,9 @@ export type UserUncheckedCreateWithoutShareLinksInput = {
   universityOwnerId?: string | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   staffMembers?: Prisma.UserUncheckedCreateNestedManyWithoutUniversityOwnerInput
@@ -2021,6 +2150,9 @@ export type UserUpdateWithoutShareLinksInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   universityOwner?: Prisma.UserUpdateOneWithoutStaffMembersNestedInput
@@ -2060,6 +2192,9 @@ export type UserUncheckedUpdateWithoutShareLinksInput = {
   universityOwnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
@@ -2097,6 +2232,9 @@ export type UserCreateManyUniversityOwnerInput = {
   issuerAccountType?: $Enums.IssuerAccountType | null
   permissions?: Prisma.UserCreatepermissionsInput | string[]
   isActive?: boolean
+  emailVerifiedAt?: Date | string | null
+  emailVerificationTokenHash?: string | null
+  emailVerificationExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2130,6 +2268,9 @@ export type UserUpdateWithoutUniversityOwnerInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffMembers?: Prisma.UserUpdateManyWithoutUniversityOwnerNestedInput
@@ -2168,6 +2309,9 @@ export type UserUncheckedUpdateWithoutUniversityOwnerInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffMembers?: Prisma.UserUncheckedUpdateManyWithoutUniversityOwnerNestedInput
@@ -2206,6 +2350,9 @@ export type UserUncheckedUpdateManyWithoutUniversityOwnerInput = {
   issuerAccountType?: Prisma.NullableEnumIssuerAccountTypeFieldUpdateOperationsInput | $Enums.IssuerAccountType | null
   permissions?: Prisma.UserUpdatepermissionsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2307,6 +2454,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   universityOwnerId?: boolean
   permissions?: boolean
   isActive?: boolean
+  emailVerifiedAt?: boolean
+  emailVerificationTokenHash?: boolean
+  emailVerificationExpiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   universityOwner?: boolean | Prisma.User$universityOwnerArgs<ExtArgs>
@@ -2348,6 +2498,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   universityOwnerId?: boolean
   permissions?: boolean
   isActive?: boolean
+  emailVerifiedAt?: boolean
+  emailVerificationTokenHash?: boolean
+  emailVerificationExpiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   universityOwner?: boolean | Prisma.User$universityOwnerArgs<ExtArgs>
@@ -2383,6 +2536,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   universityOwnerId?: boolean
   permissions?: boolean
   isActive?: boolean
+  emailVerifiedAt?: boolean
+  emailVerificationTokenHash?: boolean
+  emailVerificationExpiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   universityOwner?: boolean | Prisma.User$universityOwnerArgs<ExtArgs>
@@ -2418,11 +2574,14 @@ export type UserSelectScalar = {
   universityOwnerId?: boolean
   permissions?: boolean
   isActive?: boolean
+  emailVerifiedAt?: boolean
+  emailVerificationTokenHash?: boolean
+  emailVerificationExpiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "name" | "walletAddress" | "firstNameTh" | "lastNameTh" | "firstNameEn" | "lastNameEn" | "phone" | "birthDate" | "studentId" | "faculty" | "major" | "universityNameTh" | "universityNameEn" | "contactFirstNameTh" | "contactLastNameTh" | "contactFirstNameEn" | "contactLastNameEn" | "staffPosition" | "staffDepartment" | "website" | "address" | "issuerAccountType" | "universityOwnerId" | "permissions" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "name" | "walletAddress" | "firstNameTh" | "lastNameTh" | "firstNameEn" | "lastNameEn" | "phone" | "birthDate" | "studentId" | "faculty" | "major" | "universityNameTh" | "universityNameEn" | "contactFirstNameTh" | "contactLastNameTh" | "contactFirstNameEn" | "contactLastNameEn" | "staffPosition" | "staffDepartment" | "website" | "address" | "issuerAccountType" | "universityOwnerId" | "permissions" | "isActive" | "emailVerifiedAt" | "emailVerificationTokenHash" | "emailVerificationExpiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   universityOwner?: boolean | Prisma.User$universityOwnerArgs<ExtArgs>
   staffMembers?: boolean | Prisma.User$staffMembersArgs<ExtArgs>
@@ -2479,6 +2638,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     universityOwnerId: string | null
     permissions: string[]
     isActive: boolean
+    emailVerifiedAt: Date | null
+    emailVerificationTokenHash: string | null
+    emailVerificationExpiresAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -2939,6 +3101,9 @@ export interface UserFieldRefs {
   readonly universityOwnerId: Prisma.FieldRef<"User", 'String'>
   readonly permissions: Prisma.FieldRef<"User", 'String[]'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
+  readonly emailVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly emailVerificationTokenHash: Prisma.FieldRef<"User", 'String'>
+  readonly emailVerificationExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

@@ -9,6 +9,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { ethers } from 'ethers';
+import { createHash, randomBytes } from 'crypto';
 import {
   DEFAULT_STAFF_PERMISSIONS,
   STAFF_PERMISSIONS,
@@ -21,6 +22,7 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UpdateStaffDto } from './dto/update-staff.dto';
+import { EmailVerificationService } from './email-verification.service';
 
 function normalizeRequiredString(value?: string) {
   return value?.trim() || '';
@@ -66,6 +68,7 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly emailVerificationService: EmailVerificationService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -124,12 +127,30 @@ export class AuthService {
       isActive: true,
     });
 
-    const accessToken = await this.generateToken(user);
+    const rawVerificationToken = randomBytes(32).toString('hex');
+    const tokenHash = createHash('sha256').update(rawVerificationToken).digest('hex');
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    await this.usersService.setEmailVerification({
+      userId: user.id,
+      tokenHash,
+      expiresAt,
+    });
+
+    const frontendUrl = (process.env.FRONTEND_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
+    const verificationUrl = `${frontendUrl}/verify-email?token=${rawVerificationToken}`;
+
+    await this.emailVerificationService.sendVerificationEmail({
+      email: user.email,
+      displayName: user.name,
+      verificationUrl,
+    });
 
     return {
-      message: 'สมัครสมาชิกสำเร็จ',
-      user,
-      accessToken,
+      message: 'ลงทะเบียนสำเร็จ กรุณาตรวจสอบอีเมลเพื่อยืนยันบัญชี',
+      email: user.email,
+      requiresEmailVerification: true,
+      ...(process.env.EMAIL_DEV_RETURN_LINK === 'true' ? { verificationUrl } : {}),
     };
   }
 
@@ -142,6 +163,10 @@ export class AuthService {
 
     if (user.isActive === false) {
       throw new UnauthorizedException('บัญชีนี้ถูกปิดการใช้งาน กรุณาติดต่อผู้ดูแลบัญชี');
+    }
+
+    if (!user.emailVerifiedAt) {
+      throw new UnauthorizedException('กรุณายืนยันอีเมลก่อนเข้าสู่ระบบ');
     }
 
     const isPasswordValid = await bcrypt.compare(dto.password, user.password);
@@ -158,6 +183,60 @@ export class AuthService {
       message: 'เข้าสู่ระบบสำเร็จ',
       user: safeUser,
       accessToken,
+    };
+  }
+
+
+  async verifyEmail(rawToken: string) {
+    if (!rawToken?.trim()) {
+      throw new BadRequestException('ไม่พบรหัสยืนยันอีเมล');
+    }
+
+    const tokenHash = createHash('sha256').update(rawToken.trim()).digest('hex');
+    const user = await this.usersService.findByEmailVerificationTokenHash(tokenHash);
+
+    if (!user || !user.emailVerificationExpiresAt) {
+      throw new BadRequestException('ลิงก์ยืนยันอีเมลไม่ถูกต้องหรือถูกใช้งานแล้ว');
+    }
+
+    if (new Date(user.emailVerificationExpiresAt).getTime() < Date.now()) {
+      throw new BadRequestException('ลิงก์ยืนยันอีเมลหมดอายุแล้ว กรุณาขอลิงก์ใหม่');
+    }
+
+    await this.usersService.markEmailVerified(user.id);
+
+    return { message: 'ยืนยันอีเมลสำเร็จ คุณสามารถเข้าสู่ระบบได้แล้ว' };
+  }
+
+  async resendVerificationEmail(email: string) {
+    const user = await this.usersService.findByEmail(email);
+
+    if (!user) {
+      return { message: 'หากอีเมลนี้มีอยู่ในระบบ ระบบจะส่งลิงก์ยืนยันให้ใหม่' };
+    }
+
+    if (user.emailVerifiedAt) {
+      return { message: 'อีเมลนี้ได้รับการยืนยันแล้ว' };
+    }
+
+    const rawVerificationToken = randomBytes(32).toString('hex');
+    const tokenHash = createHash('sha256').update(rawVerificationToken).digest('hex');
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    await this.usersService.setEmailVerification({ userId: user.id, tokenHash, expiresAt });
+
+    const frontendUrl = (process.env.FRONTEND_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
+    const verificationUrl = `${frontendUrl}/verify-email?token=${rawVerificationToken}`;
+
+    await this.emailVerificationService.sendVerificationEmail({
+      email: user.email,
+      displayName: user.name,
+      verificationUrl,
+    });
+
+    return {
+      message: 'ส่งลิงก์ยืนยันอีเมลใหม่แล้ว',
+      ...(process.env.EMAIL_DEV_RETURN_LINK === 'true' ? { verificationUrl } : {}),
     };
   }
 

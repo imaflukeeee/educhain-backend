@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { EmailVerificationService } from './email-verification.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
 
@@ -28,7 +29,7 @@ import { RolesGuard } from './guards/roles.guard';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtAuthGuard, RolesGuard],
+  providers: [AuthService, EmailVerificationService, JwtAuthGuard, RolesGuard],
   /**
    * Export Guard และ JwtModule
    * เพื่อให้ Module อื่น เช่น CredentialsModule สามารถใช้ @UseGuards ได้

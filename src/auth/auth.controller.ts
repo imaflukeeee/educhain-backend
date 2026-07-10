@@ -18,9 +18,20 @@ import { RegisterDto } from './dto/register.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UpdateStaffDto } from './dto/update-staff.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
+import { IsEmail, IsString } from 'class-validator';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
 import type { AuthenticatedRequest } from './types/authenticated-request.type';
+
+class VerifyEmailDto {
+  @IsString()
+  token!: string;
+}
+
+class ResendVerificationDto {
+  @IsEmail()
+  email!: string;
+}
 
 @Controller('auth')
 export class AuthController {
@@ -35,6 +46,18 @@ export class AuthController {
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
   }
+
+
+  @Post('verify-email')
+  verifyEmail(@Body() dto: VerifyEmailDto) {
+    return this.authService.verifyEmail(dto.token);
+  }
+
+  @Post('resend-verification')
+  resendVerification(@Body() dto: ResendVerificationDto) {
+    return this.authService.resendVerificationEmail(dto.email);
+  }
+
 
   @UseGuards(JwtAuthGuard)
   @Get('me')

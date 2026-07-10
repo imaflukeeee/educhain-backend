@@ -55,6 +55,9 @@ const safeUserSelect = {
   },
   permissions: true,
   isActive: true,
+  emailVerifiedAt: true,
+  emailVerificationTokenHash: true,
+  emailVerificationExpiresAt: true,
   createdAt: true,
   updatedAt: true,
 };
@@ -100,6 +103,9 @@ export interface SafeUser {
   } | null;
   permissions?: string[];
   isActive?: boolean;
+  emailVerifiedAt?: Date | null;
+  emailVerificationTokenHash?: string | null;
+  emailVerificationExpiresAt?: Date | null;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -137,6 +143,9 @@ export type CreateUserData = {
   universityOwnerId?: string | null;
   permissions?: string[];
   isActive?: boolean;
+  emailVerifiedAt?: Date | null;
+  emailVerificationTokenHash?: string | null;
+  emailVerificationExpiresAt?: Date | null;
 };
 
 @Injectable()
@@ -174,6 +183,37 @@ export class UsersService {
     return user as SafeUser;
   }
 
+  async setEmailVerification(params: { userId: string; tokenHash: string; expiresAt: Date }) {
+    await this.db.user.update({
+      where: { id: params.userId },
+      data: {
+        emailVerificationTokenHash: params.tokenHash,
+        emailVerificationExpiresAt: params.expiresAt,
+        emailVerifiedAt: null,
+      } as never,
+    });
+  }
+
+  async findByEmailVerificationTokenHash(tokenHash: string): Promise<UserWithPassword | null> {
+    const user = await this.db.user.findUnique({
+      where: { emailVerificationTokenHash: tokenHash } as never,
+      select: userWithPasswordSelect as never,
+    });
+    return user as UserWithPassword | null;
+  }
+
+  async markEmailVerified(userId: string): Promise<SafeUser> {
+    const user = await this.db.user.update({
+      where: { id: userId },
+      data: {
+        emailVerifiedAt: new Date(),
+        emailVerificationTokenHash: null,
+        emailVerificationExpiresAt: null,
+      } as never,
+      select: safeUserSelect as never,
+    });
+    return user as SafeUser;
+  }
 
   async findHolderByStudentId(studentId: string): Promise<SafeUser | null> {
     const user = await this.db.user.findFirst({

@@ -7,7 +7,9 @@ import {
   IsOptional,
   IsString,
   IsUrl,
+  Matches,
   MinLength,
+  IsNotEmpty,
   ValidateIf,
 } from 'class-validator';
 
@@ -20,6 +22,9 @@ export class RegisterDto {
 
   @IsString()
   @MinLength(8)
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {
+    message: 'รหัสผ่านต้องมีตัวอักษรพิมพ์เล็ก พิมพ์ใหญ่ และตัวเลข อย่างน้อย 8 ตัวอักษร',
+  })
   password!: string;
 
   @IsString()
@@ -32,11 +37,13 @@ export class RegisterDto {
   @IsString()
   walletAddress?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'HOLDER')
+  @IsNotEmpty()
   @IsString()
   firstNameTh?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'HOLDER')
+  @IsNotEmpty()
   @IsString()
   lastNameTh?: string;
 
@@ -48,39 +55,45 @@ export class RegisterDto {
   @IsString()
   lastNameEn?: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   phone?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'HOLDER')
+  @IsNotEmpty()
   @IsDateString()
   birthDate?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'HOLDER')
+  @IsNotEmpty()
   @IsString()
   studentId?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'HOLDER')
+  @IsNotEmpty()
   @IsString()
   faculty?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'HOLDER')
+  @IsNotEmpty()
   @IsString()
   major?: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   universityNameTh?: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   universityNameEn?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'ISSUER')
+  @IsNotEmpty()
   @IsString()
   contactFirstNameTh?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'ISSUER')
+  @IsNotEmpty()
   @IsString()
   contactLastNameTh?: string;
 
@@ -92,11 +105,13 @@ export class RegisterDto {
   @IsString()
   contactLastNameEn?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'ISSUER')
+  @IsNotEmpty()
   @IsString()
   staffPosition?: string;
 
-  @IsOptional()
+  @ValidateIf((o) => o.role === 'ISSUER')
+  @IsNotEmpty()
   @IsString()
   staffDepartment?: string;
 
@@ -104,7 +119,7 @@ export class RegisterDto {
   @IsUrl({ require_protocol: true })
   website?: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   address?: string;
 }
