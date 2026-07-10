@@ -74,6 +74,42 @@ enum AuditAction {
   WORKFLOW_CHANGES_REQUESTED
 }
 
+
+enum DocumentRequestType {
+  STUDENT_STATUS_CERTIFICATE
+  TRANSCRIPT
+  DEGREE_CERTIFICATE
+  GRADUATION_CERTIFICATE
+  STUDENT_CARD
+  OTHER
+}
+
+enum DocumentRequestStatus {
+  SUBMITTED
+  RECEIVED
+  IN_PROGRESS
+  NEED_MORE_INFORMATION
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
+
+enum CredentialBatchStatus {
+  DRAFT
+  PREPARING
+  PENDING_REVIEW
+  PENDING_APPROVAL
+  PROCESSING
+  COMPLETED
+  PARTIALLY_COMPLETED
+  FAILED
+}
+
+enum DocumentTemplateStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model User {
   id            String   @id @default(uuid())
   email         String   @unique
@@ -127,6 +163,13 @@ model User {
   ownedCredentials  Credential[] @relation("HolderCredentials")
   staffIssuedCredentials Credential[] @relation("CredentialIssuerStaff")
 
+  documentRequests DocumentRequest[] @relation("HolderDocumentRequests")
+  assignedDocumentRequests DocumentRequest[] @relation("AssignedDocumentRequests")
+  createdTemplates DocumentTemplate[] @relation("TemplateCreator")
+  createdBatches CredentialBatch[] @relation("BatchCreator")
+  reviewedBatches CredentialBatch[] @relation("BatchReviewer")
+  approvedBatches CredentialBatch[] @relation("BatchApprover")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   shareLinks CredentialShareLink[] @relation("HolderShareLinks")
@@ -179,6 +222,9 @@ model University {
   claimAttempts      ClaimAttempt[]
   notifications      Notification[]
   auditLogs          AuditLog[]
+  documentRequests DocumentRequest[]
+  documentTemplates DocumentTemplate[]
+  credentialBatches CredentialBatch[]
 
   @@index([masterId])
   @@index([status])
@@ -262,6 +308,21 @@ model Credential {
   reviewedBy User? @relation("CredentialReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
   approvedBy User? @relation("CredentialApprover", fields: [approvedById], references: [id], onDelete: SetNull)
 
+  requestId String? @unique
+  batchId String?
+  version Int @default(1)
+  parentCredentialId String?
+  replacedById String? @unique
+  revokedReason String?
+  revokedAt DateTime?
+
+  request DocumentRequest? @relation(fields: [requestId], references: [id], onDelete: SetNull)
+  batch CredentialBatch? @relation(fields: [batchId], references: [id], onDelete: SetNull)
+  parentCredential Credential? @relation("CredentialVersions", fields: [parentCredentialId], references: [id], onDelete: SetNull)
+  versions Credential[] @relation("CredentialVersions")
+  replacedBy Credential? @relation("CredentialReplacement", fields: [replacedById], references: [id], onDelete: SetNull)
+  replaces Credential? @relation("CredentialReplacement")
+
   network         String?
   transactionHash String?
   blockNumber     Int?
@@ -278,6 +339,8 @@ model Credential {
   @@index([preparedById])
   @@index([reviewedById])
   @@index([approvedById])
+  @@index([batchId])
+  @@index([parentCredentialId])
 }
 
 model CredentialShareLink {
@@ -389,4 +452,88 @@ model AuditLog {
 
   @@index([universityId, createdAt])
   @@index([actorId])
+}
+
+model DocumentRequest {
+  id             String                @id @default(uuid())
+  universityId   String
+  holderId       String
+  type           DocumentRequestType
+  customTypeName String?
+  purpose        String?
+  details        String?
+  status         DocumentRequestStatus @default(SUBMITTED)
+  assignedToId   String?
+  staffNote      String?
+  rejectionReason String?
+  submittedAt    DateTime              @default(now())
+  receivedAt     DateTime?
+  completedAt    DateTime?
+  cancelledAt    DateTime?
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  holder User @relation("HolderDocumentRequests", fields: [holderId], references: [id], onDelete: Cascade)
+  assignedTo User? @relation("AssignedDocumentRequests", fields: [assignedToId], references: [id], onDelete: SetNull)
+  credential Credential?
+
+  @@index([universityId, status, createdAt])
+  @@index([holderId, createdAt])
+  @@index([assignedToId])
+}
+
+model DocumentTemplate {
+  id             String                 @id @default(uuid())
+  universityId   String
+  name           String
+  documentType   DocumentRequestType
+  customTypeName String?
+  description    String?
+  content        String
+  status         DocumentTemplateStatus @default(ACTIVE)
+  createdById    String
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  createdBy User @relation("TemplateCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  batches CredentialBatch[]
+
+  @@unique([universityId, name])
+  @@index([universityId, status])
+}
+
+model CredentialBatch {
+  id             String                @id @default(uuid())
+  universityId   String
+  templateId     String?
+  name           String
+  documentType   DocumentRequestType
+  academicYear   String?
+  facultyId      String?
+  majorId        String?
+  status         CredentialBatchStatus @default(DRAFT)
+  totalCount     Int                   @default(0)
+  successCount   Int                   @default(0)
+  failedCount    Int                   @default(0)
+  createdById    String
+  reviewedById   String?
+  approvedById   String?
+  note           String?
+  createdAt      DateTime              @default(now())
+  reviewedAt     DateTime?
+  approvedAt     DateTime?
+  completedAt    DateTime?
+  updatedAt      DateTime              @updatedAt
+
+  university University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  template DocumentTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  createdBy User @relation("BatchCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  reviewedBy User? @relation("BatchReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  approvedBy User? @relation("BatchApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  credentials Credential[]
+
+  @@index([universityId, status, createdAt])
+  @@index([templateId])
 }

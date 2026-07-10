@@ -10,6 +10,7 @@ import { UniversitiesModule } from './universities/universities.module';
 import { StudentsModule } from './students/students.module';
 import { OperationsModule } from './operations/operations.module';
 import { WorkflowModule } from './workflow/workflow.module';
+import { LifecycleModule } from './lifecycle/lifecycle.module';
 
 /**
  * AppModule คือ Module หลักของ Backend
@@ -33,6 +34,7 @@ import { WorkflowModule } from './workflow/workflow.module';
     StudentsModule,
     OperationsModule,
     WorkflowModule,
+    LifecycleModule,
   ],
 })
 export class AppModule {}

@@ -100,3 +100,50 @@ export const AuditAction = {
 } as const
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction]
+
+
+export const DocumentRequestType = {
+  STUDENT_STATUS_CERTIFICATE: 'STUDENT_STATUS_CERTIFICATE',
+  TRANSCRIPT: 'TRANSCRIPT',
+  DEGREE_CERTIFICATE: 'DEGREE_CERTIFICATE',
+  GRADUATION_CERTIFICATE: 'GRADUATION_CERTIFICATE',
+  STUDENT_CARD: 'STUDENT_CARD',
+  OTHER: 'OTHER'
+} as const
+
+export type DocumentRequestType = (typeof DocumentRequestType)[keyof typeof DocumentRequestType]
+
+
+export const DocumentRequestStatus = {
+  SUBMITTED: 'SUBMITTED',
+  RECEIVED: 'RECEIVED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  NEED_MORE_INFORMATION: 'NEED_MORE_INFORMATION',
+  REJECTED: 'REJECTED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type DocumentRequestStatus = (typeof DocumentRequestStatus)[keyof typeof DocumentRequestStatus]
+
+
+export const CredentialBatchStatus = {
+  DRAFT: 'DRAFT',
+  PREPARING: 'PREPARING',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  PENDING_APPROVAL: 'PENDING_APPROVAL',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  PARTIALLY_COMPLETED: 'PARTIALLY_COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type CredentialBatchStatus = (typeof CredentialBatchStatus)[keyof typeof CredentialBatchStatus]
+
+
+export const DocumentTemplateStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type DocumentTemplateStatus = (typeof DocumentTemplateStatus)[keyof typeof DocumentTemplateStatus]

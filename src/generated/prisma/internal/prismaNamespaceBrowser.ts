@@ -61,7 +61,10 @@ export const ModelName = {
   StudentRecord: 'StudentRecord',
   ClaimAttempt: 'ClaimAttempt',
   Notification: 'Notification',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  DocumentRequest: 'DocumentRequest',
+  DocumentTemplate: 'DocumentTemplate',
+  CredentialBatch: 'CredentialBatch'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -215,6 +218,13 @@ export const CredentialScalarFieldEnum = {
   submittedAt: 'submittedAt',
   reviewedAt: 'reviewedAt',
   approvedAt: 'approvedAt',
+  requestId: 'requestId',
+  batchId: 'batchId',
+  version: 'version',
+  parentCredentialId: 'parentCredentialId',
+  replacedById: 'replacedById',
+  revokedReason: 'revokedReason',
+  revokedAt: 'revokedAt',
   network: 'network',
   transactionHash: 'transactionHash',
   blockNumber: 'blockNumber',
@@ -307,6 +317,73 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const DocumentRequestScalarFieldEnum = {
+  id: 'id',
+  universityId: 'universityId',
+  holderId: 'holderId',
+  type: 'type',
+  customTypeName: 'customTypeName',
+  purpose: 'purpose',
+  details: 'details',
+  status: 'status',
+  assignedToId: 'assignedToId',
+  staffNote: 'staffNote',
+  rejectionReason: 'rejectionReason',
+  submittedAt: 'submittedAt',
+  receivedAt: 'receivedAt',
+  completedAt: 'completedAt',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DocumentRequestScalarFieldEnum = (typeof DocumentRequestScalarFieldEnum)[keyof typeof DocumentRequestScalarFieldEnum]
+
+
+export const DocumentTemplateScalarFieldEnum = {
+  id: 'id',
+  universityId: 'universityId',
+  name: 'name',
+  documentType: 'documentType',
+  customTypeName: 'customTypeName',
+  description: 'description',
+  content: 'content',
+  status: 'status',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DocumentTemplateScalarFieldEnum = (typeof DocumentTemplateScalarFieldEnum)[keyof typeof DocumentTemplateScalarFieldEnum]
+
+
+export const CredentialBatchScalarFieldEnum = {
+  id: 'id',
+  universityId: 'universityId',
+  templateId: 'templateId',
+  name: 'name',
+  documentType: 'documentType',
+  academicYear: 'academicYear',
+  facultyId: 'facultyId',
+  majorId: 'majorId',
+  status: 'status',
+  totalCount: 'totalCount',
+  successCount: 'successCount',
+  failedCount: 'failedCount',
+  createdById: 'createdById',
+  reviewedById: 'reviewedById',
+  approvedById: 'approvedById',
+  note: 'note',
+  createdAt: 'createdAt',
+  reviewedAt: 'reviewedAt',
+  approvedAt: 'approvedAt',
+  completedAt: 'completedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CredentialBatchScalarFieldEnum = (typeof CredentialBatchScalarFieldEnum)[keyof typeof CredentialBatchScalarFieldEnum]
 
 
 export const SortOrder = {
