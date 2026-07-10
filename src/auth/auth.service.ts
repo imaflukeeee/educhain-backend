@@ -95,6 +95,7 @@ export class AuthService {
       name: fallbackName,
       role: dto.role,
       walletAddress: normalizeNullableString(dto.walletAddress),
+      namePrefix: dto.namePrefix,
       firstNameTh: normalizeNullableString(dto.firstNameTh),
       lastNameTh: normalizeNullableString(dto.lastNameTh),
       firstNameEn: normalizeNullableString(dto.firstNameEn),
@@ -138,7 +139,7 @@ export class AuthService {
     });
 
     const frontendUrl = (process.env.FRONTEND_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
-    const verificationUrl = `${frontendUrl}/verify-email?token=${rawVerificationToken}`;
+    const verificationUrl = `${frontendUrl}/verify-email?token=${encodeURIComponent(rawVerificationToken)}&role=${encodeURIComponent(user.role)}`;
 
     await this.emailVerificationService.sendVerificationEmail({
       email: user.email,
@@ -226,7 +227,7 @@ export class AuthService {
     await this.usersService.setEmailVerification({ userId: user.id, tokenHash, expiresAt });
 
     const frontendUrl = (process.env.FRONTEND_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
-    const verificationUrl = `${frontendUrl}/verify-email?token=${rawVerificationToken}`;
+    const verificationUrl = `${frontendUrl}/verify-email?token=${encodeURIComponent(rawVerificationToken)}&role=${encodeURIComponent(user.role)}`;
 
     await this.emailVerificationService.sendVerificationEmail({
       email: user.email,

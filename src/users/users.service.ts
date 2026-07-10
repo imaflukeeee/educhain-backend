@@ -29,6 +29,7 @@ const safeUserSelect = {
   name: true,
   role: true,
   walletAddress: true,
+  namePrefix: true,
   firstNameTh: true,
   lastNameTh: true,
   firstNameEn: true,
@@ -73,6 +74,7 @@ export interface SafeUser {
   name: string;
   role: UserRole;
   walletAddress: string | null;
+  namePrefix?: 'MR' | 'MISS' | 'MRS' | null;
   firstNameTh?: string | null;
   lastNameTh?: string | null;
   firstNameEn?: string | null;
@@ -120,6 +122,7 @@ export type CreateUserData = {
   name: string;
   role: UserRole;
   walletAddress?: string | null;
+  namePrefix?: 'MR' | 'MISS' | 'MRS' | null;
   firstNameTh?: string | null;
   lastNameTh?: string | null;
   firstNameEn?: string | null;

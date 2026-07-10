@@ -10,8 +10,13 @@ async function bootstrap() {
    * ตอน Local: http://localhost:3000
    * ตอน Deploy จริง: เปลี่ยนเป็น URL ของ Vercel
    */
+  const corsOrigins = (process.env.CORS_ORIGIN ?? '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
   app.enableCors({
-    origin: process.env.CORS_ORIGIN?.split(',') ?? ['http://localhost:3000'],
+    origin: corsOrigins,
     credentials: true,
   });
 

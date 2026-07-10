@@ -17,6 +17,15 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const NamePrefix = {
+  MR: 'MR',
+  MISS: 'MISS',
+  MRS: 'MRS'
+} as const
+
+export type NamePrefix = (typeof NamePrefix)[keyof typeof NamePrefix]
+
+
 export const IssuerAccountType = {
   UNIVERSITY_ADMIN: 'UNIVERSITY_ADMIN',
   REGISTRAR_STAFF: 'REGISTRAR_STAFF'

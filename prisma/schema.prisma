@@ -13,6 +13,12 @@ enum UserRole {
   HOLDER
 }
 
+enum NamePrefix {
+  MR
+  MISS
+  MRS
+}
+
 enum IssuerAccountType {
   UNIVERSITY_ADMIN
   REGISTRAR_STAFF
@@ -31,6 +37,7 @@ model User {
   role          UserRole
   name          String
   walletAddress String?
+  namePrefix   NamePrefix?
 
   firstNameTh       String?
   lastNameTh        String?

@@ -14,7 +14,9 @@ import {
 } from 'class-validator';
 
 export const REGISTER_ROLES = ['ISSUER', 'HOLDER'] as const;
+export const NAME_PREFIXES = ['MR', 'MISS', 'MRS'] as const;
 export type RegisterRole = (typeof REGISTER_ROLES)[number];
+export type NamePrefix = (typeof NAME_PREFIXES)[number];
 
 export class RegisterDto {
   @IsEmail()
@@ -36,6 +38,9 @@ export class RegisterDto {
   @IsOptional()
   @IsString()
   walletAddress?: string;
+
+  @IsIn(NAME_PREFIXES)
+  namePrefix!: NamePrefix;
 
   @ValidateIf((o) => o.role === 'HOLDER')
   @IsNotEmpty()

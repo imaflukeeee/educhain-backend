@@ -31,6 +31,7 @@ export type UserMinAggregateOutputType = {
   role: $Enums.UserRole | null
   name: string | null
   walletAddress: string | null
+  namePrefix: $Enums.NamePrefix | null
   firstNameTh: string | null
   lastNameTh: string | null
   firstNameEn: string | null
@@ -67,6 +68,7 @@ export type UserMaxAggregateOutputType = {
   role: $Enums.UserRole | null
   name: string | null
   walletAddress: string | null
+  namePrefix: $Enums.NamePrefix | null
   firstNameTh: string | null
   lastNameTh: string | null
   firstNameEn: string | null
@@ -103,6 +105,7 @@ export type UserCountAggregateOutputType = {
   role: number
   name: number
   walletAddress: number
+  namePrefix: number
   firstNameTh: number
   lastNameTh: number
   firstNameEn: number
@@ -142,6 +145,7 @@ export type UserMinAggregateInputType = {
   role?: true
   name?: true
   walletAddress?: true
+  namePrefix?: true
   firstNameTh?: true
   lastNameTh?: true
   firstNameEn?: true
@@ -178,6 +182,7 @@ export type UserMaxAggregateInputType = {
   role?: true
   name?: true
   walletAddress?: true
+  namePrefix?: true
   firstNameTh?: true
   lastNameTh?: true
   firstNameEn?: true
@@ -214,6 +219,7 @@ export type UserCountAggregateInputType = {
   role?: true
   name?: true
   walletAddress?: true
+  namePrefix?: true
   firstNameTh?: true
   lastNameTh?: true
   firstNameEn?: true
@@ -324,6 +330,7 @@ export type UserGroupByOutputType = {
   role: $Enums.UserRole
   name: string
   walletAddress: string | null
+  namePrefix: $Enums.NamePrefix | null
   firstNameTh: string | null
   lastNameTh: string | null
   firstNameEn: string | null
@@ -382,6 +389,7 @@ export type UserWhereInput = {
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   name?: Prisma.StringFilter<"User"> | string
   walletAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  namePrefix?: Prisma.EnumNamePrefixNullableFilter<"User"> | $Enums.NamePrefix | null
   firstNameTh?: Prisma.StringNullableFilter<"User"> | string | null
   lastNameTh?: Prisma.StringNullableFilter<"User"> | string | null
   firstNameEn?: Prisma.StringNullableFilter<"User"> | string | null
@@ -425,6 +433,7 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   name?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  namePrefix?: Prisma.SortOrderInput | Prisma.SortOrder
   firstNameTh?: Prisma.SortOrderInput | Prisma.SortOrder
   lastNameTh?: Prisma.SortOrderInput | Prisma.SortOrder
   firstNameEn?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -472,6 +481,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   name?: Prisma.StringFilter<"User"> | string
   walletAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  namePrefix?: Prisma.EnumNamePrefixNullableFilter<"User"> | $Enums.NamePrefix | null
   firstNameTh?: Prisma.StringNullableFilter<"User"> | string | null
   lastNameTh?: Prisma.StringNullableFilter<"User"> | string | null
   firstNameEn?: Prisma.StringNullableFilter<"User"> | string | null
@@ -514,6 +524,7 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   name?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  namePrefix?: Prisma.SortOrderInput | Prisma.SortOrder
   firstNameTh?: Prisma.SortOrderInput | Prisma.SortOrder
   lastNameTh?: Prisma.SortOrderInput | Prisma.SortOrder
   firstNameEn?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -557,6 +568,7 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   walletAddress?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  namePrefix?: Prisma.EnumNamePrefixNullableWithAggregatesFilter<"User"> | $Enums.NamePrefix | null
   firstNameTh?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   lastNameTh?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   firstNameEn?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -594,6 +606,7 @@ export type UserCreateInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -636,6 +649,7 @@ export type UserUncheckedCreateInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -678,6 +692,7 @@ export type UserUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -720,6 +735,7 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -762,6 +778,7 @@ export type UserCreateManyInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -799,6 +816,7 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -835,6 +853,7 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -895,6 +914,7 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   name?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrder
+  namePrefix?: Prisma.SortOrder
   firstNameTh?: Prisma.SortOrder
   lastNameTh?: Prisma.SortOrder
   firstNameEn?: Prisma.SortOrder
@@ -932,6 +952,7 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   name?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrder
+  namePrefix?: Prisma.SortOrder
   firstNameTh?: Prisma.SortOrder
   lastNameTh?: Prisma.SortOrder
   firstNameEn?: Prisma.SortOrder
@@ -968,6 +989,7 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   name?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrder
+  namePrefix?: Prisma.SortOrder
   firstNameTh?: Prisma.SortOrder
   lastNameTh?: Prisma.SortOrder
   firstNameEn?: Prisma.SortOrder
@@ -1036,6 +1058,10 @@ export type EnumUserRoleFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type NullableEnumNamePrefixFieldUpdateOperationsInput = {
+  set?: $Enums.NamePrefix | null
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -1162,6 +1188,7 @@ export type UserCreateWithoutStaffMembersInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1203,6 +1230,7 @@ export type UserUncheckedCreateWithoutStaffMembersInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1249,6 +1277,7 @@ export type UserCreateWithoutUniversityOwnerInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1290,6 +1319,7 @@ export type UserUncheckedCreateWithoutUniversityOwnerInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1352,6 +1382,7 @@ export type UserUpdateWithoutStaffMembersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1393,6 +1424,7 @@ export type UserUncheckedUpdateWithoutStaffMembersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1453,6 +1485,7 @@ export type UserScalarWhereInput = {
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   name?: Prisma.StringFilter<"User"> | string
   walletAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  namePrefix?: Prisma.EnumNamePrefixNullableFilter<"User"> | $Enums.NamePrefix | null
   firstNameTh?: Prisma.StringNullableFilter<"User"> | string | null
   lastNameTh?: Prisma.StringNullableFilter<"User"> | string | null
   firstNameEn?: Prisma.StringNullableFilter<"User"> | string | null
@@ -1490,6 +1523,7 @@ export type UserCreateWithoutIssuedCredentialsInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1531,6 +1565,7 @@ export type UserUncheckedCreateWithoutIssuedCredentialsInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1577,6 +1612,7 @@ export type UserCreateWithoutOwnedCredentialsInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1618,6 +1654,7 @@ export type UserUncheckedCreateWithoutOwnedCredentialsInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1664,6 +1701,7 @@ export type UserCreateWithoutStaffIssuedCredentialsInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1705,6 +1743,7 @@ export type UserUncheckedCreateWithoutStaffIssuedCredentialsInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -1762,6 +1801,7 @@ export type UserUpdateWithoutIssuedCredentialsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1803,6 +1843,7 @@ export type UserUncheckedUpdateWithoutIssuedCredentialsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1855,6 +1896,7 @@ export type UserUpdateWithoutOwnedCredentialsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1896,6 +1938,7 @@ export type UserUncheckedUpdateWithoutOwnedCredentialsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1948,6 +1991,7 @@ export type UserUpdateWithoutStaffIssuedCredentialsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1989,6 +2033,7 @@ export type UserUncheckedUpdateWithoutStaffIssuedCredentialsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2030,6 +2075,7 @@ export type UserCreateWithoutShareLinksInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -2071,6 +2117,7 @@ export type UserUncheckedCreateWithoutShareLinksInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -2128,6 +2175,7 @@ export type UserUpdateWithoutShareLinksInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2169,6 +2217,7 @@ export type UserUncheckedUpdateWithoutShareLinksInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2210,6 +2259,7 @@ export type UserCreateManyUniversityOwnerInput = {
   role: $Enums.UserRole
   name: string
   walletAddress?: string | null
+  namePrefix?: $Enums.NamePrefix | null
   firstNameTh?: string | null
   lastNameTh?: string | null
   firstNameEn?: string | null
@@ -2246,6 +2296,7 @@ export type UserUpdateWithoutUniversityOwnerInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2287,6 +2338,7 @@ export type UserUncheckedUpdateWithoutUniversityOwnerInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2328,6 +2380,7 @@ export type UserUncheckedUpdateManyWithoutUniversityOwnerInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   name?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  namePrefix?: Prisma.NullableEnumNamePrefixFieldUpdateOperationsInput | $Enums.NamePrefix | null
   firstNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastNameTh?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstNameEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2431,6 +2484,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   name?: boolean
   walletAddress?: boolean
+  namePrefix?: boolean
   firstNameTh?: boolean
   lastNameTh?: boolean
   firstNameEn?: boolean
@@ -2475,6 +2529,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   name?: boolean
   walletAddress?: boolean
+  namePrefix?: boolean
   firstNameTh?: boolean
   lastNameTh?: boolean
   firstNameEn?: boolean
@@ -2513,6 +2568,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   name?: boolean
   walletAddress?: boolean
+  namePrefix?: boolean
   firstNameTh?: boolean
   lastNameTh?: boolean
   firstNameEn?: boolean
@@ -2551,6 +2607,7 @@ export type UserSelectScalar = {
   role?: boolean
   name?: boolean
   walletAddress?: boolean
+  namePrefix?: boolean
   firstNameTh?: boolean
   lastNameTh?: boolean
   firstNameEn?: boolean
@@ -2581,7 +2638,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "name" | "walletAddress" | "firstNameTh" | "lastNameTh" | "firstNameEn" | "lastNameEn" | "phone" | "birthDate" | "studentId" | "faculty" | "major" | "universityNameTh" | "universityNameEn" | "contactFirstNameTh" | "contactLastNameTh" | "contactFirstNameEn" | "contactLastNameEn" | "staffPosition" | "staffDepartment" | "website" | "address" | "issuerAccountType" | "universityOwnerId" | "permissions" | "isActive" | "emailVerifiedAt" | "emailVerificationTokenHash" | "emailVerificationExpiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "name" | "walletAddress" | "namePrefix" | "firstNameTh" | "lastNameTh" | "firstNameEn" | "lastNameEn" | "phone" | "birthDate" | "studentId" | "faculty" | "major" | "universityNameTh" | "universityNameEn" | "contactFirstNameTh" | "contactLastNameTh" | "contactFirstNameEn" | "contactLastNameEn" | "staffPosition" | "staffDepartment" | "website" | "address" | "issuerAccountType" | "universityOwnerId" | "permissions" | "isActive" | "emailVerifiedAt" | "emailVerificationTokenHash" | "emailVerificationExpiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   universityOwner?: boolean | Prisma.User$universityOwnerArgs<ExtArgs>
   staffMembers?: boolean | Prisma.User$staffMembersArgs<ExtArgs>
@@ -2615,6 +2672,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: $Enums.UserRole
     name: string
     walletAddress: string | null
+    namePrefix: $Enums.NamePrefix | null
     firstNameTh: string | null
     lastNameTh: string | null
     firstNameEn: string | null
@@ -3078,6 +3136,7 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly walletAddress: Prisma.FieldRef<"User", 'String'>
+  readonly namePrefix: Prisma.FieldRef<"User", 'NamePrefix'>
   readonly firstNameTh: Prisma.FieldRef<"User", 'String'>
   readonly lastNameTh: Prisma.FieldRef<"User", 'String'>
   readonly firstNameEn: Prisma.FieldRef<"User", 'String'>
