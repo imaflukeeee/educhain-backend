@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -26,4 +26,10 @@ export class UniversitiesController {
   facultyActive(@Req() req: AuthenticatedRequest, @Param('id') id: string, @Body() dto: UpdateActiveDto) { if (!req.user) throw new UnauthorizedException(); return this.service.setFacultyActive(req.user.sub,id,dto.isActive); }
   @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ISSUER') @Patch('issuer/majors/:id/active')
   majorActive(@Req() req: AuthenticatedRequest, @Param('id') id: string, @Body() dto: UpdateActiveDto) { if (!req.user) throw new UnauthorizedException(); return this.service.setMajorActive(req.user.sub,id,dto.isActive); }
+
+  @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ISSUER') @Delete('issuer/faculties/:id')
+  deleteFaculty(@Req() req: AuthenticatedRequest, @Param('id') id: string) { if (!req.user) throw new UnauthorizedException(); return this.service.deleteFaculty(req.user.sub, id); }
+  @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ISSUER') @Delete('issuer/majors/:id')
+  deleteMajor(@Req() req: AuthenticatedRequest, @Param('id') id: string) { if (!req.user) throw new UnauthorizedException(); return this.service.deleteMajor(req.user.sub, id); }
 }
+

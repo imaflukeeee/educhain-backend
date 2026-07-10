@@ -71,4 +71,31 @@ export class UniversitiesService {
     if (!major) throw new NotFoundException('ไม่พบสาขาวิชา');
     return this.prisma.major.update({ where: { id }, data: { isActive } });
   }
+
+
+  async deleteMajor(userId: string, id: string) {
+    const universityId = await this.getUniversityForUser(userId);
+    const major = await this.prisma.major.findFirst({
+      where: { id, faculty: { universityId } },
+      select: { id: true, nameTh: true },
+    });
+    if (!major) throw new NotFoundException('ไม่พบสาขาวิชา');
+
+    await this.prisma.major.delete({ where: { id: major.id } });
+    return { message: `ลบสาขาวิชา ${major.nameTh} เรียบร้อยแล้ว` };
+  }
+
+  async deleteFaculty(userId: string, id: string) {
+    const universityId = await this.getUniversityForUser(userId);
+    const faculty = await this.prisma.faculty.findFirst({
+      where: { id, universityId },
+      select: { id: true, nameTh: true },
+    });
+    if (!faculty) throw new NotFoundException('ไม่พบคณะ');
+
+    // Major ถูกกำหนด onDelete: Cascade และ StudentRecord ใช้ onDelete: SetNull
+    // จึงลบคณะและสาขาภายในได้โดยไม่ลบประวัตินักศึกษา
+    await this.prisma.faculty.delete({ where: { id: faculty.id } });
+    return { message: `ลบคณะ ${faculty.nameTh} เรียบร้อยแล้ว` };
+  }
 }
