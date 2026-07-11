@@ -299,29 +299,93 @@ if (!isIssuer && registeredUniversity && dto.studentId && dto.birthDate) {
       }),
     ]);
   } else {
+    let reviewRecord = candidate;
+
+    if (!candidate) {
+      const faculty = dto.faculty
+        ? await this.prisma.faculty.findFirst({
+            where: {
+              universityId: registeredUniversity.id,
+              nameTh: dto.faculty.trim(),
+              isActive: true,
+            },
+            select: { id: true },
+          })
+        : null;
+
+      const major = dto.major
+        ? await this.prisma.major.findFirst({
+            where: {
+              faculty: {
+                universityId: registeredUniversity.id,
+              },
+              nameTh: dto.major.trim(),
+              isActive: true,
+            },
+            select: { id: true },
+          })
+        : null;
+
+      reviewRecord = await this.prisma.studentRecord.create({
+        data: {
+          universityId: registeredUniversity.id,
+          studentId,
+          namePrefix: dto.namePrefix,
+          firstNameTh: dto.firstNameTh!.trim(),
+          lastNameTh: dto.lastNameTh!.trim(),
+          firstNameEn: normalizeNullableString(dto.firstNameEn),
+          lastNameEn: normalizeNullableString(dto.lastNameEn),
+          birthDate: new Date(`${dto.birthDate}T00:00:00.000Z`),
+          nationalIdHash,
+          email: dto.email.trim().toLowerCase(),
+          facultyId: faculty?.id ?? null,
+          majorId: major?.id ?? null,
+          claimStatus: 'REVIEW_REQUIRED',
+          claimedById: user.id,
+          claimedAt: null,
+          isActive: true,
+        },
+      });
+
+      await this.prisma.auditLog.create({
+        data: {
+          actorId: user.id,
+          universityId: registeredUniversity.id,
+          action: 'STUDENT_CREATED',
+          entityType: 'StudentRecord',
+          entityId: reviewRecord.id,
+          afterData: {
+            source: 'HOLDER_REGISTRATION',
+            requiresReview: true,
+          },
+        },
+      });
+    } else if (candidate.claimStatus === 'UNCLAIMED') {
+      reviewRecord = await this.prisma.studentRecord.update({
+        where: { id: candidate.id },
+        data: {
+          claimStatus: 'REVIEW_REQUIRED',
+          claimedById: user.id,
+        },
+      });
+    }
+
     await this.prisma.claimAttempt.create({
       data: {
         universityId: registeredUniversity.id,
-        studentRecordId: candidate?.id ?? null,
+        studentRecordId: reviewRecord?.id ?? null,
         userId: user.id,
-        studentId: studentId,
+        studentId,
         matched: false,
         reason: !candidate
-          ? 'ไม่พบรหัสนักศึกษา'
+          ? 'ไม่พบข้อมูลเดิมของนักศึกษา จึงส่งให้มหาวิทยาลัยตรวจสอบ'
           : candidate.claimStatus !== 'UNCLAIMED'
-            ? 'ข้อมูลนักศึกษาถูก Claim แล้ว'
+            ? 'ข้อมูลนักศึกษาถูกเชื่อมกับบัญชีอื่นแล้ว'
             : !birthMatches
               ? 'วันเกิดไม่ตรงกัน'
               : 'เลขบัตรประชาชนไม่ตรงกัน',
       },
     });
-
-    if (candidate && candidate.claimStatus === 'UNCLAIMED') {
-      await this.prisma.studentRecord.update({
-        where: { id: candidate.id },
-        data: { claimStatus: 'REVIEW_REQUIRED' },
-      });
-    }
 
     const admins = await this.prisma.user.findMany({
       where: {
@@ -338,8 +402,8 @@ if (!isIssuer && registeredUniversity && dto.studentId && dto.birthDate) {
           userId: admin.id,
           universityId: registeredUniversity.id,
           type: 'CLAIM_REVIEW_REQUIRED' as const,
-          title: 'มีรายการ Claim ที่ต้องตรวจสอบ',
-          message: `รหัสนักศึกษา ${studentId} ไม่สามารถ Claim อัตโนมัติได้`,
+          title: 'มีข้อมูลนักศึกษาที่ต้องตรวจสอบ',
+          message: `รหัสนักศึกษา ${studentId} ต้องได้รับการตรวจสอบก่อนเชื่อมบัญชี`,
           link: '/issuer/students?status=REVIEW_REQUIRED',
         })),
       });
