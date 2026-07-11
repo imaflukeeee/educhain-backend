@@ -8,9 +8,38 @@ const REQUEST_STATUSES = [
   'COMPLETED',
 ] as const;
 
+const REQUEST_TYPES = [
+  'STUDENT_STATUS_CERTIFICATE',
+  'TRANSCRIPT',
+  'DEGREE_CERTIFICATE',
+  'GRADUATION_CERTIFICATE',
+  'STUDENT_CARD',
+  'OTHER',
+] as const;
+
 export class UpdateDocumentRequestDto {
+  @IsOptional()
   @IsIn(REQUEST_STATUSES)
-  status!: (typeof REQUEST_STATUSES)[number];
+  status?: (typeof REQUEST_STATUSES)[number];
+
+  @IsOptional()
+  @IsIn(REQUEST_TYPES)
+  type?: (typeof REQUEST_TYPES)[number];
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  customTypeName?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  purpose?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  details?: string;
 
   @IsOptional()
   @IsString()

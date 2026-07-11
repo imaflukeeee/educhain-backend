@@ -184,11 +184,39 @@ export class CredentialsService {
 
     const holder = await this.prisma.user.findUnique({
       where: { email: dto.holderEmail.trim().toLowerCase() },
-      select: { id: true, role: true },
+      select: { id: true, role: true, universityId: true },
     });
 
     if (!holder || holder.role !== UserRole.HOLDER) {
       throw new NotFoundException('ไม่พบนักศึกษาในระบบ');
+    }
+
+    let sourceRequest: { id: string; status: string } | null = null;
+    if (dto.requestId?.trim()) {
+      sourceRequest = await this.prisma.documentRequest.findFirst({
+        where: {
+          id: dto.requestId.trim(),
+          universityId: issuerContext.universityId,
+          holderId: holder.id,
+        },
+        select: { id: true, status: true },
+      });
+
+      if (!sourceRequest) {
+        throw new NotFoundException('ไม่พบคำร้องเอกสารของนักศึกษารายนี้');
+      }
+
+      if (['REJECTED', 'CANCELLED', 'COMPLETED'].includes(sourceRequest.status)) {
+        throw new BadRequestException('คำร้องนี้ไม่สามารถนำมาออกเอกสารได้');
+      }
+
+      const linkedCredential = await this.prisma.credential.findUnique({
+        where: { requestId: sourceRequest.id },
+        select: { id: true },
+      });
+      if (linkedCredential) {
+        throw new BadRequestException('คำร้องนี้มีการสร้างเอกสารแล้ว');
+      }
     }
 
     const documentHash = createHash('sha256').update(file.buffer).digest('hex');
@@ -222,6 +250,8 @@ export class CredentialsService {
         storagePath,
         documentHash,
         status: CredentialStatus.PENDING,
+        requestId: sourceRequest?.id,
+        preparedById: issuerContext.userId,
       },
       include: {
         issuerStaff: {
@@ -238,8 +268,22 @@ export class CredentialsService {
       },
     });
 
+    if (sourceRequest) {
+      await this.prisma.documentRequest.update({
+        where: { id: sourceRequest.id },
+        data: {
+          status: 'IN_PROGRESS',
+          assignedToId: issuerContext.userId,
+          receivedAt: new Date(),
+          staffNote: 'เริ่มดำเนินการออกเอกสารแล้ว',
+        },
+      });
+    }
+
     return {
-      message: 'สร้างข้อมูลเอกสารสำเร็จ รอการยืนยันเอกสาร',
+      message: sourceRequest
+        ? 'สร้างเอกสารจากคำร้องสำเร็จ และส่งเข้าสู่ขั้นตอนตรวจสอบแล้ว'
+        : 'สร้างข้อมูลเอกสารสำเร็จ รอการยืนยันเอกสาร',
       credential,
     };
   }

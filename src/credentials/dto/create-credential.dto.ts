@@ -52,4 +52,11 @@ export class CreateCredentialDto {
    */
   @IsDateString()
   issuedAt!: string;
+
+  /**
+   * รหัสคำร้องเอกสารที่เป็นต้นทางของการออกเอกสาร
+   */
+  @IsOptional()
+  @IsString()
+  requestId?: string;
 }

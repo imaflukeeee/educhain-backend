@@ -171,26 +171,43 @@ export class LifecycleService {
       throw new NotFoundException('ไม่พบคำร้องเอกสาร');
     }
 
-    if (dto.status === 'REJECTED' && !dto.rejectionReason?.trim()) {
+    const nextStatus = dto.status ?? request.status;
+
+    if (nextStatus === 'REJECTED' && !dto.rejectionReason?.trim() && !request.rejectionReason) {
       throw new BadRequestException('กรุณาระบุเหตุผลที่ไม่อนุมัติคำร้อง');
+    }
+
+    if (dto.type === 'OTHER' && !dto.customTypeName?.trim() && !request.customTypeName) {
+      throw new BadRequestException('กรุณาระบุชื่อเอกสาร');
     }
 
     const now = new Date();
     const updated = await this.prisma.documentRequest.update({
       where: { id: request.id },
       data: {
-        status: dto.status,
+        status: nextStatus,
+        type: dto.type,
+        customTypeName:
+          dto.type === 'OTHER'
+            ? dto.customTypeName?.trim() || request.customTypeName
+            : dto.type
+              ? null
+              : undefined,
+        purpose: dto.purpose !== undefined ? dto.purpose.trim() || null : undefined,
+        details: dto.details !== undefined ? dto.details.trim() || null : undefined,
         assignedToId: dto.assignedToId || context.userId,
-        staffNote: dto.staffNote?.trim() || null,
+        staffNote: dto.staffNote !== undefined ? dto.staffNote.trim() || null : undefined,
         rejectionReason:
-          dto.status === 'REJECTED'
-            ? dto.rejectionReason?.trim() || null
-            : null,
+          nextStatus === 'REJECTED'
+            ? dto.rejectionReason?.trim() || request.rejectionReason
+            : dto.status
+              ? null
+              : undefined,
         receivedAt:
-          dto.status === 'RECEIVED' && !request.receivedAt
+          nextStatus === 'RECEIVED' && !request.receivedAt
             ? now
             : request.receivedAt,
-        completedAt: dto.status === 'COMPLETED' ? now : null,
+        completedAt: nextStatus === 'COMPLETED' ? now : null,
       },
     });
 
