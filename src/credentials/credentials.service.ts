@@ -182,28 +182,26 @@ export class CredentialsService {
       throw new BadRequestException('ขนาดไฟล์ต้องไม่เกิน 10MB');
     }
 
-    const holder = await this.prisma.user.findUnique({
-      where: { email: dto.holderEmail.trim().toLowerCase() },
-      select: { id: true, role: true, universityId: true },
-    });
+    let holder: { id: string; role: UserRole; universityId: string | null } | null = null;
+    let sourceRequest: { id: string; status: string; holderId: string } | null = null;
 
-    if (!holder || holder.role !== UserRole.HOLDER) {
-      throw new NotFoundException('ไม่พบนักศึกษาในระบบ');
-    }
-
-    let sourceRequest: { id: string; status: string } | null = null;
     if (dto.requestId?.trim()) {
+      // เมื่อออกเอกสารจากหน้าคำร้อง ให้ใช้ผู้ยื่นคำร้องจาก Database เป็นแหล่งข้อมูลหลัก
+      // ไม่อ้างอิงอีเมลจาก Form เพื่อป้องกันอีเมลไม่ตรง ตัวพิมพ์เล็ก/ใหญ่ หรือข้อมูลหน้าเว็บเก่า
       sourceRequest = await this.prisma.documentRequest.findFirst({
         where: {
           id: dto.requestId.trim(),
           universityId: issuerContext.universityId,
-          holderId: holder.id,
         },
-        select: { id: true, status: true },
+        select: {
+          id: true,
+          status: true,
+          holderId: true,
+        },
       });
 
       if (!sourceRequest) {
-        throw new NotFoundException('ไม่พบคำร้องเอกสารของนักศึกษารายนี้');
+        throw new NotFoundException('ไม่พบคำร้องเอกสารนี้ในมหาวิทยาลัยของคุณ');
       }
 
       if (['REJECTED', 'CANCELLED', 'COMPLETED'].includes(sourceRequest.status)) {
@@ -217,6 +215,24 @@ export class CredentialsService {
       if (linkedCredential) {
         throw new BadRequestException('คำร้องนี้มีการสร้างเอกสารแล้ว');
       }
+
+      holder = await this.prisma.user.findUnique({
+        where: { id: sourceRequest.holderId },
+        select: { id: true, role: true, universityId: true },
+      });
+    } else {
+      holder = await this.prisma.user.findUnique({
+        where: { email: dto.holderEmail.trim().toLowerCase() },
+        select: { id: true, role: true, universityId: true },
+      });
+    }
+
+    if (!holder || holder.role !== UserRole.HOLDER) {
+      throw new NotFoundException('ไม่พบนักศึกษาในระบบ');
+    }
+
+    if (sourceRequest && sourceRequest.holderId !== holder.id) {
+      throw new BadRequestException('ข้อมูลผู้ยื่นคำร้องไม่ตรงกับบัญชีนักศึกษา');
     }
 
     const documentHash = createHash('sha256').update(file.buffer).digest('hex');
